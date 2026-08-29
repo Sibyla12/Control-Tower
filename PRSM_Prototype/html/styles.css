@@ -151,6 +151,13 @@ main { padding-top: 18px; }
 
 /* ============ OPERATIONS GRID ============ */
 .executive-panel { margin-top: 10px; }
+.risk-concentration { padding: 4px 18px 18px; }
+.risk-concentration-heading { color: var(--text-tertiary); font-size: 9.5px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px; }
+.risk-dim-row { display: flex; align-items: baseline; gap: 10px; padding: 7px 0; border-top: 1px solid var(--hairline); }
+.risk-dim-label { flex: none; width: 108px; color: var(--text-tertiary); font-size: 9.5px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .05em; }
+.risk-dim-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.risk-chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border: 1px solid var(--hairline); border-radius: var(--radius-sm); background: var(--panel-sunken); font-family: var(--font-mono); font-size: 10.5px; color: var(--text-secondary); }
+.risk-chip strong { color: var(--text-primary); font-variant-numeric: tabular-nums; }
 .operations-grid { display: grid; grid-template-columns: minmax(320px, .55fr) minmax(460px, 1fr); gap: 10px; margin-top: 10px; align-items: start; }
 .panel { border-radius: var(--radius); overflow: hidden; }
 .panel-heading { justify-content: space-between; min-height: 68px; padding: 15px 18px; border-bottom: 1px solid var(--hairline); }

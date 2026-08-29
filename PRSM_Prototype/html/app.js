@@ -234,6 +234,7 @@ function buildLiveScenario(dashboard, liveIncidents, unresolvedCandidates) {
     countries,
     monitoredTraffic: dashboard.monitored_traffic,
     executiveSummary: dashboard.executive_summary || EMPTY_EXECUTIVE_SUMMARY,
+    riskConcentration: dashboard.risk_concentration || [],
     lastUpdated: dashboard.last_updated,
     marker: findMarkerIndex(history, liveIncidents)
   };
@@ -336,6 +337,7 @@ function render() {
   renderIncidents(s.incidents);
   renderUnresolved(s.unresolvedCandidates || []);
   renderExecutiveSummary(s.executiveSummary || EMPTY_EXECUTIVE_SUMMARY);
+  renderRiskConcentration(s.riskConcentration || []);
   renderChart(s.chart, s.expectedChart, s.marker);
   renderAnnunciators(s.incidents);
 }
@@ -347,6 +349,24 @@ function renderExecutiveSummary(summary) {
   document.getElementById("execGmvGross").textContent = money(summary.total_gmv_at_risk_usd);
   document.getElementById("execPlatformRisk").textContent = money(summary.total_platform_revenue_at_risk_usd);
   document.getElementById("execMerchantImpact").textContent = money(summary.total_merchant_economic_impact_usd);
+}
+
+const RISK_DIMENSION_LABELS = {
+  root_cause_type: "Root cause", country: "Country", provider: "Provider",
+  issuing_bank: "Issuing bank", payment_method: "Method", decline_code: "Decline code"
+};
+const RISK_DIMENSION_ORDER = ["root_cause_type", "country", "provider", "issuing_bank", "payment_method", "decline_code"];
+
+function renderRiskConcentration(signals) {
+  const el = document.getElementById("riskConcentration");
+  if (!signals.length) { el.innerHTML = ""; return; }
+  const byDimension = {};
+  signals.forEach(s => { (byDimension[s.dimension] = byDimension[s.dimension] || []).push(s); });
+  const rows = RISK_DIMENSION_ORDER.filter(dim => byDimension[dim]).map(dim => {
+    const chips = byDimension[dim].map(s => `<span class="risk-chip">${humanizeMerchant(s.value)}<strong>${Math.round(s.concentration_pct * 100)}%</strong></span>`).join("");
+    return `<div class="risk-dim-row"><span class="risk-dim-label">${RISK_DIMENSION_LABELS[dim] || dim}</span><span class="risk-dim-chips">${chips}</span></div>`;
+  }).join("");
+  el.innerHTML = `<div class="risk-concentration-heading">Where the current GMV at risk concentrates — diagnostic signal, not the confirmed root cause</div>${rows}`;
 }
 
 function renderUnresolved(list) {

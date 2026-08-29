@@ -172,6 +172,59 @@ def resolve_merchant_margin_rate(
     return sum(margin_rates.values()) / len(margin_rates)
 
 
+RISK_CONCENTRATION_DIMENSIONS = {
+    "root_cause_type": "root_cause_type",
+    "country": "country",
+    "provider": "provider",
+    "issuing_bank": "issuing_bank",
+    "payment_method": "payment_method",
+    "decline_code": "dominant_decline_code",
+}
+
+
+def build_risk_concentration(incident_records: list[dict]) -> list[dict]:
+    """Diagnostic signal, not a confirmed root cause: how the current
+    active incidents' adjusted GMV at risk concentrates by dimension.
+    Methodology from the finance workbook's Root_Cause_Analysis sheet,
+    applied to the live incident set instead of a static historical one.
+    """
+    total_risk = sum(
+        record.get("net_unrecovered_value_usd") or 0
+        for record in incident_records
+    )
+    if total_risk <= 0:
+        return []
+
+    signals = []
+    for dimension, field in RISK_CONCENTRATION_DIMENSIONS.items():
+        totals: dict[str, float] = {}
+        incident_counts: dict[str, int] = {}
+
+        for record in incident_records:
+            value = record.get(field)
+            if not value or pd.isna(value) or "|" in str(value):
+                # A pipe-joined value means this dimension wasn't the
+                # isolated root cause for this incident (it lists every
+                # affected value, e.g. "Bradesco|Nubank") - crediting it
+                # as one opaque bucket would misrepresent it.
+                continue
+            risk = record.get("net_unrecovered_value_usd") or 0
+            totals[value] = totals.get(value, 0) + risk
+            incident_counts[value] = incident_counts.get(value, 0) + 1
+
+        for value, risk in totals.items():
+            signals.append({
+                "dimension": dimension,
+                "value": value,
+                "gmv_at_risk_adjusted_usd": round(risk, 2),
+                "concentration_pct": round(risk / total_risk, 4),
+                "incident_count": incident_counts[value],
+            })
+
+    signals.sort(key=lambda signal: signal["concentration_pct"], reverse=True)
+    return signals
+
+
 def build_economic_impact(
     record: dict,
     margin_rates: dict[str, float],
@@ -574,6 +627,9 @@ def build_dashboard_payload() -> dict:
                 2,
             ),
         },
+        "risk_concentration": build_risk_concentration(
+            active_incidents.to_dict(orient="records")
+        ),
     }
 
 
