@@ -23,6 +23,14 @@ AUDIT_LOG_PATH = Path("data/recommendation_audit_log.csv")
 UNRESOLVED_CANDIDATES_PATH = Path(
     "data/unresolved_incident_candidates.csv"
 )
+INCIDENT_MEMORY_PATH = Path("data/incident_memory.csv")
+INCIDENT_MEMORY_COLUMNS = [
+    "fingerprint",
+    "consolidated_incident_id",
+    "incident_title",
+    "priority",
+    "recorded_at",
+]
 LIVE_SEGMENT_WINDOWS_PATH = Path("data/live_segment_windows.csv")
 BASELINE_BY_SEGMENT_PATH = Path("data/baseline_by_segment.csv")
 NOTIFIED_INCIDENTS_PATH = Path("data/notified_incidents.json")
@@ -397,6 +405,73 @@ def build_projections(record: dict) -> list[dict]:
     return projections
 
 
+def incident_fingerprint(record: dict) -> str:
+    """A stable identity for 'the same failure pattern', independent of
+    the random consolidated_incident_id a fresh pipeline run assigns.
+    """
+    parts = [
+        str(record.get("root_cause_type") or ""),
+        str(record.get("provider") or ""),
+        str(record.get("issuing_bank") or ""),
+        str(record.get("country") or ""),
+        str(record.get("dominant_decline_code") or ""),
+    ]
+    return "|".join(parts)
+
+
+def load_incident_memory() -> pd.DataFrame:
+    if not INCIDENT_MEMORY_PATH.exists():
+        return pd.DataFrame(columns=INCIDENT_MEMORY_COLUMNS)
+
+    return pd.read_csv(INCIDENT_MEMORY_PATH)
+
+
+def build_incident_memory(record: dict) -> dict:
+    """Recognizes when the current incident matches a pattern already
+    seen in an earlier pipeline run (real wall-clock time, not the
+    simulated demo clock), and records this occurrence for future
+    lookups. Idempotent per consolidated_incident_id, so repeated API
+    polls of the same incident don't inflate the count.
+    """
+    fingerprint = incident_fingerprint(record)
+    incident_id = record.get("consolidated_incident_id")
+    memory = load_incident_memory()
+
+    prior = memory[
+        memory["fingerprint"].eq(fingerprint)
+        & memory["consolidated_incident_id"].ne(incident_id)
+    ]
+    is_repeat = not prior.empty
+
+    already_recorded = bool((
+        memory["fingerprint"].eq(fingerprint)
+        & memory["consolidated_incident_id"].eq(incident_id)
+    ).any())
+
+    if incident_id and not already_recorded:
+        new_row = pd.DataFrame([{
+            "fingerprint": fingerprint,
+            "consolidated_incident_id": incident_id,
+            "incident_title": record.get("incident_title"),
+            "priority": record.get("priority"),
+            "recorded_at": utc_now(),
+        }])
+        updated = pd.concat([memory, new_row], ignore_index=True)
+        INCIDENT_MEMORY_PATH.parent.mkdir(parents=True, exist_ok=True)
+        updated.to_csv(INCIDENT_MEMORY_PATH, index=False)
+
+    return {
+        "is_repeat_incident": is_repeat,
+        "repeat_occurrence_count": int(prior["consolidated_incident_id"].nunique()),
+        "repeat_first_seen_at": (
+            prior["recorded_at"].min() if is_repeat else None
+        ),
+        "repeat_last_seen_at": (
+            prior["recorded_at"].max() if is_repeat else None
+        ),
+    }
+
+
 def enrich_with_playbook(record: dict) -> dict:
     taxonomy = load_lookup_table(INCIDENT_TAXONOMY_PATH, "incident_type")
     playbook = load_lookup_table(OPERATIONAL_PLAYBOOK_PATH, "incident_type")
@@ -428,6 +503,7 @@ def enrich_with_playbook(record: dict) -> dict:
         "mttr_assumption_hours": MTTR_ASSUMPTION_HOURS,
         "projections": build_projections(record),
         **build_data_quality(record),
+        **build_incident_memory(record),
     }
 
 

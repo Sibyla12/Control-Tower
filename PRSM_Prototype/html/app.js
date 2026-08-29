@@ -145,7 +145,11 @@ function mapApiIncident(rawApiIncident) {
     baselineReliableShare: apiIncident.baseline_reliable_share,
     baselineHistoricalAttempts: apiIncident.baseline_historical_attempts,
     rank: null,
-    cumulativePct: null
+    cumulativePct: null,
+    isRepeatIncident: apiIncident.is_repeat_incident,
+    repeatOccurrenceCount: apiIncident.repeat_occurrence_count,
+    repeatFirstSeenAt: apiIncident.repeat_first_seen_at,
+    repeatLastSeenAt: apiIncident.repeat_last_seen_at
   };
 }
 
@@ -663,6 +667,22 @@ function buildProjectionSection(i) {
   </div>`;
 }
 
+function formatDateTime(timestamp) {
+  if (!timestamp) return "—";
+  return new Date(timestamp).toLocaleString("en-GB", {
+    day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", hour12: false
+  });
+}
+
+function buildRepeatBanner(i) {
+  if (!i.isRepeatIncident) return "";
+  const times = i.repeatOccurrenceCount === 1 ? "time" : "times";
+  return `<div class="repeat-banner">
+    <span class="eyebrow">RECOGNIZED PATTERN</span><br>
+    This same failure (root cause, dimensions, and decline code) has been seen ${i.repeatOccurrenceCount} prior ${times} — first recorded ${formatDateTime(i.repeatFirstSeenAt)}, most recently ${formatDateTime(i.repeatLastSeenAt)}.
+  </div>`;
+}
+
 function openDrawer(i) {
   if (!i) return;
   state.selectedIncident = i;
@@ -672,6 +692,7 @@ function openDrawer(i) {
   document.getElementById("drawerContent").innerHTML = `
     <div class="drawer-title-row"><span class="severity-label ${i.priority === "P1" ? "" : "warning"}">${i.priority} · ${i.severity}</span><h2>${i.title}</h2><p>${i.affected}</p></div>
     <div class="executive-summary"><span class="eyebrow">EXECUTIVE SUMMARY</span><br>${i.executive}</div>
+    ${buildRepeatBanner(i)}
     <div class="drawer-section" id="aiAnalysisSection">
       <h3>AI ANALYSIS</h3>
       <button class="drawer-action" id="generateAnalysisButton">Generate analysis</button>

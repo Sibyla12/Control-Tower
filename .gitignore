@@ -210,6 +210,7 @@ tempCodeRunnerFile.py
 
 # Runtime state written by the API (not source data)
 data/notified_incidents.json
+data/incident_memory.csv
 
 # Local R session history
 .Rhistory

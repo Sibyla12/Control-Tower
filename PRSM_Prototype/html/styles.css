@@ -296,6 +296,8 @@ main { padding-top: 18px; }
 .severity-label { display: inline-block; padding: 4px 7px; border: 1px solid var(--warning); border-radius: var(--radius-sm); color: var(--warning); background: var(--warning-dim); font-size: 9px; font-weight: 700; letter-spacing: .06em; font-family: var(--font-mono); }
 .severity-label.warning { color: var(--caution); border-color: var(--caution); background: var(--caution-dim); }
 .executive-summary { padding: 13px 15px; border-left: 2px solid var(--select); background: var(--select-dim); color: var(--text-primary); font-size: 12px; line-height: 1.55; }
+.repeat-banner { margin-top: 10px; padding: 13px 15px; border-left: 2px solid var(--caution); background: var(--caution-dim); color: var(--text-primary); font-size: 12px; line-height: 1.55; }
+.repeat-banner .eyebrow { color: var(--caution); }
 .priority-summary { margin: 10px 0 0; color: var(--text-secondary); font-size: 12px; line-height: 1.6; }
 .projection-table { width: 100%; margin-top: 12px; border-collapse: collapse; font-family: var(--font-mono); font-size: 11px; }
 .projection-table th, .projection-table td { padding: 8px 6px; text-align: right; border-bottom: 1px solid var(--hairline); }
