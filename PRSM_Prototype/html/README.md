@@ -1,8 +1,14 @@
 # PagoTotal Control Tower — HTML prototype
 
-Open `index.html` in a modern browser. No installation, internet connection, or build step is required.
+Open `index.html` in a modern browser. No installation or build step is required. An internet connection is needed to reach the live Control Tower API (`API_URL` in `app.js`).
 
-Use the **Demo Control** buttons from left to right to present the story:
+## Live network (default)
+
+On load, the dashboard polls the real Control Tower API (`/dashboard` and `/incidents`) every 20 seconds: status strip, KPIs, LATAM map, incident queue, and the conversion chart all reflect real data computed from `data/live_segment_windows.csv` and the incident pipeline — no invented numbers. If the API is unreachable, the strip shows "LIVE DATA UNAVAILABLE" instead of silently substituting fake data.
+
+## Demo mode
+
+Click **Demo mode** in the DATA SOURCE bar to switch to the deterministic, rehearsed scenarios (useful for a pitch where you don't want live variability):
 
 1. Normal operation
 2. Brazil provider failure
@@ -12,6 +18,6 @@ Use the **Demo Control** buttons from left to right to present the story:
 6. Ambiguous incident / insufficient evidence
 7. Reset
 
-Click a country marker or an incident card to open the investigation panel. In Random Incident, use **Reveal injected failure** after presenting the diagnosis.
+These figures are intentionally fixed and offline — calibrated to the attached 50,000-transaction baseline. Click **Live network** to return to real data.
 
-The figures are calibrated to the attached 50,000-transaction baseline and are intentionally deterministic for live-demo reliability.
+Click a country marker or an incident card to open the investigation panel. In Random Incident (Demo mode), use **Reveal injected failure** after presenting the diagnosis.

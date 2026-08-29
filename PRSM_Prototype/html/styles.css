@@ -127,6 +127,8 @@ code, .mono { font-family: var(--font-mono); }
 .scenario-button.is-active { color: #0a0a0a; border-color: var(--select); background: var(--select); font-weight: 700; }
 .scenario-button.is-active span { color: #0a0a0a; border-color: rgba(10, 10, 10, .3); }
 .reset-button { color: var(--text-secondary); margin-left: 6px; }
+.mode-toggle { gap: 6px; justify-content: flex-start; padding: 0; }
+.scenario-button.is-disabled { opacity: .35; pointer-events: none; }
 
 /* ============ STATUS STRIP ============ */
 main { padding-top: 18px; }

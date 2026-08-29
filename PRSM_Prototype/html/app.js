@@ -2,6 +2,7 @@ const BASE_CHART = [85.4, 85.2, 85.6, 85.1, 85.5, 85.0, 85.3, 84.9, 85.6, 85.2, 
 const EXPECTED = [85.4, 85.4, 85.3, 85.4, 85.4, 85.3, 85.4, 85.4, 85.4, 85.3, 85.4, 85.4, 85.4, 85.3, 85.4, 85.4];
 
 const API_URL = "https://control-tower-vl22.onrender.com";
+const LIVE_POLL_MS = 20000;
 
 function pipeToText(value, fallback = "All") {
   if (!value) return fallback;
@@ -114,25 +115,69 @@ async function loadLiveIncidents() {
   return payload.incidents.map(mapApiIncident);
 }
 
-function buildLiveScenario(liveIncidents) {
-  const countries = { MX: ["healthy", 83.2], CO: ["healthy", 84.3], BR: ["healthy", 88.0] };
-  liveIncidents.forEach(incident => {
-    countries[incident.country] = [incident.priority === "P1" ? "critical" : "warning", incident.actual];
+async function loadDashboard() {
+  const response = await fetch(`${API_URL}/dashboard`);
+  if (!response.ok) throw new Error(`Control Tower API returned ${response.status}`);
+  return response.json();
+}
+
+function pickTimeLabels(history) {
+  if (!history.length) return [];
+  const lastIndex = history.length - 1;
+  const indices = [...new Set([0, Math.round(lastIndex / 3), Math.round((lastIndex * 2) / 3), lastIndex])];
+  return indices.map((index, position) => position === indices.length - 1 ? "Now" : formatStarted(history[index].timestamp));
+}
+
+function buildLiveScenario(dashboard, liveIncidents) {
+  const globalMetrics = dashboard.global_metrics;
+  const countries = {};
+  Object.entries(dashboard.countries).forEach(([code, country]) => {
+    countries[code] = [country.status, country.approval_rate !== null ? country.approval_rate * 100 : 0];
   });
-  const totalAttempts = liveIncidents.reduce((sum, incident) => sum + incident.attempts, 0);
-  const weightedActual = totalAttempts ? liveIncidents.reduce((sum, incident) => sum + incident.actual * incident.attempts, 0) / totalAttempts : 85.1;
-  const weightedExpected = totalAttempts ? liveIncidents.reduce((sum, incident) => sum + incident.expected * incident.attempts, 0) / totalAttempts : 85.4;
+  const history = dashboard.conversion_history || [];
+  const chart = history.map(point => point.observed_rate !== null ? point.observed_rate * 100 : null);
+  const expectedChart = history.map(point => point.expected_rate !== null ? point.expected_rate * 100 : null);
+  const isHealthy = dashboard.system_status === "healthy";
   return {
-    tone: liveIncidents.some(incident => incident.priority === "P1") ? "critical" : "warning",
-    pill: `${liveIncidents.length} ACTIVE INCIDENT${liveIncidents.length === 1 ? "" : "S"}`,
-    title: "Live payment incidents detected and prioritized",
-    description: "Control Tower separated the active failures, estimated their financial impact, and generated operator recommendations.",
-    conversion: weightedActual,
-    expected: weightedExpected,
-    chart: [85.4, 85.2, 85.6, 85.1, 85.5, 85.0, 85.3, 84.9, 85.0, 83.1, 79.7, 77.2, 76.0, 76.7, 76.2, weightedActual],
+    tone: dashboard.system_status,
+    pill: isHealthy ? "SYSTEM HEALTHY" : `${liveIncidents.length} ACTIVE INCIDENT${liveIncidents.length === 1 ? "" : "S"}`,
+    title: isHealthy
+      ? "Payment network operating within expected range"
+      : liveIncidents.length > 1
+        ? "Multiple live incidents detected and prioritized"
+        : "Live incident detected and prioritized",
+    description: isHealthy
+      ? "No meaningful deterioration detected across monitored payment flows."
+      : "Control Tower separated the active failures, estimated their financial impact, and generated operator recommendations.",
+    conversion: globalMetrics.approval_rate !== null ? globalMetrics.approval_rate * 100 : 0,
+    expected: globalMetrics.expected_approval_rate !== null ? globalMetrics.expected_approval_rate * 100 : 0,
+    chart, expectedChart,
+    timeLabels: pickTimeLabels(history),
     incidents: liveIncidents,
     countries,
-    marker: 9
+    monitoredTraffic: dashboard.monitored_traffic,
+    lastUpdated: dashboard.last_updated,
+    marker: undefined
+  };
+}
+
+function connectingScenario() {
+  return {
+    tone: "healthy", pill: "CONNECTING…", title: "Connecting to the live payment network",
+    description: "Fetching current incidents and conversion data from Control Tower.",
+    conversion: 0, expected: 0, chart: [], expectedChart: [], timeLabels: [],
+    incidents: [], countries: { MX: ["healthy", 0], CO: ["healthy", 0], BR: ["healthy", 0] },
+    monitoredTraffic: { attempts_total: 0, merchants: 0, providers: 0 }, marker: undefined
+  };
+}
+
+function liveErrorScenario(message) {
+  return {
+    tone: "warning", pill: "LIVE DATA UNAVAILABLE", title: "Could not reach the Control Tower API",
+    description: message,
+    conversion: 0, expected: 0, chart: [], expectedChart: [], timeLabels: [],
+    incidents: [], countries: { MX: ["healthy", 0], CO: ["healthy", 0], BR: ["healthy", 0] },
+    monitoredTraffic: { attempts_total: 0, merchants: 0, providers: 0 }, marker: undefined
   };
 }
 
@@ -217,7 +262,14 @@ const randomTemplates = [
     tree: { label:"Brazil", children:[ { label:"Other merchants", state:"normal" }, { label:"Merchant A", state:"root", children:[ { label:"Wallet — processing time ↑ 2.3×", state:"root" } ] } ] } }
 ];
 
-const state = { scenario: "normal", selectedIncident: null, randomIncident: null, randomCounter: 0, groundTruthRevealed: false };
+const state = { mode: "live", scenario: "normal", selectedIncident: null, randomIncident: null, randomCounter: 0, groundTruthRevealed: false, liveData: null, liveError: null, liveTimer: null };
+
+const DEMO_DEFAULTS = {
+  expectedChart: EXPECTED,
+  timeLabels: ["09:42", "09:52", "10:02", "Now"],
+  monitoredTraffic: { attempts_total: 50000, merchants: 3, providers: 3 }
+};
+function withDemoDefaults(scenario) { return { ...DEMO_DEFAULTS, ...scenario }; }
 
 const scenarios = {
   normal: {
@@ -248,17 +300,24 @@ const scenarios = {
 };
 
 function money(value) { return value >= 1000 ? `$${(value/1000).toFixed(1)}K` : `$${Math.round(value)}`; }
+function formatCount(value) { return value >= 1000 ? `${(value/1000).toFixed(1)}K` : `${Math.round(value)}`; }
+
 function currentScenario() {
-  if (state.scenario !== "random") return scenarios[state.scenario];
+  if (state.mode === "live") {
+    if (state.liveData) return state.liveData;
+    if (state.liveError) return liveErrorScenario(state.liveError);
+    return connectingScenario();
+  }
+  if (state.scenario !== "random") return withDemoDefaults(scenarios[state.scenario]);
   const i = state.randomIncident;
   const countries = { MX:["healthy",83.2], CO:["healthy",84.3], BR:["healthy",88.0] };
   countries[i.country] = [i.severity === "CRITICAL" ? "critical" : "warning", i.actual];
-  return {
+  return withDemoDefaults({
     tone: i.severity === "CRITICAL" ? "critical" : "warning", pill: "BLIND TEST · INCIDENT FOUND",
     title: "A previously unrehearsed failure was diagnosed", description: "The injected dimensions stay hidden until you reveal the ground truth.",
     conversion: +(85.1 - (i.expected-i.actual)*.18).toFixed(1), expected:85.4,
     chart:[85.4,85.2,85.6,85.1,85.5,85.0,85.3,84.9,85.2,84.7,83.1,81.2,80.4,79.5,79.2,79.0], incidents:[i], countries, marker:10
-  };
+  });
 }
 
 function setScenario(key) {
@@ -271,8 +330,56 @@ function setScenario(key) {
   state.scenario = key;
   closeDrawer();
   render();
-  document.querySelectorAll(".scenario-button").forEach(b => b.classList.toggle("is-active", b.dataset.scenario === key));
+  document.querySelectorAll("[data-scenario]").forEach(b => b.classList.toggle("is-active", b.dataset.scenario === key));
   showToast(key === "normal" ? "Demo reset to normal operation" : `${currentScenario().pill.toLowerCase()} loaded`);
+}
+
+function setMode(view) {
+  state.mode = view;
+  document.querySelectorAll("#modeToggle [data-view]").forEach(b => b.classList.toggle("is-active", b.dataset.view === view));
+  document.querySelectorAll("#scenarioButtons > [data-scenario]").forEach(b => b.classList.toggle("is-disabled", view !== "demo"));
+  document.getElementById("controlNote").textContent = view === "live"
+    ? "Live network data from Control Tower"
+    : "Deterministic scenarios for a reliable live demo";
+  closeDrawer();
+  if (view === "live") {
+    render();
+    startLivePolling();
+  } else {
+    stopLivePolling();
+    setScenario(state.scenario === "random" ? "random" : state.scenario);
+  }
+}
+
+async function fetchLive() {
+  try {
+    const [dashboard, liveIncidents] = await Promise.all([loadDashboard(), loadLiveIncidents()]);
+    const hadError = Boolean(state.liveError);
+    state.liveData = buildLiveScenario(dashboard, liveIncidents);
+    state.liveError = null;
+    if (state.mode === "live") {
+      render();
+      if (hadError) showToast("Live connection restored");
+    }
+  } catch (error) {
+    console.error("Could not load live data:", error);
+    state.liveError = (error && error.message) || "Control Tower API unavailable";
+    if (state.mode === "live") {
+      render();
+      showToast("Live data unavailable — check the Control Tower API");
+    }
+  }
+}
+
+function startLivePolling() {
+  fetchLive();
+  clearInterval(state.liveTimer);
+  state.liveTimer = setInterval(fetchLive, LIVE_POLL_MS);
+}
+
+function stopLivePolling() {
+  clearInterval(state.liveTimer);
+  state.liveTimer = null;
 }
 
 function render() {
@@ -297,10 +404,16 @@ function render() {
   document.getElementById("highestPriority").textContent = s.incidents.length ? s.incidents[0].priority : "—";
   document.getElementById("riskValue").textContent = money(risk);
   document.getElementById("riskConfidence").textContent = money(adjusted);
+  document.getElementById("monitoredAttempts").textContent = formatCount(s.monitoredTraffic.attempts_total);
+  document.getElementById("monitoredEntities").textContent = `${s.monitoredTraffic.merchants} / ${s.monitoredTraffic.providers}`;
+  document.getElementById("timeLabels").innerHTML = s.timeLabels.map(t => `<span>${t}</span>`).join("");
+  document.getElementById("statusTimestamp").textContent = state.mode === "live" && s.lastUpdated
+    ? `Updated ${formatStarted(s.lastUpdated)}`
+    : "Updated just now";
   renderCountries(s.countries);
   renderMarketRoster(s.countries, s.incidents);
   renderIncidents(s.incidents);
-  renderChart(s.chart, s.marker);
+  renderChart(s.chart, s.expectedChart, s.marker);
   renderAnnunciators(s.incidents);
 }
 
@@ -391,15 +504,24 @@ function renderIncidents(list) {
   }));
 }
 
-function renderChart(actual, marker) {
+function fillGaps(arr, fallback) {
+  let last = arr.find(v => v !== null && v !== undefined);
+  if (last === undefined) last = fallback;
+  return arr.map(v => { if (v === null || v === undefined) return last; last = v; return v; });
+}
+
+function renderChart(rawActual, rawExpected, marker) {
   const svg = document.getElementById("conversionChart");
+  if (!rawActual || rawActual.length < 2) { svg.innerHTML = ""; return; }
   const width=1200, height=250, min=55, max=95;
+  const actual = fillGaps(rawActual, (min+max)/2);
+  const expected = rawExpected && rawExpected.length === actual.length ? fillGaps(rawExpected, (min+max)/2) : actual;
   const x = i => i*(width/(actual.length-1)); const y = v => height-((v-min)/(max-min))*height;
   const points = arr => arr.map((v,i)=>`${x(i)},${y(v)}`).join(" ");
   const area = `0,${height} ${points(actual)} ${width},${height}`;
   const grids = [0,.25,.5,.75,1].map(p=>`<line class="chart-grid" x1="0" y1="${p*height}" x2="${width}" y2="${p*height}"/>`).join("");
   const markerSvg = marker !== undefined ? `<line class="incident-line" x1="${x(marker)}" y1="0" x2="${x(marker)}" y2="${height}"/><text class="chart-label" x="${x(marker)+8}" y="15">ANOMALY DETECTED</text>` : "";
-  svg.innerHTML = `<defs><linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></linearGradient></defs>${grids}<polygon class="area-path" points="${area}"/><polyline class="expected-path" points="${points(EXPECTED)}"/><polyline class="actual-path" points="${points(actual)}"/>${markerSvg}<circle class="chart-point" cx="${x(actual.length-1)}" cy="${y(actual[actual.length-1])}" r="5"/>`;
+  svg.innerHTML = `<defs><linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></linearGradient></defs>${grids}<polygon class="area-path" points="${area}"/><polyline class="expected-path" points="${points(expected)}"/><polyline class="actual-path" points="${points(actual)}"/>${markerSvg}<circle class="chart-point" cx="${x(actual.length-1)}" cy="${y(actual[actual.length-1])}" r="5"/>`;
 }
 
 function renderTreeNode(node) {
@@ -606,6 +728,7 @@ const Globe = (() => {
 Globe.start();
 
 document.getElementById("scenarioButtons").addEventListener("click", e => { const b=e.target.closest("[data-scenario]"); if(b) setScenario(b.dataset.scenario); });
+document.getElementById("modeToggle").addEventListener("click", e => { const b=e.target.closest("[data-view]"); if(b) setMode(b.dataset.view); });
 document.querySelectorAll(".country-node[data-country]").forEach(b=>b.addEventListener("click",()=>showCountry(b.dataset.country)));
 document.getElementById("marketRoster").addEventListener("click", e => { const b = e.target.closest("[data-country]"); if (b) showCountry(b.dataset.country); });
 document.getElementById("beaconWarning").addEventListener("click", () => { if (document.getElementById("beaconWarning").classList.contains("is-lit")) showToast("Critical signal acknowledged"); });
@@ -613,22 +736,7 @@ document.getElementById("beaconCaution").addEventListener("click", () => { if (d
 document.getElementById("closeDrawer").addEventListener("click",closeDrawer);
 document.getElementById("drawerBackdrop").addEventListener("click",closeDrawer);
 document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeDrawer(); });
-async function initializeDashboard() {
-  setInterval(updateClock, 1000);
-  updateClock();
-
-  try {
-    const liveIncidents = await loadLiveIncidents();
-    scenarios.live = buildLiveScenario(liveIncidents);
-    state.scenario = "live";
-    render();
-    showToast(`${liveIncidents.length} live incidents loaded`);
-  } catch (error) {
-    console.error("Could not load live incidents:", error);
-    state.scenario = "both";
-    render();
-    showToast("API unavailable — showing demo data");
-  }
-}
-
-initializeDashboard();
+setInterval(updateClock, 1000);
+updateClock();
+render();
+startLivePolling();

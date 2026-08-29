@@ -41,17 +41,22 @@
 
     <section class="demo-control" aria-label="Demo scenarios">
       <div class="control-heading">
-        <span class="eyebrow">DEMO CONTROL</span>
-        <span class="control-note">Deterministic scenarios for a reliable live demo</span>
+        <span class="eyebrow">DATA SOURCE</span>
+        <span class="control-note" id="controlNote">Live network data from Control Tower</span>
       </div>
       <div class="scenario-buttons" id="scenarioButtons">
-        <button data-scenario="normal" class="scenario-button is-active"><span>01</span>Normal</button>
-        <button data-scenario="brazil" class="scenario-button"><span>02</span>Brazil provider failure</button>
-        <button data-scenario="mexico" class="scenario-button"><span>03</span>Mexico bank failure</button>
-        <button data-scenario="both" class="scenario-button"><span>04</span>Both</button>
-        <button data-scenario="random" class="scenario-button"><span>05</span>Random incident</button>
-        <button data-scenario="ambiguous" class="scenario-button"><span>06</span>Ambiguous</button>
-        <button data-scenario="reset" class="scenario-button reset-button" title="Reset demo">↺ Reset</button>
+        <div class="scenario-buttons mode-toggle" id="modeToggle">
+          <button data-view="live" class="scenario-button is-active"><span>●</span>Live network</button>
+          <button data-view="demo" class="scenario-button">Demo mode</button>
+        </div>
+        <span class="rail-divider" aria-hidden="true"></span>
+        <button data-scenario="normal" class="scenario-button is-disabled"><span>01</span>Normal</button>
+        <button data-scenario="brazil" class="scenario-button is-disabled"><span>02</span>Brazil provider failure</button>
+        <button data-scenario="mexico" class="scenario-button is-disabled"><span>03</span>Mexico bank failure</button>
+        <button data-scenario="both" class="scenario-button is-disabled"><span>04</span>Both</button>
+        <button data-scenario="random" class="scenario-button is-disabled"><span>05</span>Random incident</button>
+        <button data-scenario="ambiguous" class="scenario-button is-disabled"><span>06</span>Ambiguous</button>
+        <button data-scenario="reset" class="scenario-button reset-button is-disabled" title="Reset demo">↺ Reset</button>
       </div>
     </section>
 
@@ -85,8 +90,8 @@
         </article>
         <article class="kpi-card">
           <div class="kpi-label">Monitored traffic</div>
-          <div class="kpi-row"><strong>50.0K</strong><span class="delta healthy">100%</span></div>
-          <div class="kpi-foot"><span>Merchants / providers</span><strong>3 / 3</strong></div>
+          <div class="kpi-row"><strong id="monitoredAttempts">—</strong><span class="delta healthy">100%</span></div>
+          <div class="kpi-foot"><span>Merchants / providers</span><strong id="monitoredEntities">— / —</strong></div>
         </article>
       </section>
 
@@ -139,7 +144,7 @@
         <div class="chart-wrap">
           <div class="axis-labels"><span>95%</span><span>85%</span><span>75%</span><span>65%</span><span>55%</span></div>
           <svg id="conversionChart" viewBox="0 0 1200 250" preserveAspectRatio="none" role="img" aria-label="Actual conversion compared with expected conversion"></svg>
-          <div class="time-labels"><span>09:42</span><span>09:52</span><span>10:02</span><span>Now</span></div>
+          <div class="time-labels" id="timeLabels"><span>09:42</span><span>09:52</span><span>10:02</span><span>Now</span></div>
         </div>
       </section>
     </main>
