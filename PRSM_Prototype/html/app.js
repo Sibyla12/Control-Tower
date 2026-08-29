@@ -505,6 +505,22 @@ async function submitReview(i, action) {
   }
 }
 
+async function generateAnalysis(incidentId) {
+  const button = document.getElementById("generateAnalysisButton");
+  const output = document.getElementById("aiAnalysisOutput");
+  if (button) { button.disabled = true; button.textContent = "Analyzing…"; }
+  try {
+    const response = await fetch(`${API_URL}/incidents/${incidentId}/analysis`, { method: "POST" });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(payload.detail || `Request failed (${response.status})`);
+    if (output) { output.textContent = payload.analysis; output.hidden = false; }
+    if (button) button.hidden = true;
+  } catch (error) {
+    showToast(error.message || "Could not generate analysis");
+    if (button) { button.disabled = false; button.textContent = "Generate analysis"; }
+  }
+}
+
 function openDrawer(i) {
   if (!i) return;
   state.selectedIncident = i;
@@ -514,6 +530,11 @@ function openDrawer(i) {
   document.getElementById("drawerContent").innerHTML = `
     <div class="drawer-title-row"><span class="severity-label ${i.priority === "P1" ? "" : "warning"}">${i.priority} · ${i.severity}</span><h2>${i.title}</h2><p>${i.affected}</p></div>
     <div class="executive-summary"><span class="eyebrow">EXECUTIVE SUMMARY</span><br>${i.executive}</div>
+    <div class="drawer-section" id="aiAnalysisSection">
+      <h3>AI ANALYSIS</h3>
+      <button class="drawer-action" id="generateAnalysisButton">Generate analysis</button>
+      <div class="ai-analysis-output" id="aiAnalysisOutput" hidden></div>
+    </div>
     <div class="drawer-section"><h3>${rootCauseHeading}</h3>${rootCauseBody}</div>
     <div class="drawer-section"><h3>EVIDENCE</h3><div class="evidence-list">${i.evidence.map(e=>`<div class="evidence-item"><span class="evidence-check">✓</span><span>${e}</span></div>`).join("")}</div></div>
     <div class="drawer-section"><h3>PRIORITY</h3><span class="severity-label ${i.priority === "P1" ? "" : "warning"}">${i.priorityLabel || `${i.priority} · ${i.severity}`}</span><p class="priority-summary">${money(i.risk)}/h at risk · ${i.confidence}% confidence${i.priorityCriteria ? ` — ${i.priorityCriteria}` : ""}</p></div>
@@ -524,6 +545,8 @@ function openDrawer(i) {
     <div class="drawer-section" id="humanDecisionSection"></div>`;
   state.reviewUi = { modifying: false };
   renderHumanDecision(i);
+  const generateButton = document.getElementById("generateAnalysisButton");
+  if (generateButton) generateButton.addEventListener("click", () => generateAnalysis(i.id));
   document.getElementById("drawerBackdrop").hidden = false;
   document.getElementById("detailDrawer").classList.add("is-open");
   document.getElementById("detailDrawer").setAttribute("aria-hidden","false");

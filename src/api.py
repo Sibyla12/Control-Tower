@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Literal
 
+import anthropic
 import pandas as pd
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -150,6 +151,67 @@ def enrich_with_playbook(record: dict) -> dict:
         "escalation_level": matrix_row.get("escalation"),
         "expected_attention": matrix_row.get("expected_attention"),
     }
+
+
+ANALYSIS_MODEL = "claude-opus-5"
+ANALYSIS_FIELDS = [
+    "consolidated_incident_id",
+    "incident_title",
+    "incident_type",
+    "root_cause_type",
+    "provider",
+    "issuing_bank",
+    "merchant",
+    "payment_method",
+    "country",
+    "dominant_decline_code",
+    "start_time",
+    "end_time",
+    "confidence_score",
+    "observed_approval_rate",
+    "expected_approval_rate",
+    "validated_windows",
+    "attempts_in_scope",
+    "estimated_lost_approvals",
+    "value_at_risk_per_minute_usd",
+    "net_unrecovered_value_usd",
+    "priority",
+    "priority_label",
+    "priority_criteria",
+    "root_cause_dimensions",
+    "taxonomy_evidence",
+    "operational_owner",
+    "playbook_action",
+    "escalation_level",
+    "expected_attention",
+    "recommendation_status",
+]
+ANALYSIS_SYSTEM_PROMPT = """You are a payments operations analyst embedded in a \
+real-time incident dashboard. You will receive one incident's structured data \
+(JSON) from an automated anomaly-detection and root-cause pipeline.
+
+Write a short, plain-language analysis (3-5 sentences) for a human operator who \
+is about to approve, modify, or reject the recommended action.
+
+Rules:
+- Use only the facts present in the JSON. Never invent numbers, causes, \
+providers, banks, or outcomes that are not stated in the data.
+- If a field is null or missing, do not guess a value for it or dwell on its \
+absence unless directly relevant.
+- Do not just restate the JSON field by field; synthesize it into a natural \
+narrative a busy operator can read in ten seconds.
+- End with one sentence naming the recommended action and who owns it.
+- You are explaining the situation, not deciding it. Never tell the operator to \
+approve or reject."""
+
+_anthropic_client: anthropic.Anthropic | None = None
+
+
+def get_anthropic_client() -> anthropic.Anthropic:
+    global _anthropic_client
+    if _anthropic_client is None:
+        _anthropic_client = anthropic.Anthropic()
+    return _anthropic_client
 
 
 def load_incidents() -> pd.DataFrame:
@@ -553,6 +615,55 @@ def get_incident(incident_id: str):
         raise HTTPException(status_code=404, detail="Incident not found.")
 
     return enrich_with_playbook(clean_record(matches.iloc[0].to_dict()))
+
+
+@app.post("/incidents/{incident_id}/analysis")
+def analyze_incident(incident_id: str):
+    dataframe = load_incidents()
+    matches = dataframe[
+        dataframe["consolidated_incident_id"].eq(incident_id)
+    ]
+
+    if matches.empty:
+        raise HTTPException(status_code=404, detail="Incident not found.")
+
+    record = enrich_with_playbook(clean_record(matches.iloc[0].to_dict()))
+    grounding = {field: record.get(field) for field in ANALYSIS_FIELDS}
+
+    try:
+        client = get_anthropic_client()
+        response = client.messages.create(
+            model=ANALYSIS_MODEL,
+            max_tokens=500,
+            output_config={"effort": "medium"},
+            system=ANALYSIS_SYSTEM_PROMPT,
+            messages=[{
+                "role": "user",
+                "content": (
+                    "Incident data (JSON):\n"
+                    + json.dumps(grounding, default=str)
+                ),
+            }],
+        )
+    except anthropic.APIStatusError as error:
+        raise HTTPException(
+            status_code=502,
+            detail=f"AI analysis request failed: {error.message}",
+        ) from error
+    except Exception as error:
+        raise HTTPException(
+            status_code=503,
+            detail=f"AI analysis is not configured: {error}",
+        ) from error
+
+    analysis_text = "".join(
+        block.text for block in response.content if block.type == "text"
+    ).strip()
+
+    return {
+        "consolidated_incident_id": incident_id,
+        "analysis": analysis_text,
+    }
 
 
 @app.get("/audit-log")
