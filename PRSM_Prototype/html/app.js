@@ -213,7 +213,7 @@ function liveErrorScenario(message) {
   };
 }
 
-const state = { selectedIncident: null, liveData: null, liveError: null, liveTimer: null };
+const state = { selectedIncident: null, liveData: null, liveError: null, liveTimer: null, reviewUi: { modifying: false } };
 
 function money(value) { return value >= 1000 ? `$${(value/1000).toFixed(1)}K` : `$${Math.round(value)}`; }
 function formatCount(value) { return value >= 1000 ? `${(value/1000).toFixed(1)}K` : `${Math.round(value)}`; }
@@ -414,6 +414,97 @@ function renderTree(root) {
   return `<div class="tree-root">${root.label}</div><ul class="tree">${root.children.map(renderTreeNode).join("")}</ul>`;
 }
 
+const REVIEW_STATUS_LABELS = { proposed: "Proposed", modified: "Modified", approved: "Approved", rejected: "Rejected", executed: "Executed" };
+const REVIEW_ACTIONS_BY_STATUS = {
+  proposed: [["approve", "Approve"], ["modify", "Modify"], ["reject", "Reject"]],
+  modified: [["approve", "Approve"], ["modify", "Modify"], ["reject", "Reject"]],
+  approved: [["execute", "Execute"], ["modify", "Modify"], ["reject", "Reject"]]
+};
+
+function getSavedReviewer() {
+  try { return localStorage.getItem("controlTowerReviewer") || ""; } catch (error) { return ""; }
+}
+
+function buildHumanDecisionHtml(i) {
+  const status = i.recommendationStatus || "proposed";
+  const statusLine = `<div class="review-status">Status: <strong>${REVIEW_STATUS_LABELS[status] || status}</strong>${i.reviewedBy ? ` · last reviewed by ${i.reviewedBy}` : ""}</div>`;
+  const actions = REVIEW_ACTIONS_BY_STATUS[status] || [];
+  if (!actions.length) return `<h3>HUMAN DECISION</h3>${statusLine}`;
+
+  const modifying = state.reviewUi.modifying;
+  const fields = `
+    <label class="review-field"><span>Your name</span><input type="text" id="reviewerInput" placeholder="e.g. Ana Ruiz" value="${getSavedReviewer()}"></label>
+    <label class="review-field"><span>Comment (optional)</span><input type="text" id="reviewerComment" placeholder="Add context for the audit log"></label>
+    ${modifying ? `<label class="review-field"><span>Modified action</span><textarea id="modifiedActionInput" rows="3">${i.playbookAction || i.recommendation || ""}</textarea></label>` : ""}`;
+  const buttonRow = modifying
+    ? `<div class="drawer-actions"><button class="drawer-action" data-review-cancel="1">Cancel</button><button class="drawer-action primary" data-review-action="modify">Save modification</button></div>`
+    : `<div class="drawer-actions">${actions.map(([action, label]) => `<button class="drawer-action ${action === "reject" ? "" : "primary"}" data-review-action="${action}">${label}</button>`).join("")}</div>`;
+  return `<h3>HUMAN DECISION</h3>${statusLine}${fields}${buttonRow}`;
+}
+
+function renderHumanDecision(i) {
+  const section = document.getElementById("humanDecisionSection");
+  if (!section) return;
+  section.innerHTML = buildHumanDecisionHtml(i);
+  section.querySelectorAll("[data-review-action]").forEach(button => {
+    button.addEventListener("click", () => {
+      const action = button.dataset.reviewAction;
+      if (action === "modify" && !state.reviewUi.modifying) {
+        state.reviewUi.modifying = true;
+        renderHumanDecision(i);
+        return;
+      }
+      submitReview(i, action);
+    });
+  });
+  const cancelButton = section.querySelector("[data-review-cancel]");
+  if (cancelButton) cancelButton.addEventListener("click", () => { state.reviewUi.modifying = false; renderHumanDecision(i); });
+}
+
+async function submitReview(i, action) {
+  const reviewerInput = document.getElementById("reviewerInput");
+  const commentInput = document.getElementById("reviewerComment");
+  const modifiedInput = document.getElementById("modifiedActionInput");
+  const reviewer = reviewerInput ? reviewerInput.value.trim() : "";
+  if (reviewer.length < 2) {
+    showToast("Enter your name to record this decision");
+    if (reviewerInput) reviewerInput.focus();
+    return;
+  }
+  if (action === "modify" && (!modifiedInput || !modifiedInput.value.trim())) {
+    showToast("Enter the modified action text");
+    if (modifiedInput) modifiedInput.focus();
+    return;
+  }
+  try { localStorage.setItem("controlTowerReviewer", reviewer); } catch (error) { /* private browsing or storage disabled */ }
+
+  const body = { action, reviewer };
+  if (commentInput && commentInput.value.trim()) body.comment = commentInput.value.trim();
+  if (action === "modify") body.modified_primary_action = modifiedInput.value.trim();
+
+  const submitButton = document.querySelector(`[data-review-action="${action}"]`);
+  const originalLabel = submitButton ? submitButton.textContent : "";
+  if (submitButton) { submitButton.disabled = true; submitButton.textContent = "Submitting…"; }
+
+  try {
+    const response = await fetch(`${API_URL}/incidents/${i.id}/review`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(payload.detail || `Request failed (${response.status})`);
+    state.reviewUi.modifying = false;
+    showToast(`Decision recorded: ${action}`);
+    await fetchLive();
+    const updated = state.liveData && state.liveData.incidents.find(inc => inc.id === i.id);
+    if (updated) openDrawer(updated); else closeDrawer();
+  } catch (error) {
+    showToast(error.message || "Could not record the decision");
+    if (submitButton) { submitButton.disabled = false; submitButton.textContent = originalLabel; }
+  }
+}
+
 function openDrawer(i) {
   if (!i) return;
   state.selectedIncident = i;
@@ -430,7 +521,9 @@ function openDrawer(i) {
     <div class="drawer-section"><h3>OBSERVED VS EXPECTED · AFFECTED SEGMENT</h3><div class="conversion-compare"><div><span>Expected</span><strong>${i.expected.toFixed(1)}%</strong></div><span class="compare-arrow">→</span><div class="drop-value"><span>Observed</span><strong>${i.actual.toFixed(1)}%</strong></div></div></div>
     <div class="drawer-section"><h3>ECONOMIC IMPACT</h3><div class="metric-grid"><div class="metric-pair"><span>GMV at risk</span><strong>${money(i.risk)}/h</strong></div><div class="metric-pair"><span>Recoverable</span><strong>${i.recovery}</strong></div><div class="metric-pair"><span>Affected attempts</span><strong>${i.attempts.toLocaleString()}</strong></div><div class="metric-pair"><span>Excess declines</span><strong>${i.excess.toLocaleString()}</strong></div></div></div>
     <div class="drawer-section"><h3>DIAGNOSIS CONFIDENCE</h3><div class="confidence-head"><span>${i.root}</span><strong>${i.confidence}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.confidence < 60 ? "warning" : ""}" style="width:${i.confidence}%"></div></div><div class="attribution"><div class="attribution-label"><span>Conversion loss explained</span><strong>${i.attribution}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.attribution < 60 ? "warning" : ""}" style="width:${i.attribution}%"></div></div></div></div>
-    <div class="drawer-actions"><button class="drawer-action">Export incident</button><button class="drawer-action primary">Open investigation</button></div>`;
+    <div class="drawer-section" id="humanDecisionSection"></div>`;
+  state.reviewUi = { modifying: false };
+  renderHumanDecision(i);
   document.getElementById("drawerBackdrop").hidden = false;
   document.getElementById("detailDrawer").classList.add("is-open");
   document.getElementById("detailDrawer").setAttribute("aria-hidden","false");

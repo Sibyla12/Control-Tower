@@ -180,6 +180,9 @@ def load_incidents() -> pd.DataFrame:
     for column, default in optional_columns.items():
         if column not in dataframe.columns:
             dataframe[column] = default
+        # An all-empty column is read back as float64 NaN, which then
+        # rejects string assignment later (e.g. setting executed_at).
+        dataframe[column] = dataframe[column].astype(object)
 
     return dataframe
 
