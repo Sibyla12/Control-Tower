@@ -24,6 +24,9 @@ function buildRootLabel(apiIncident) {
   if (apiIncident.root_cause_type === "issuing_bank") {
     return `${apiIncident.country} › ${apiIncident.merchant} › ${apiIncident.issuing_bank}`;
   }
+  if (apiIncident.root_cause_type === "decline_code") {
+    return `${apiIncident.country} › ${apiIncident.dominant_decline_code}`;
+  }
   return `${apiIncident.country} › unresolved`;
 }
 
@@ -44,6 +47,14 @@ function buildDiagnosticTree(apiIncident) {
       }]
     }] };
   }
+  if (apiIncident.root_cause_type === "decline_code") {
+    return { label: apiIncident.country, children: [{
+      label: apiIncident.dominant_decline_code, state: "root", children: [
+        { label: `Banks: ${pipeToText(apiIncident.affected_banks, "multiple")}`, state: "anomaly" },
+        { label: `Merchants: ${pipeToText(apiIncident.affected_merchants, "multiple")}`, state: "anomaly" }
+      ]
+    }] };
+  }
   return null;
 }
 
@@ -62,6 +73,9 @@ function buildEvidence(apiIncident) {
   }
   if (apiIncident.root_cause_type === "issuing_bank") {
     evidence[1] = `The failure is concentrated in ${apiIncident.issuing_bank}-issued traffic for ${apiIncident.merchant}.`;
+  }
+  if (apiIncident.root_cause_type === "decline_code") {
+    evidence[1] = `${apiIncident.dominant_decline_code} spans ${pipeToText(apiIncident.affected_banks, "multiple banks")} and ${pipeToText(apiIncident.affected_merchants, "multiple merchants")} — no single provider or bank explains it alone.`;
   }
   return evidence;
 }
@@ -87,7 +101,9 @@ function mapApiIncident(rawApiIncident) {
     title: apiIncident.incident_title,
     subtitle: apiIncident.root_cause_type === "provider"
       ? "Provider issue across multiple merchants"
-      : `Issuer outage affecting ${apiIncident.merchant || "affected merchant"}`,
+      : apiIncident.root_cause_type === "decline_code"
+        ? `${apiIncident.dominant_decline_code} spike, root cause not yet isolated`
+        : `Issuer outage affecting ${apiIncident.merchant || "affected merchant"}`,
     expected,
     actual,
     confidence: Math.round(apiIncident.confidence_score * 100),
@@ -138,6 +154,32 @@ async function loadDashboard() {
   return response.json();
 }
 
+function mapUnresolvedCandidate(raw) {
+  const candidate = { ...raw };
+  for (const key of Object.keys(candidate)) candidate[key] = humanizeMerchant(candidate[key]);
+  const suspects = [candidate.provider, candidate.issuing_bank, candidate.merchant, candidate.payment_method]
+    .filter(Boolean)
+    .map(value => pipeToText(value, value));
+  return {
+    id: candidate.incident_id,
+    country: candidate.country,
+    incidentType: candidate.incident_type,
+    declineCode: candidate.dominant_decline_code,
+    confidence: Math.round(candidate.confidence_score * 100),
+    confidenceLevel: candidate.confidence_level,
+    started: formatStarted(candidate.start_time),
+    dropPoints: candidate.approval_rate_drop * 100,
+    suspects: suspects.length ? suspects.join(" · ") : "not isolated to one dimension"
+  };
+}
+
+async function loadUnresolvedCandidates() {
+  const response = await fetch(`${API_URL}/unresolved-candidates`);
+  if (!response.ok) throw new Error(`Control Tower API returned ${response.status}`);
+  const payload = await response.json();
+  return payload.candidates.map(mapUnresolvedCandidate);
+}
+
 function pickTimeLabels(history) {
   if (!history.length) return [];
   const lastIndex = history.length - 1;
@@ -160,7 +202,7 @@ function findMarkerIndex(history, liveIncidents) {
   return bestIndex;
 }
 
-function buildLiveScenario(dashboard, liveIncidents) {
+function buildLiveScenario(dashboard, liveIncidents, unresolvedCandidates) {
   const globalMetrics = dashboard.global_metrics;
   const countries = {};
   Object.entries(dashboard.countries).forEach(([code, country]) => {
@@ -186,6 +228,7 @@ function buildLiveScenario(dashboard, liveIncidents) {
     chart, expectedChart,
     timeLabels: pickTimeLabels(history),
     incidents: liveIncidents,
+    unresolvedCandidates,
     countries,
     monitoredTraffic: dashboard.monitored_traffic,
     lastUpdated: dashboard.last_updated,
@@ -198,7 +241,7 @@ function connectingScenario() {
     tone: "healthy", pill: "CONNECTING…", title: "Connecting to the live payment network",
     description: "Fetching current incidents and conversion data from Control Tower.",
     conversion: 0, expected: 0, chart: [], expectedChart: [], timeLabels: [],
-    incidents: [], countries: { MX: ["healthy", 0], CO: ["healthy", 0], BR: ["healthy", 0] },
+    incidents: [], unresolvedCandidates: [], countries: { MX: ["healthy", 0], CO: ["healthy", 0], BR: ["healthy", 0] },
     monitoredTraffic: { attempts_total: 0, merchants: 0, providers: 0 }, marker: undefined
   };
 }
@@ -208,7 +251,7 @@ function liveErrorScenario(message) {
     tone: "warning", pill: "LIVE DATA UNAVAILABLE", title: "Could not reach the Control Tower API",
     description: message,
     conversion: 0, expected: 0, chart: [], expectedChart: [], timeLabels: [],
-    incidents: [], countries: { MX: ["healthy", 0], CO: ["healthy", 0], BR: ["healthy", 0] },
+    incidents: [], unresolvedCandidates: [], countries: { MX: ["healthy", 0], CO: ["healthy", 0], BR: ["healthy", 0] },
     monitoredTraffic: { attempts_total: 0, merchants: 0, providers: 0 }, marker: undefined
   };
 }
@@ -226,9 +269,11 @@ function currentView() {
 
 async function fetchLive() {
   try {
-    const [dashboard, liveIncidents] = await Promise.all([loadDashboard(), loadLiveIncidents()]);
+    const [dashboard, liveIncidents, unresolvedCandidates] = await Promise.all([
+      loadDashboard(), loadLiveIncidents(), loadUnresolvedCandidates()
+    ]);
     const hadError = Boolean(state.liveError);
-    state.liveData = buildLiveScenario(dashboard, liveIncidents);
+    state.liveData = buildLiveScenario(dashboard, liveIncidents, unresolvedCandidates);
     state.liveError = null;
     render();
     if (hadError) showToast("Live connection restored");
@@ -277,8 +322,23 @@ function render() {
   renderCountries(s.countries);
   renderMarketRoster(s.countries, s.incidents);
   renderIncidents(s.incidents);
+  renderUnresolved(s.unresolvedCandidates || []);
   renderChart(s.chart, s.expectedChart, s.marker);
   renderAnnunciators(s.incidents);
+}
+
+function renderUnresolved(list) {
+  document.getElementById("unresolvedCount").textContent = `${list.length} candidate${list.length === 1 ? "" : "s"}`;
+  const el = document.getElementById("unresolvedList");
+  if (!list.length) {
+    el.innerHTML = `<div class="unresolved-empty">No open anomalies are waiting on more evidence right now.</div>`;
+    return;
+  }
+  el.innerHTML = list.map(c => `<div class="unresolved-card">
+    <div class="unresolved-top"><span class="unresolved-tag">${c.confidenceLevel} confidence · ${c.confidence}%</span><span class="unresolved-confidence">Since ${c.started}</span></div>
+    <h4 class="unresolved-title">${c.incidentType} suspected in ${c.country} — ${c.declineCode}</h4>
+    <p class="unresolved-note">Approval rate is ${c.dropPoints.toFixed(1)} pp below baseline, concentrated around ${c.suspects}, but the evidence isn't strong enough yet to name a confirmed root cause. Control Tower is continuing to monitor rather than guess.</p>
+  </div>`).join("");
 }
 
 function renderAnnunciators(incidentList) {

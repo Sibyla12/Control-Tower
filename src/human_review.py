@@ -290,9 +290,15 @@ def run_demo_reviews(
 
     append_audit_log(audit)
 
-    p2 = incidents[
+    p2_bank_incidents = incidents[
         incidents["priority"].eq("P2")
-    ].iloc[0]
+        & incidents["root_cause_type"].eq("issuing_bank")
+    ]
+    p2 = (
+        p2_bank_incidents.iloc[0]
+        if not p2_bank_incidents.empty
+        else incidents[incidents["priority"].eq("P2")].iloc[0]
+    )
 
     incidents, audit = apply_review(
         incidents=incidents,

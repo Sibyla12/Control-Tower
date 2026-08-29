@@ -20,6 +20,9 @@ RECOMMENDED_INCIDENTS_PATH = Path(
     "data/incidents_with_recommendations.csv"
 )
 AUDIT_LOG_PATH = Path("data/recommendation_audit_log.csv")
+UNRESOLVED_CANDIDATES_PATH = Path(
+    "data/unresolved_incident_candidates.csv"
+)
 LIVE_SEGMENT_WINDOWS_PATH = Path("data/live_segment_windows.csv")
 BASELINE_BY_SEGMENT_PATH = Path("data/baseline_by_segment.csv")
 NOTIFIED_INCIDENTS_PATH = Path("data/notified_incidents.json")
@@ -35,6 +38,7 @@ ROOT_CAUSE_TO_INCIDENT_TYPE = {
     "issuing_bank": "Issuing Bank Degradation",
     "payment_method": "Payment Method Degradation",
     "merchant": "Merchant-Specific Issue",
+    "decline_code": "Decline Code Spike",
     "unknown": "Unknown Root Cause",
 }
 
@@ -570,6 +574,31 @@ def health():
         "service": "control-tower-api",
         "timestamp": utc_now(),
     }
+
+
+@app.get("/unresolved-candidates")
+def get_unresolved_candidates():
+    if not UNRESOLVED_CANDIDATES_PATH.exists():
+        return {"count": 0, "candidates": []}
+
+    dataframe = pd.read_csv(
+        UNRESOLVED_CANDIDATES_PATH,
+        parse_dates=["start_time", "end_time"],
+        date_format="mixed",
+    )
+    dataframe = dataframe.sort_values(
+        "confidence_score", ascending=False
+    )
+
+    records = []
+    for record in dataframe.to_dict(orient="records"):
+        cleaned = clean_record(record)
+        cleaned["incident_type"] = ROOT_CAUSE_TO_INCIDENT_TYPE.get(
+            str(cleaned.get("root_cause_type")), "Unknown Root Cause"
+        )
+        records.append(cleaned)
+
+    return {"count": len(records), "candidates": records}
 
 
 @app.get("/dashboard")

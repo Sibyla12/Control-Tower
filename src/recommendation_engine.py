@@ -66,6 +66,13 @@ def build_incident_title(
             f"{bank} issuer outage in {country}"
         )
 
+    if root_type == "decline_code":
+        decline_code = clean_value(
+            incident.get("dominant_decline_code")
+        )
+
+        return f"{decline_code} spike in {country}"
+
     return f"Payment degradation in {country}"
 
 
@@ -88,6 +95,10 @@ def build_operations_recommendation(
         incident.get("country")
     )
 
+    decline_code = clean_value(
+        incident.get("dominant_decline_code")
+    )
+
     if root_type == "provider":
         return (
             f"Reduce routing exposure to {provider} in "
@@ -100,6 +111,15 @@ def build_operations_recommendation(
             f"Keep acquiring routes active, isolate traffic "
             f"issued by {bank}, and apply controlled retry "
             f"rules instead of rerouting all traffic."
+        )
+
+    if root_type == "decline_code":
+        return (
+            f"Hold routing changes until the {decline_code} "
+            f"spike in {country} is attributed to a specific "
+            f"provider or bank; it currently spans more than "
+            f"one, so rerouting a single provider would not "
+            f"fix it."
         )
 
     return (
@@ -141,6 +161,15 @@ def build_engineering_recommendation(
             f"in cards issued by {bank}. Check issuer "
             f"response patterns and prevent aggressive "
             f"retries that could duplicate transactions."
+        )
+
+    if root_type == "decline_code":
+        return (
+            f"Identify which provider, bank, merchant, or "
+            f"payment method is generating {decline_code} in "
+            f"the affected country, and investigate the "
+            f"shared dependency behind it rather than any "
+            f"single connector."
         )
 
     return (
@@ -196,6 +225,14 @@ def build_merchant_success_recommendation(
             "merchants that routing mitigation is underway. "
             "Avoid attributing the issue to their checkout "
             "or customer behavior."
+        )
+
+    if root_type == "decline_code":
+        return (
+            "Notify affected merchants that Payments "
+            "Operations is investigating a shared decline "
+            "pattern; it is not specific to their integration "
+            "and does not yet have a single confirmed owner."
         )
 
     if merchant:
@@ -270,6 +307,10 @@ def build_primary_action(
         incident.get("country")
     )
 
+    decline_code = clean_value(
+        incident.get("dominant_decline_code")
+    )
+
     if root_type == "provider":
         return (
             f"Shift eligible {country} traffic away from "
@@ -280,6 +321,13 @@ def build_primary_action(
         return (
             f"Isolate {bank}-issued card failures and "
             f"activate controlled retry guidance."
+        )
+
+    if root_type == "decline_code":
+        return (
+            f"Investigate the {decline_code} spike in "
+            f"{country} across the affected providers, banks "
+            f"and merchants before changing routing."
         )
 
     return (

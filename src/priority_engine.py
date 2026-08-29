@@ -30,6 +30,7 @@ MERCHANT_PRIORITY_SCORE = {
 ROOT_CAUSE_SCOPE_SCORE = {
     "provider": 1.00,
     "payment_method": 0.85,
+    "decline_code": 0.80,
     "issuing_bank": 0.75,
     "merchant": 0.55,
     "unknown": 0.30,

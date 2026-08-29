@@ -231,6 +231,17 @@ main { padding-top: 18px; }
 /* incidents whose priority-tag is amber (P2/caution) get an amber rail instead of red */
 .incident-card:has(.priority-tag.warning) { border-left-color: var(--caution); }
 
+/* ============ UNDER INVESTIGATION (insufficient evidence) ============ */
+.unresolved-panel { margin-top: 10px; }
+.unresolved-list { display: grid; gap: 8px; padding: 14px 18px 18px; max-height: 260px; overflow: auto; }
+.unresolved-empty { padding: 10px 2px; color: var(--text-tertiary); font-size: 11.5px; line-height: 1.6; }
+.unresolved-card { padding: 12px 14px; border: 1px dashed var(--hairline-bright); border-radius: var(--radius-sm); background: var(--panel-sunken); }
+.unresolved-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.unresolved-tag { padding: 3px 6px; border-radius: var(--radius-sm); background: transparent; border: 1px solid var(--text-tertiary); color: var(--text-secondary); font-size: 9px; font-weight: 700; letter-spacing: .05em; font-family: var(--font-mono); text-transform: uppercase; }
+.unresolved-confidence { color: var(--text-tertiary); font-size: 9px; font-family: var(--font-mono); }
+.unresolved-title { margin: 8px 0 3px; font-size: 12px; font-weight: 600; color: var(--text-primary); }
+.unresolved-note { margin: 0; color: var(--text-secondary); font-size: 11px; line-height: 1.55; }
+
 /* ============ CHART ============ */
 .chart-panel { margin-top: 10px; }
 .chart-heading { min-height: 64px; }
