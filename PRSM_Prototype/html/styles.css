@@ -150,6 +150,7 @@ main { padding-top: 18px; }
 .kpi-foot strong { color: var(--text-secondary); font-weight: 600; }
 
 /* ============ OPERATIONS GRID ============ */
+.executive-panel { margin-top: 10px; }
 .operations-grid { display: grid; grid-template-columns: minmax(320px, .55fr) minmax(460px, 1fr); gap: 10px; margin-top: 10px; align-items: start; }
 .panel { border-radius: var(--radius); overflow: hidden; }
 .panel-heading { justify-content: space-between; min-height: 68px; padding: 15px 18px; border-bottom: 1px solid var(--hairline); }

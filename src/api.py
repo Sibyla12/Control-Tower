@@ -29,6 +29,9 @@ NOTIFIED_INCIDENTS_PATH = Path("data/notified_incidents.json")
 INCIDENT_TAXONOMY_PATH = Path("data/incident_taxonomy.csv")
 OPERATIONAL_PLAYBOOK_PATH = Path("data/operational_playbook.csv")
 PRIORITY_MATRIX_PATH = Path("data/priority_matrix.csv")
+MERCHANT_FINANCIAL_CONFIG_PATH = Path(
+    "data/merchant_financial_config.csv"
+)
 
 NTFY_TOPIC = os.environ.get("NTFY_TOPIC", "")
 NOTIFY_POLL_SECONDS = 30
@@ -134,6 +137,70 @@ def load_lookup_table(path: Path, key_column: str) -> dict[str, dict]:
     }
 
 
+def load_merchant_margin_rates() -> dict[str, float]:
+    if not MERCHANT_FINANCIAL_CONFIG_PATH.exists():
+        return {}
+
+    dataframe = pd.read_csv(MERCHANT_FINANCIAL_CONFIG_PATH)
+    return dict(
+        zip(dataframe["merchant"], dataframe["merchant_margin_rate"])
+    )
+
+
+def resolve_merchant_margin_rate(
+    record: dict,
+    margin_rates: dict[str, float],
+) -> float | None:
+    if not margin_rates:
+        return None
+
+    merchant = record.get("merchant")
+    if merchant and merchant in margin_rates:
+        return margin_rates[merchant]
+
+    affected = record.get("affected_merchants")
+    matched = [
+        margin_rates[name]
+        for name in str(affected or "").split("|")
+        if name in margin_rates
+    ]
+    if matched:
+        return sum(matched) / len(matched)
+
+    # No merchant identified at all - fall back to the network average
+    # so the network-wide rollup still has a number to sum.
+    return sum(margin_rates.values()) / len(margin_rates)
+
+
+def build_economic_impact(
+    record: dict,
+    margin_rates: dict[str, float],
+) -> dict:
+    gmv_at_risk_adjusted = record.get("net_unrecovered_value_usd")
+    platform_revenue_at_risk = record.get("platform_revenue_at_risk_usd")
+    margin_rate = resolve_merchant_margin_rate(record, margin_rates)
+
+    if gmv_at_risk_adjusted is None or margin_rate is None:
+        return {
+            "merchant_margin_rate": margin_rate,
+            "merchant_economic_impact_usd": None,
+            "total_economic_impact_usd": None,
+        }
+
+    merchant_economic_impact = gmv_at_risk_adjusted * margin_rate
+    total_economic_impact = merchant_economic_impact + (
+        platform_revenue_at_risk or 0
+    )
+
+    return {
+        "merchant_margin_rate": round(margin_rate, 4),
+        "merchant_economic_impact_usd": round(
+            merchant_economic_impact, 2
+        ),
+        "total_economic_impact_usd": round(total_economic_impact, 2),
+    }
+
+
 def build_projections(record: dict) -> list[dict]:
     value_per_minute = record.get("value_at_risk_per_minute_usd")
     retry_recovery_rate = record.get("retry_recovery_rate")
@@ -170,6 +237,7 @@ def enrich_with_playbook(record: dict) -> dict:
     taxonomy = load_lookup_table(INCIDENT_TAXONOMY_PATH, "incident_type")
     playbook = load_lookup_table(OPERATIONAL_PLAYBOOK_PATH, "incident_type")
     priority_matrix = load_lookup_table(PRIORITY_MATRIX_PATH, "priority_code")
+    margin_rates = load_merchant_margin_rates()
 
     incident_type = ROOT_CAUSE_TO_INCIDENT_TYPE.get(
         str(record.get("root_cause_type")), "Unknown Root Cause"
@@ -182,6 +250,7 @@ def enrich_with_playbook(record: dict) -> dict:
 
     return {
         **record,
+        **build_economic_impact(record, margin_rates),
         "incident_type": incident_type,
         "root_cause_dimensions": taxonomy_row.get("main_dimensions"),
         "taxonomy_evidence": taxonomy_row.get("evidence"),
@@ -447,6 +516,20 @@ def build_dashboard_payload() -> dict:
         else None
     )
 
+    def summed(column: str) -> float:
+        return (
+            float(active_incidents[column].sum())
+            if column in active_incidents.columns
+            and not active_incidents.empty
+            else 0.0
+        )
+
+    margin_rates = load_merchant_margin_rates()
+    economic_impacts = [
+        build_economic_impact(record, margin_rates)
+        for record in active_incidents.to_dict(orient="records")
+    ]
+
     return {
         "system_status": system_status,
         "last_updated": latest_minute.isoformat(),
@@ -464,6 +547,32 @@ def build_dashboard_payload() -> dict:
             "attempts_total": int(live["attempts"].sum()),
             "merchants": int(live["merchant"].nunique()),
             "providers": int(live["provider"].nunique()),
+        },
+        "executive_summary": {
+            "active_incident_count": int(len(active_incidents)),
+            "total_gmv_at_risk_usd": round(
+                summed("gross_payment_value_at_risk_usd"), 2
+            ),
+            "total_gmv_at_risk_adjusted_usd": round(
+                summed("net_unrecovered_value_usd"), 2
+            ),
+            "total_platform_revenue_at_risk_usd": round(
+                summed("platform_revenue_at_risk_usd"), 2
+            ),
+            "total_merchant_economic_impact_usd": round(
+                sum(
+                    e["merchant_economic_impact_usd"] or 0
+                    for e in economic_impacts
+                ),
+                2,
+            ),
+            "total_economic_impact_usd": round(
+                sum(
+                    e["total_economic_impact_usd"] or 0
+                    for e in economic_impacts
+                ),
+                2,
+            ),
         },
     }
 

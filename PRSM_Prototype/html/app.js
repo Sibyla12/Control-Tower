@@ -233,10 +233,16 @@ function buildLiveScenario(dashboard, liveIncidents, unresolvedCandidates) {
     unresolvedCandidates,
     countries,
     monitoredTraffic: dashboard.monitored_traffic,
+    executiveSummary: dashboard.executive_summary || EMPTY_EXECUTIVE_SUMMARY,
     lastUpdated: dashboard.last_updated,
     marker: findMarkerIndex(history, liveIncidents)
   };
 }
+
+const EMPTY_EXECUTIVE_SUMMARY = {
+  active_incident_count: 0, total_gmv_at_risk_usd: 0, total_gmv_at_risk_adjusted_usd: 0,
+  total_platform_revenue_at_risk_usd: 0, total_merchant_economic_impact_usd: 0, total_economic_impact_usd: 0
+};
 
 function connectingScenario() {
   return {
@@ -244,7 +250,7 @@ function connectingScenario() {
     description: "Fetching current incidents and conversion data from Control Tower.",
     conversion: 0, expected: 0, chart: [], expectedChart: [], timeLabels: [],
     incidents: [], unresolvedCandidates: [], countries: { MX: ["healthy", 0], CO: ["healthy", 0], BR: ["healthy", 0] },
-    monitoredTraffic: { attempts_total: 0, merchants: 0, providers: 0 }, marker: undefined
+    monitoredTraffic: { attempts_total: 0, merchants: 0, providers: 0 }, executiveSummary: EMPTY_EXECUTIVE_SUMMARY, marker: undefined
   };
 }
 
@@ -254,7 +260,7 @@ function liveErrorScenario(message) {
     description: message,
     conversion: 0, expected: 0, chart: [], expectedChart: [], timeLabels: [],
     incidents: [], unresolvedCandidates: [], countries: { MX: ["healthy", 0], CO: ["healthy", 0], BR: ["healthy", 0] },
-    monitoredTraffic: { attempts_total: 0, merchants: 0, providers: 0 }, marker: undefined
+    monitoredTraffic: { attempts_total: 0, merchants: 0, providers: 0 }, executiveSummary: EMPTY_EXECUTIVE_SUMMARY, marker: undefined
   };
 }
 
@@ -329,8 +335,18 @@ function render() {
   renderMarketRoster(s.countries, s.incidents);
   renderIncidents(s.incidents);
   renderUnresolved(s.unresolvedCandidates || []);
+  renderExecutiveSummary(s.executiveSummary || EMPTY_EXECUTIVE_SUMMARY);
   renderChart(s.chart, s.expectedChart, s.marker);
   renderAnnunciators(s.incidents);
+}
+
+function renderExecutiveSummary(summary) {
+  document.getElementById("execTotalImpact").textContent = money(summary.total_economic_impact_usd);
+  document.getElementById("execIncidentCount").textContent = summary.active_incident_count;
+  document.getElementById("execGmvAdjusted").textContent = money(summary.total_gmv_at_risk_adjusted_usd);
+  document.getElementById("execGmvGross").textContent = money(summary.total_gmv_at_risk_usd);
+  document.getElementById("execPlatformRisk").textContent = money(summary.total_platform_revenue_at_risk_usd);
+  document.getElementById("execMerchantImpact").textContent = money(summary.total_merchant_economic_impact_usd);
 }
 
 function renderUnresolved(list) {
