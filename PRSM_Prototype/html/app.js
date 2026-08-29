@@ -139,7 +139,13 @@ function mapApiIncident(rawApiIncident) {
     escalationLevel: apiIncident.escalation_level,
     expectedAttention: apiIncident.expected_attention,
     mttrHours: apiIncident.mttr_assumption_hours,
-    projections: apiIncident.projections || []
+    projections: apiIncident.projections || [],
+    dataQuality: apiIncident.data_quality,
+    baselineSource: apiIncident.baseline_source,
+    baselineReliableShare: apiIncident.baseline_reliable_share,
+    baselineHistoricalAttempts: apiIncident.baseline_historical_attempts,
+    rank: null,
+    cumulativePct: null
   };
 }
 
@@ -204,7 +210,18 @@ function findMarkerIndex(history, liveIncidents) {
   return bestIndex;
 }
 
+function applyRiskRanking(liveIncidents, riskRanking) {
+  const rankById = {};
+  (riskRanking || []).forEach(r => { rankById[r.consolidated_incident_id] = r; });
+  liveIncidents.forEach(incident => {
+    const rank = rankById[incident.id];
+    incident.rank = rank ? rank.rank : null;
+    incident.cumulativePct = rank ? rank.cumulative_pct : null;
+  });
+}
+
 function buildLiveScenario(dashboard, liveIncidents, unresolvedCandidates) {
+  applyRiskRanking(liveIncidents, dashboard.risk_ranking);
   const globalMetrics = dashboard.global_metrics;
   const countries = {};
   Object.entries(dashboard.countries).forEach(([code, country]) => {
@@ -662,12 +679,12 @@ function openDrawer(i) {
     </div>
     <div class="drawer-section"><h3>${rootCauseHeading}</h3>${rootCauseBody}</div>
     <div class="drawer-section"><h3>EVIDENCE</h3><div class="evidence-list">${i.evidence.map(e=>`<div class="evidence-item"><span class="evidence-check">✓</span><span>${e}</span></div>`).join("")}</div></div>
-    <div class="drawer-section"><h3>PRIORITY</h3><span class="severity-label ${i.priority === "P1" ? "" : "warning"}">${i.priorityLabel || `${i.priority} · ${i.severity}`}</span><p class="priority-summary">${money(i.risk)}/h at risk · ${i.confidence}% confidence${i.priorityCriteria ? ` — ${i.priorityCriteria}` : ""}</p></div>
+    <div class="drawer-section"><h3>PRIORITY</h3><span class="severity-label ${i.priority === "P1" ? "" : "warning"}">${i.priorityLabel || `${i.priority} · ${i.severity}`}</span><p class="priority-summary">${money(i.risk)}/h at risk · ${i.confidence}% confidence${i.priorityCriteria ? ` — ${i.priorityCriteria}` : ""}</p>${i.rank ? `<p class="priority-summary">Rank ${i.rank} of the active incidents — explains ${Math.round(i.cumulativePct * 100)}% of total adjusted GMV at risk so far (cumulative).</p>` : ""}</div>
     <div class="drawer-section"><h3>OPERATIONAL PLAYBOOK</h3><div class="metric-grid"><div class="metric-pair"><span>Owner</span><strong>${i.operationalOwner || "—"}</strong></div><div class="metric-pair"><span>Escalation</span><strong>${i.escalationLevel || "—"}</strong></div></div><div class="recommendation"><strong>Recommended action</strong><br>${i.playbookAction || i.recommendation}</div></div>
     <div class="drawer-section"><h3>OBSERVED VS EXPECTED · AFFECTED SEGMENT</h3><div class="conversion-compare"><div><span>Expected</span><strong>${i.expected.toFixed(1)}%</strong></div><span class="compare-arrow">→</span><div class="drop-value"><span>Observed</span><strong>${i.actual.toFixed(1)}%</strong></div></div></div>
     <div class="drawer-section"><h3>ECONOMIC IMPACT</h3><div class="metric-grid"><div class="metric-pair"><span>GMV at risk</span><strong>${money(i.risk)}/h</strong></div><div class="metric-pair"><span>Recoverable</span><strong>${i.recovery}</strong></div><div class="metric-pair"><span>Affected attempts</span><strong>${i.attempts.toLocaleString()}</strong></div><div class="metric-pair"><span>Excess declines</span><strong>${i.excess.toLocaleString()}</strong></div></div></div>
     ${buildProjectionSection(i)}
-    <div class="drawer-section"><h3>DIAGNOSIS CONFIDENCE</h3><div class="confidence-head"><span>${i.root}</span><strong>${i.confidence}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.confidence < 60 ? "warning" : ""}" style="width:${i.confidence}%"></div></div><div class="attribution"><div class="attribution-label"><span>Conversion loss explained</span><strong>${i.attribution}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.attribution < 60 ? "warning" : ""}" style="width:${i.attribution}%"></div></div></div></div>
+    <div class="drawer-section"><h3>DIAGNOSIS CONFIDENCE</h3><div class="confidence-head"><span>${i.root}</span><strong>${i.confidence}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.confidence < 60 ? "warning" : ""}" style="width:${i.confidence}%"></div></div><div class="attribution"><div class="attribution-label"><span>Conversion loss explained</span><strong>${i.attribution}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.attribution < 60 ? "warning" : ""}" style="width:${i.attribution}%"></div></div></div>${i.dataQuality ? `<div class="attribution"><div class="attribution-label"><span>Baseline data quality — ${i.baselineSource}${i.baselineHistoricalAttempts ? ` (${i.baselineHistoricalAttempts.toLocaleString()} historical attempts)` : ""}</span><strong>${i.dataQuality}</strong></div></div>` : ""}</div>
     <div class="drawer-section" id="humanDecisionSection"></div>`;
   state.reviewUi = { modifying: false };
   renderHumanDecision(i);

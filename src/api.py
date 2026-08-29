@@ -32,6 +32,20 @@ PRIORITY_MATRIX_PATH = Path("data/priority_matrix.csv")
 MERCHANT_FINANCIAL_CONFIG_PATH = Path(
     "data/merchant_financial_config.csv"
 )
+DETECTION_LEVEL_BASELINES_PATH = Path(
+    "data/detection_level_baselines.csv"
+)
+
+# Which detection level (and matching incident field) backs each root
+# cause type's historical comparison. decline_code has no dedicated
+# level - it falls back to a live-evidence-volume heuristic instead.
+ROOT_CAUSE_TO_DETECTION_LEVEL = {
+    "provider": ("L1_PROVIDER_COUNTRY", "provider"),
+    "issuing_bank": ("L4_BANK_COUNTRY", "issuing_bank"),
+    "merchant": ("L3_MERCHANT_COUNTRY", "merchant"),
+    "payment_method": ("L2_METHOD_COUNTRY", "payment_method"),
+}
+MIN_RELIABLE_ATTEMPTS = 30
 
 NTFY_TOPIC = os.environ.get("NTFY_TOPIC", "")
 NOTIFY_POLL_SECONDS = 30
@@ -170,6 +184,103 @@ def resolve_merchant_margin_rate(
     # No merchant identified at all - fall back to the network average
     # so the network-wide rollup still has a number to sum.
     return sum(margin_rates.values()) / len(margin_rates)
+
+
+def build_data_quality(record: dict) -> dict:
+    """How much to trust the baseline this diagnosis was compared
+    against - not the diagnosis's own confidence_score. Mirrors the
+    finance workbook's Confidence sheet, but sourced from the real
+    baseline_reliable flags in detection_level_baselines.csv rather
+    than re-derived.
+    """
+    root_cause_type = str(record.get("root_cause_type"))
+    mapping = ROOT_CAUSE_TO_DETECTION_LEVEL.get(root_cause_type)
+
+    if mapping and DETECTION_LEVEL_BASELINES_PATH.exists():
+        detection_level, dimension_column = mapping
+        dimension_value = record.get(dimension_column)
+        country = record.get("country")
+
+        if dimension_value and country:
+            baselines = pd.read_csv(DETECTION_LEVEL_BASELINES_PATH)
+            matches = baselines[
+                baselines["detection_level"].eq(detection_level)
+                & baselines[dimension_column].eq(dimension_value)
+                & baselines["country"].eq(country)
+            ]
+            if not matches.empty:
+                reliable_share = float(matches["baseline_reliable"].mean())
+                if reliable_share >= 0.8:
+                    level = "high"
+                elif reliable_share >= 0.5:
+                    level = "medium"
+                else:
+                    level = "low"
+                return {
+                    "data_quality": level,
+                    "baseline_source": f"{detection_level} historical baseline",
+                    "baseline_reliable_share": round(reliable_share, 2),
+                    "baseline_historical_attempts": int(
+                        matches["historical_attempts"].sum()
+                    ),
+                }
+
+    # No dedicated baseline level for this root cause type (decline_code)
+    # or no matching historical rows - fall back to how much live evidence
+    # backs the diagnosis itself.
+    attempts = record.get("attempts_in_scope") or record.get("attempts") or 0
+    validated_windows = record.get("validated_windows") or 0
+    if attempts >= 500 and validated_windows >= 10:
+        level = "high"
+    elif attempts >= MIN_RELIABLE_ATTEMPTS and validated_windows >= 3:
+        level = "medium"
+    else:
+        level = "low"
+
+    return {
+        "data_quality": level,
+        "baseline_source": (
+            "live validated-window volume "
+            "(no per-segment historical baseline for this dimension)"
+        ),
+        "baseline_reliable_share": None,
+        "baseline_historical_attempts": None,
+    }
+
+
+def build_risk_ranking(incident_records: list[dict]) -> list[dict]:
+    """Pareto-style ranking: which incidents explain what share of the
+    total adjusted GMV at risk, from the finance workbook's Ranking
+    sheet, applied to the live active incidents.
+    """
+    ranked = sorted(
+        incident_records,
+        key=lambda record: record.get("net_unrecovered_value_usd") or 0,
+        reverse=True,
+    )
+    total_risk = sum(
+        record.get("net_unrecovered_value_usd") or 0 for record in ranked
+    )
+
+    rows = []
+    cumulative = 0.0
+    for index, record in enumerate(ranked, start=1):
+        risk = record.get("net_unrecovered_value_usd") or 0
+        cumulative += risk
+        rows.append({
+            "rank": index,
+            "consolidated_incident_id": record.get(
+                "consolidated_incident_id"
+            ),
+            "incident_title": record.get("incident_title"),
+            "gmv_at_risk_adjusted_usd": round(risk, 2),
+            "cumulative_gmv_at_risk_adjusted_usd": round(cumulative, 2),
+            "cumulative_pct": (
+                round(cumulative / total_risk, 4) if total_risk else 0.0
+            ),
+        })
+
+    return rows
 
 
 RISK_CONCENTRATION_DIMENSIONS = {
@@ -316,6 +427,7 @@ def enrich_with_playbook(record: dict) -> dict:
         "expected_attention": matrix_row.get("expected_attention"),
         "mttr_assumption_hours": MTTR_ASSUMPTION_HOURS,
         "projections": build_projections(record),
+        **build_data_quality(record),
     }
 
 
@@ -628,6 +740,9 @@ def build_dashboard_payload() -> dict:
             ),
         },
         "risk_concentration": build_risk_concentration(
+            active_incidents.to_dict(orient="records")
+        ),
+        "risk_ranking": build_risk_ranking(
             active_incidents.to_dict(orient="records")
         ),
     }
