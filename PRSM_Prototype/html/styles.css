@@ -305,6 +305,9 @@ main { padding-top: 18px; }
 .projection-table thead th { color: var(--text-tertiary); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; font-size: 9px; }
 .projection-table tbody td { color: var(--text-primary); font-variant-numeric: tabular-nums; }
 .projection-table tbody tr:last-child td { border-bottom: none; font-weight: 600; }
+.segment-table-wrap { margin-top: 10px; overflow-x: auto; }
+.segment-table { min-width: 620px; margin-top: 0; }
+.segment-table td:first-child { white-space: nowrap; }
 .ai-analysis-output { margin-top: 10px; padding: 14px 15px; border: 1px solid var(--hairline-bright); border-radius: var(--radius-sm); background: var(--panel-sunken); color: var(--text-primary); font-size: 12px; line-height: 1.6; }
 .review-status { color: var(--text-secondary); font-size: 11.5px; margin-bottom: 12px; font-family: var(--font-mono); }
 .review-field { display: block; margin-bottom: 10px; }

@@ -13,6 +13,7 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+from scipy.stats import norm
 
 
 REVIEWED_INCIDENTS_PATH = Path("data/reviewed_incidents.csv")
@@ -23,6 +24,8 @@ AUDIT_LOG_PATH = Path("data/recommendation_audit_log.csv")
 UNRESOLVED_CANDIDATES_PATH = Path(
     "data/unresolved_incident_candidates.csv"
 )
+ROOT_CAUSE_INCIDENTS_PATH = Path("data/root_cause_incidents.csv")
+CLUSTERED_INCIDENTS_PATH = Path("data/clustered_incidents.csv")
 INCIDENT_MEMORY_PATH = Path("data/incident_memory.csv")
 INCIDENT_MEMORY_COLUMNS = [
     "fingerprint",
@@ -470,6 +473,96 @@ def build_incident_memory(record: dict) -> dict:
             prior["recorded_at"].max() if is_repeat else None
         ),
     }
+
+
+def build_segment_breakdown(source_incident_ids: str | None) -> list[dict]:
+    """Per-incident Pareto breakdown of which underlying segment (provider,
+    bank, merchant, method - whichever the cluster actually isolated)
+    contributed how much of the excess declines. Traces
+    consolidated_incidents -> source_incident_ids -> root_cause_incidents
+    -> source_candidates -> clustered_incidents, the same lineage the
+    pipeline itself used to build the incident.
+    """
+    if (
+        not source_incident_ids
+        or not ROOT_CAUSE_INCIDENTS_PATH.exists()
+        or not CLUSTERED_INCIDENTS_PATH.exists()
+    ):
+        return []
+
+    root_cause = pd.read_csv(ROOT_CAUSE_INCIDENTS_PATH)
+    clustered = pd.read_csv(CLUSTERED_INCIDENTS_PATH)
+
+    incident_ids = [
+        value for value in str(source_incident_ids).split("|") if value
+    ]
+    matching_root_causes = root_cause[
+        root_cause["incident_id"].isin(incident_ids)
+    ]
+
+    candidate_ids: list[str] = []
+    for candidates in matching_root_causes["source_candidates"].dropna():
+        candidate_ids.extend(str(candidates).split("|"))
+
+    segments = clustered[
+        clustered["incident_candidate_id"].isin(candidate_ids)
+    ].copy()
+    if segments.empty:
+        return []
+
+    def label_segment(row: pd.Series) -> str:
+        parts = [
+            row.get("provider"),
+            row.get("issuing_bank"),
+            row.get("merchant"),
+            row.get("payment_method"),
+        ]
+        labeled = [str(part) for part in parts if pd.notna(part) and str(part)]
+        if labeled:
+            return " · ".join(labeled)
+
+        # Every specific dimension was null (a coarse detection level) -
+        # fall back to something identifying rather than a blank row.
+        fallback = [row.get("detection_level"), row.get("country")]
+        labeled_fallback = [
+            str(part) for part in fallback if pd.notna(part) and str(part)
+        ]
+        return " · ".join(labeled_fallback) or "Unlabeled segment"
+
+    segments["segment"] = segments.apply(label_segment, axis=1)
+    segments["expected_declines"] = segments["attempts"] * (
+        1 - segments["expected_approval_rate"]
+    )
+    segments["actual_declines"] = segments["attempts"] - segments["approvals"]
+    segments["excess_declines"] = (
+        segments["actual_declines"] - segments["expected_declines"]
+    ).clip(lower=0)
+    segments["confidence"] = segments["maximum_z_score"].apply(
+        lambda z: float(1 - norm.sf(z)) if pd.notna(z) else None
+    )
+
+    total_excess = segments["excess_declines"].sum()
+    segments["contribution_pct"] = (
+        segments["excess_declines"] / total_excess if total_excess else 0.0
+    )
+    segments = segments.sort_values("excess_declines", ascending=False)
+    segments["cumulative_pct"] = segments["contribution_pct"].cumsum()
+
+    rows = []
+    for _, row in segments.iterrows():
+        confidence = row["confidence"]
+        rows.append({
+            "segment": row["segment"],
+            "expected_declines": round(float(row["expected_declines"]), 2),
+            "actual_declines": int(row["actual_declines"]),
+            "excess_declines": round(float(row["excess_declines"]), 2),
+            "contribution_pct": round(float(row["contribution_pct"]), 4),
+            "cumulative_pct": round(float(row["cumulative_pct"]), 4),
+            "attempts_in_scope": int(row["attempts"]),
+            "confidence": round(confidence, 4) if confidence is not None else None,
+        })
+
+    return rows
 
 
 def enrich_with_playbook(record: dict) -> dict:
@@ -1040,6 +1133,22 @@ def get_incident(incident_id: str):
         raise HTTPException(status_code=404, detail="Incident not found.")
 
     return enrich_with_playbook(clean_record(matches.iloc[0].to_dict()))
+
+
+@app.get("/incidents/{incident_id}/segments")
+def get_incident_segments(incident_id: str):
+    dataframe = load_incidents()
+    matches = dataframe[
+        dataframe["consolidated_incident_id"].eq(incident_id)
+    ]
+
+    if matches.empty:
+        raise HTTPException(status_code=404, detail="Incident not found.")
+
+    record = clean_record(matches.iloc[0].to_dict())
+    segments = build_segment_breakdown(record.get("source_incident_ids"))
+
+    return {"consolidated_incident_id": incident_id, "segments": segments}
 
 
 @app.post("/incidents/{incident_id}/analysis")

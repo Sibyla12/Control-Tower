@@ -683,6 +683,41 @@ function buildRepeatBanner(i) {
   </div>`;
 }
 
+function renderSegmentBreakdown(segments) {
+  const el = document.getElementById("segmentBreakdown");
+  if (!el) return;
+  if (!segments || !segments.length) {
+    el.innerHTML = `<p class="priority-summary">No underlying segment breakdown available for this incident.</p>`;
+    return;
+  }
+  const rows = segments.map(s => `<tr>
+    <td>${humanizeMerchant(s.segment)}</td>
+    <td>${s.attempts_in_scope.toLocaleString()}</td>
+    <td>${s.expected_declines.toFixed(1)}</td>
+    <td>${s.actual_declines.toLocaleString()}</td>
+    <td>${s.excess_declines.toFixed(1)}</td>
+    <td>${(s.contribution_pct * 100).toFixed(1)}%</td>
+    <td>${(s.cumulative_pct * 100).toFixed(1)}%</td>
+    <td>${s.confidence !== null && s.confidence !== undefined ? (s.confidence * 100).toFixed(1) + "%" : "—"}</td>
+  </tr>`).join("");
+  el.innerHTML = `<div class="segment-table-wrap"><table class="projection-table segment-table">
+    <thead><tr><th>Segment</th><th>Attempts</th><th>Expected</th><th>Actual</th><th>Excess</th><th>Contrib.</th><th>Cumul.</th><th>Confidence</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div>`;
+}
+
+async function loadAndRenderSegments(incidentId) {
+  try {
+    const response = await fetch(`${API_URL}/incidents/${incidentId}/segments`);
+    if (!response.ok) throw new Error(`Request failed (${response.status})`);
+    const payload = await response.json();
+    renderSegmentBreakdown(payload.segments);
+  } catch (error) {
+    const el = document.getElementById("segmentBreakdown");
+    if (el) el.innerHTML = `<p class="priority-summary">Could not load segment breakdown.</p>`;
+  }
+}
+
 function openDrawer(i) {
   if (!i) return;
   state.selectedIncident = i;
@@ -706,11 +741,13 @@ function openDrawer(i) {
     <div class="drawer-section"><h3>ECONOMIC IMPACT</h3><div class="metric-grid"><div class="metric-pair"><span>GMV at risk</span><strong>${money(i.risk)}/h</strong></div><div class="metric-pair"><span>Recoverable</span><strong>${i.recovery}</strong></div><div class="metric-pair"><span>Affected attempts</span><strong>${i.attempts.toLocaleString()}</strong></div><div class="metric-pair"><span>Excess declines</span><strong>${i.excess.toLocaleString()}</strong></div></div></div>
     ${buildProjectionSection(i)}
     <div class="drawer-section"><h3>DIAGNOSIS CONFIDENCE</h3><div class="confidence-head"><span>${i.root}</span><strong>${i.confidence}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.confidence < 60 ? "warning" : ""}" style="width:${i.confidence}%"></div></div><div class="attribution"><div class="attribution-label"><span>Conversion loss explained</span><strong>${i.attribution}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.attribution < 60 ? "warning" : ""}" style="width:${i.attribution}%"></div></div></div>${i.dataQuality ? `<div class="attribution"><div class="attribution-label"><span>Baseline data quality — ${i.baselineSource}${i.baselineHistoricalAttempts ? ` (${i.baselineHistoricalAttempts.toLocaleString()} historical attempts)` : ""}</span><strong>${i.dataQuality}</strong></div></div>` : ""}</div>
+    <div class="drawer-section"><h3>SEGMENT BREAKDOWN</h3><p class="priority-summary">Which underlying segment explains the excess declines, ranked Pareto-style.</p><div id="segmentBreakdown"><p class="priority-summary">Loading…</p></div></div>
     <div class="drawer-section" id="humanDecisionSection"></div>`;
   state.reviewUi = { modifying: false };
   renderHumanDecision(i);
   const generateButton = document.getElementById("generateAnalysisButton");
   if (generateButton) generateButton.addEventListener("click", () => generateAnalysis(i.id));
+  loadAndRenderSegments(i.id);
   document.getElementById("drawerBackdrop").hidden = false;
   document.getElementById("detailDrawer").classList.add("is-open");
   document.getElementById("detailDrawer").setAttribute("aria-hidden","false");
