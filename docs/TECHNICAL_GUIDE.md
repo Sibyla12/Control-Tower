@@ -301,7 +301,11 @@ Infers cause type from the evidence level:
 - provider levels -> `provider`;
 - bank levels -> `issuing_bank`;
 - merchant level -> `merchant`;
-- method level -> `payment_method`.
+- method level -> `payment_method`;
+- no dedicated detection level resolved a provider/bank/merchant/method (e.g.
+  a decline code spiking across several banks or merchants at once, with no
+  single one attributable) -> `decline_code`, grouped by matching decline
+  code, country, and time overlap.
 
 It merges compatible candidates by dimension, country, and time overlap.
 
@@ -312,8 +316,9 @@ cause type, validated windows, candidate count, conversion drop, z-score, and
 whether the decline code is technical.
 
 Candidates are ordered and strong primary causes are selected sequentially.
-Provider and bank roots require at least 0.70 confidence. A second pass absorbs
-symptoms sharing country, time, and technical decline code.
+Provider, bank, and decline-code roots require at least 0.70 confidence. A
+second pass absorbs symptoms sharing country, time, and technical decline
+code.
 
 Examples:
 
@@ -321,6 +326,10 @@ Examples:
   Adyen + BR root incident.
 - Provider-level `ISSUER_UNAVAILABLE` signals can be symptoms of BBVA +
   Merchant_A + MX because an issuer outage crosses providers.
+- Bradesco- and Nubank-issued `PROCESSOR_ERROR` windows across several
+  merchants in BR form their own `decline_code` root when no single provider
+  or bank explains them, distinct from and additional to the Adyen root
+  above.
 
 Weak candidates or candidates dominated by normal decline codes remain in
 `unresolved_incident_candidates.csv`; the system does not invent a diagnosis.
@@ -385,9 +394,23 @@ It records reviewer, comment, timestamps, action edits, and audit entries.
 
 ### `src/api.py`
 
-Exposes health, dashboard data, incidents, incident detail, assisted analysis,
-audit history, reviews, and test notifications. It enriches incidents with the
-taxonomy, operational playbook, and priority matrix when those tables exist.
+Exposes health, dashboard data, incidents, incident detail, unresolved
+(insufficient-evidence) candidates, assisted analysis, audit history,
+reviews, and test notifications. It enriches incidents with the taxonomy,
+operational playbook, and priority matrix when those tables exist, plus:
+
+- forward-looking cost projections (4h / 24h / 7 days, with an MTTR-based
+  recovery haircut so net impact plateaus once the incident is expected to
+  be fixed);
+- merchant economic impact (GMV at risk adjusted × the merchant's own margin
+  rate) alongside platform revenue at risk;
+- a network-wide executive summary and a risk-concentration breakdown by
+  dimension, both computed over the currently active incidents;
+- a Pareto-style ranking of active incidents by adjusted GMV at risk;
+- a baseline data-quality signal per incident, sourced from the real
+  `baseline_reliable` flags in `detection_level_baselines.csv` for the
+  relevant detection level (falling back to a live-evidence-volume heuristic
+  for `decline_code`, which has no dedicated level).
 
 OpenAI (`gpt-4o`) can generate a short narrative from structured incident
 JSON. This layer does not replace statistical detection or decide priority.
@@ -412,9 +435,19 @@ and is not the primary FastAPI-connected frontend.
 
 ## 13. Execution order
 
-Rebuild the demo from the existing live transaction file:
+`src/run_pipeline.py` runs every stage below in order as a single command,
+including `multisegment_aggregator.py` (required for `/dashboard`, which the
+detection chain alone does not regenerate):
 
 ```bash
+python src/run_pipeline.py
+```
+
+Equivalent to running each stage by hand, from the existing live transaction
+file:
+
+```bash
+python src/multisegment_aggregator.py
 python src/detection_aggregator.py
 python src/adaptive_windows.py
 python src/anomaly_scanner.py
@@ -428,7 +461,22 @@ python src/recommendation_engine.py
 python src/human_review.py
 ```
 
-Regenerate live traffic first when needed:
+To inject a judge-specified, unrehearsed incident during a live demo (any
+combination of merchant/provider/country/method/issuing bank, all optional
+wildcards), append matching transactions first, then run the pipeline:
+
+```bash
+python src/inject_live_incident.py \
+  --provider Stripe --country CO --decline-code SUSPECTED_FRAUD \
+  --approval-rate 0.35 --minutes 5
+python src/run_pipeline.py
+```
+
+The API re-reads every CSV on each request, so `/dashboard` and `/incidents`
+reflect the new data on their next poll with no restart needed.
+
+Regenerate live traffic from scratch when needed (this replaces
+`transactions_live_multisegment.csv`, discarding any injected incidents):
 
 ```bash
 python src/live_simulator.py

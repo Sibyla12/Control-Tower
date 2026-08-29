@@ -10,14 +10,25 @@ three merchants, three providers, local payment methods, and issuing banks.
 ## Capabilities
 
 - A synthetic 60-day history with 500,000 transactions.
-- Multi-segment live traffic with controlled incident injection.
+- Multi-segment live traffic with controlled incident injection, plus a live
+  injector (`src/inject_live_incident.py`) for judge-specified, unrehearsed
+  incidents during a demo.
 - Historical baselines aligned with every live detection level.
 - Adaptive one-minute and five-minute windows.
 - Statistical detection with FDR correction and temporal persistence.
-- Consolidation of symptoms into provider or issuing-bank root causes.
-- Financial impact normalized to USD.
+- Consolidation of symptoms into provider, issuing-bank, or decline-code root
+  causes, backed by a taxonomy, operational playbook, and priority matrix.
+- Financial impact normalized to USD, with forward-looking cost projections,
+  a network-wide executive summary, risk concentration by dimension, and a
+  Pareto ranking across active incidents.
+- A baseline data-quality signal distinguishing diagnostic confidence from
+  how much historical evidence backs the comparison.
 - Explainable P1–P4 prioritization with operational guardrails.
-- Team-specific recommendations and human approval with an audit trail.
+- An "under investigation" view for anomalies without enough evidence to
+  confirm a root cause, instead of forcing a guess.
+- Team-specific recommendations, AI-assisted narrative analysis (OpenAI), and
+  human approval with an audit trail.
+- Phone push notifications (ntfy) on new incidents.
 - A FastAPI backend and an HTML dashboard connected to the API.
 
 ## Repository structure
@@ -60,6 +71,7 @@ Available routes:
 - `GET /dashboard`
 - `GET /incidents`
 - `GET /incidents/{incident_id}`
+- `GET /unresolved-candidates`
 - `POST /incidents/{incident_id}/analysis`
 - `GET /audit-log`
 - `POST /incidents/{incident_id}/review`
@@ -81,14 +93,15 @@ the `API_URL` constant in `app.js`. It always shows live data; if the API is
 unavailable, the status strip shows "LIVE DATA UNAVAILABLE" instead of
 substituting demo data.
 
-Do not open `index.html` directly. Start a static server instead:
+Backend CORS is wide open (`allow_origins=["*"]`), so `index.html` can be
+opened directly from disk or served from a static server — either works:
 
 ```bash
 cd PRSM_Prototype/html
 python -m http.server 5500
 ```
 
-Then open `http://localhost:5500`.
+Then open `http://localhost:5500`, or just double-click `index.html`.
 
 ## Analytics pipeline
 
