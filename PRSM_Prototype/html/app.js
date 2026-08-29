@@ -137,7 +137,9 @@ function mapApiIncident(rawApiIncident) {
     priorityCriteria: apiIncident.priority_criteria,
     systemResponse: apiIncident.system_response,
     escalationLevel: apiIncident.escalation_level,
-    expectedAttention: apiIncident.expected_attention
+    expectedAttention: apiIncident.expected_attention,
+    mttrHours: apiIncident.mttr_assumption_hours,
+    projections: apiIncident.projections || []
   };
 }
 
@@ -258,7 +260,11 @@ function liveErrorScenario(message) {
 
 const state = { selectedIncident: null, liveData: null, liveError: null, liveTimer: null, reviewUi: { modifying: false } };
 
-function money(value) { return value >= 1000 ? `$${(value/1000).toFixed(1)}K` : `$${Math.round(value)}`; }
+function money(value) {
+  if (value >= 1000000) return `$${(value / 1000000).toFixed(1)}M`;
+  if (value >= 1000) return `$${(value / 1000).toFixed(1)}K`;
+  return `$${Math.round(value)}`;
+}
 function formatCount(value) { return value >= 1000 ? `${(value/1000).toFixed(1)}K` : `${Math.round(value)}`; }
 
 function currentView() {
@@ -581,6 +587,29 @@ async function generateAnalysis(incidentId) {
   }
 }
 
+function horizonLabel(hours) {
+  if (hours < 24) return `Next ${hours}h`;
+  const days = Math.round(hours / 24);
+  return days === 1 ? "Next 24h" : `Next ${days} days`;
+}
+
+function buildProjectionSection(i) {
+  if (!i.projections || !i.projections.length) return "";
+  const headerCells = i.projections.map(p => `<th>${horizonLabel(p.horizon_hours)}</th>`).join("");
+  const atRiskCells = i.projections.map(p => `<td>${money(p.projected_gmv_at_risk_adjusted_usd)}</td>`).join("");
+  const netCells = i.projections.map(p => `<td>${money(p.projected_net_impact_usd)}</td>`).join("");
+  return `<div class="drawer-section"><h3>PROJECTED IMPACT IF UNRESOLVED</h3>
+    <p class="priority-summary">Assumes a ${i.mttrHours}h average time to resolve — net impact plateaus once the incident is expected to be fixed rather than growing forever.</p>
+    <table class="projection-table">
+      <thead><tr><th></th>${headerCells}</tr></thead>
+      <tbody>
+        <tr><td>At risk</td>${atRiskCells}</tr>
+        <tr><td>Net impact</td>${netCells}</tr>
+      </tbody>
+    </table>
+  </div>`;
+}
+
 function openDrawer(i) {
   if (!i) return;
   state.selectedIncident = i;
@@ -601,6 +630,7 @@ function openDrawer(i) {
     <div class="drawer-section"><h3>OPERATIONAL PLAYBOOK</h3><div class="metric-grid"><div class="metric-pair"><span>Owner</span><strong>${i.operationalOwner || "—"}</strong></div><div class="metric-pair"><span>Escalation</span><strong>${i.escalationLevel || "—"}</strong></div></div><div class="recommendation"><strong>Recommended action</strong><br>${i.playbookAction || i.recommendation}</div></div>
     <div class="drawer-section"><h3>OBSERVED VS EXPECTED · AFFECTED SEGMENT</h3><div class="conversion-compare"><div><span>Expected</span><strong>${i.expected.toFixed(1)}%</strong></div><span class="compare-arrow">→</span><div class="drop-value"><span>Observed</span><strong>${i.actual.toFixed(1)}%</strong></div></div></div>
     <div class="drawer-section"><h3>ECONOMIC IMPACT</h3><div class="metric-grid"><div class="metric-pair"><span>GMV at risk</span><strong>${money(i.risk)}/h</strong></div><div class="metric-pair"><span>Recoverable</span><strong>${i.recovery}</strong></div><div class="metric-pair"><span>Affected attempts</span><strong>${i.attempts.toLocaleString()}</strong></div><div class="metric-pair"><span>Excess declines</span><strong>${i.excess.toLocaleString()}</strong></div></div></div>
+    ${buildProjectionSection(i)}
     <div class="drawer-section"><h3>DIAGNOSIS CONFIDENCE</h3><div class="confidence-head"><span>${i.root}</span><strong>${i.confidence}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.confidence < 60 ? "warning" : ""}" style="width:${i.confidence}%"></div></div><div class="attribution"><div class="attribution-label"><span>Conversion loss explained</span><strong>${i.attribution}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.attribution < 60 ? "warning" : ""}" style="width:${i.attribution}%"></div></div></div></div>
     <div class="drawer-section" id="humanDecisionSection"></div>`;
   state.reviewUi = { modifying: false };

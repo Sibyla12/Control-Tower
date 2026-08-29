@@ -47,6 +47,12 @@ PLAYBOOK_INCIDENT_TYPE_ALIASES = {
     "Unknown Root Cause": "Unknown / Insufficient Evidence",
 }
 
+# Forward-looking cost projection, methodology from the finance workbook:
+# exposure keeps accruing linearly at the current rate, then gets a
+# mean-time-to-resolve haircut once the horizon passes the MTTR assumption.
+PROJECTION_HORIZONS_HOURS = [4, 24, 168]
+MTTR_ASSUMPTION_HOURS = 6
+
 MONITORED_COUNTRIES = ["MX", "CO", "BR"]
 CONVERSION_HISTORY_MINUTES = 30
 
@@ -128,6 +134,38 @@ def load_lookup_table(path: Path, key_column: str) -> dict[str, dict]:
     }
 
 
+def build_projections(record: dict) -> list[dict]:
+    value_per_minute = record.get("value_at_risk_per_minute_usd")
+    retry_recovery_rate = record.get("retry_recovery_rate")
+
+    if value_per_minute is None or retry_recovery_rate is None:
+        return []
+
+    projections = []
+
+    for horizon_hours in PROJECTION_HORIZONS_HOURS:
+        gross_at_risk = value_per_minute * 60 * horizon_hours
+        adjusted_at_risk = gross_at_risk * (1 - retry_recovery_rate)
+        # Fraction of the horizon assumed to fall after the incident is
+        # fixed (per the MTTR assumption); clamped at 0 for horizons
+        # shorter than the MTTR, since it wouldn't be fixed within them yet.
+        recovery_factor = max(
+            0.0,
+            (horizon_hours - MTTR_ASSUMPTION_HOURS) / horizon_hours,
+        )
+        net_impact = adjusted_at_risk * (1 - recovery_factor)
+
+        projections.append({
+            "horizon_hours": horizon_hours,
+            "projected_gmv_at_risk_usd": round(gross_at_risk, 2),
+            "projected_gmv_at_risk_adjusted_usd": round(adjusted_at_risk, 2),
+            "recovery_factor": round(recovery_factor, 4),
+            "projected_net_impact_usd": round(net_impact, 2),
+        })
+
+    return projections
+
+
 def enrich_with_playbook(record: dict) -> dict:
     taxonomy = load_lookup_table(INCIDENT_TAXONOMY_PATH, "incident_type")
     playbook = load_lookup_table(OPERATIONAL_PLAYBOOK_PATH, "incident_type")
@@ -154,6 +192,8 @@ def enrich_with_playbook(record: dict) -> dict:
         "system_response": matrix_row.get("system_response"),
         "escalation_level": matrix_row.get("escalation"),
         "expected_attention": matrix_row.get("expected_attention"),
+        "mttr_assumption_hours": MTTR_ASSUMPTION_HOURS,
+        "projections": build_projections(record),
     }
 
 
