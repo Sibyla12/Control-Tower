@@ -1,42 +1,42 @@
 # Control Tower
 
-Plataforma de inteligencia operativa para pagos que detecta anomalías de
-conversión, valida su persistencia, diagnostica la causa raíz, estima el impacto
-financiero y propone acciones sujetas a revisión humana.
+A payment operations intelligence platform that detects conversion anomalies,
+validates their persistence, diagnoses root causes, estimates financial impact,
+and proposes actions subject to human review.
 
-La demo monitorea tráfico sintético de México, Colombia y Brasil, con tres
-merchants, tres proveedores, métodos de pago locales y bancos emisores.
+The demo monitors synthetic traffic from Mexico, Colombia, and Brazil across
+three merchants, three providers, local payment methods, and issuing banks.
 
-## Capacidades
+## Capabilities
 
-- Histórico sintético de 60 días y 500,000 transacciones.
-- Tráfico live multisegmento con incidentes controlados.
-- Baselines equivalentes a cada nivel de detección.
-- Ventanas adaptativas de uno y cinco minutos.
-- Detección estadística con corrección FDR y persistencia temporal.
-- Consolidación de síntomas en causas raíz de provider o issuing bank.
-- Impacto financiero normalizado a USD.
-- Priorización P1–P4 con guardrails operativos explicables.
-- Recomendaciones por área y flujo de aprobación humana con auditoría.
-- API FastAPI y dashboard HTML conectado al backend.
+- A synthetic 60-day history with 500,000 transactions.
+- Multi-segment live traffic with controlled incident injection.
+- Historical baselines aligned with every live detection level.
+- Adaptive one-minute and five-minute windows.
+- Statistical detection with FDR correction and temporal persistence.
+- Consolidation of symptoms into provider or issuing-bank root causes.
+- Financial impact normalized to USD.
+- Explainable P1–P4 prioritization with operational guardrails.
+- Team-specific recommendations and human approval with an audit trail.
+- A FastAPI backend and an HTML dashboard connected to the API.
 
-## Estructura
+## Repository structure
 
 ```text
 Control-Tower/
-├── src/                     # Simulación, detección, diagnóstico y API
-├── data/                    # CSV y JSON sintéticos usados por la demo
-├── docs/                    # Contratos de datos de la UI
+├── src/                     # Simulation, detection, diagnosis, and API
+├── data/                    # Synthetic CSV and JSON demo data
+├── docs/                    # UI contracts and technical documentation
 ├── PRSM_Prototype/
-│   ├── html/                # Dashboard HTML/CSS/JavaScript
-│   └── streamlit/           # Prototipo alternativo en Streamlit
+│   ├── html/                # HTML/CSS/JavaScript dashboard
+│   └── streamlit/           # Alternative Streamlit prototype
 ├── requirements.txt
 └── Procfile
 ```
 
-## Instalación
+## Installation
 
-Requiere Python 3.12 o compatible.
+Python 3.12 or a compatible version is required.
 
 ```bash
 python -m venv .venv
@@ -47,49 +47,53 @@ pip install numpy scipy
 
 ## API
 
-Inicia el backend desde la raíz:
+Start the backend from the repository root:
 
 ```bash
 uvicorn src.api:app --reload --port 8000
 ```
 
-Rutas disponibles:
+Available routes:
 
 - `GET /`
 - `GET /health`
+- `GET /dashboard`
 - `GET /incidents`
 - `GET /incidents/{incident_id}`
+- `POST /incidents/{incident_id}/analysis`
 - `GET /audit-log`
 - `POST /incidents/{incident_id}/review`
+- `GET /notify/test`
 
-La documentación interactiva local queda en
+Interactive local documentation is available at
 `http://127.0.0.1:8000/docs`.
 
-En producción se utiliza el comando del `Procfile`, sin `--reload`:
+Production uses the command in the `Procfile`, without `--reload`:
 
 ```bash
 uvicorn src.api:app --host 0.0.0.0 --port $PORT
 ```
 
-## Dashboard HTML
+## HTML dashboard
 
-El dashboard está en `PRSM_Prototype/html/` y consume la API configurada en
-`API_URL`, dentro de `app.js`. Si la API no está disponible, carga el escenario
-demo como fallback.
+The dashboard lives in `PRSM_Prototype/html/` and consumes the API configured in
+the `API_URL` constant in `app.js`. If the API is unavailable, it loads the
+deterministic demo scenario as a fallback.
 
-No abras `index.html` directamente. Levanta un servidor estático:
+Do not open `index.html` directly. Start a static server instead:
 
 ```bash
 cd PRSM_Prototype/html
 python -m http.server 5500
 ```
 
-Después abre `http://localhost:5500`.
+Then open `http://localhost:5500`.
 
-## Flujo analítico
+## Analytics pipeline
 
-La explicación completa de arquitectura, estadística, falsos positivos y lógica
-de cada módulo está en [docs/TECHNICAL_GUIDE.md](docs/TECHNICAL_GUIDE.md).
+The complete explanation of the architecture, statistics, false-positive
+controls, and every module is available in
+[docs/TECHNICAL_GUIDE.md](docs/TECHNICAL_GUIDE.md).
 
 ```text
 transactions_live_multisegment.csv
@@ -107,29 +111,29 @@ transactions_live_multisegment.csv
   → api.py
 ```
 
-Los artefactos intermedios se guardan en `data/` para que cada etapa sea
-inspeccionable y reproducible durante la demo.
+Intermediate artifacts are written to `data/` so each stage remains inspectable
+and reproducible during the demo.
 
-## Datos y supuestos
+## Data and assumptions
 
-Todos los datos son sintéticos. Los importes, configuraciones financieras,
-probabilidades de recuperación y latencias no representan desempeño real de
-merchants, bancos o proveedores.
+All data is synthetic. Amounts, financial configuration, retry recovery
+probabilities, and latency distributions do not represent the actual performance
+of any merchant, bank, or provider.
 
-Las tasas de cambio son constantes para la simulación:
+Exchange rates are fixed simulation assumptions:
 
-| Moneda | USD por unidad |
+| Currency | USD per unit |
 |---|---:|
 | MXN | 0.055 |
 | COP | 0.00025 |
 | BRL | 0.20 |
 | USD | 1.00 |
 
-No deben interpretarse como tasas de mercado actuales.
+They must not be interpreted as current market rates.
 
-## Principio del producto
+## Product principle
 
-El sistema no solo indica que bajó la conversión. Busca explicar qué falló,
-mostrar la evidencia, cuantificar el costo y recomendar la siguiente acción sin
-ejecutarla automáticamente. Las decisiones operativas permanecen bajo control
-humano y quedan registradas en el audit log.
+The system does more than report a conversion drop. It attempts to explain what
+failed, present supporting evidence, quantify the cost, and recommend the next
+action without executing it automatically. Operational decisions remain under
+human control and are recorded in the audit log.
