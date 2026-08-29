@@ -400,9 +400,10 @@ API reviews persist to `reviewed_incidents.csv` and
 
 ### `PRSM_Prototype/html/app.js`
 
-Loads `/incidents` from the public API, maps the backend contract to the visual
-model, and builds a live scenario weighted by attempts. If the API fails, it
-falls back to deterministic demo scenarios.
+Polls `/dashboard`, `/incidents`, and `/unresolved-candidates` from the public
+API every 20 seconds and maps the backend contract to the visual model. There
+is no demo mode: if the API fails, the status strip shows "LIVE DATA
+UNAVAILABLE" instead of substituting fake data.
 
 ### `PRSM_Prototype/streamlit/`
 

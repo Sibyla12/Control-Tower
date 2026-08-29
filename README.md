@@ -77,8 +77,9 @@ uvicorn src.api:app --host 0.0.0.0 --port $PORT
 ## HTML dashboard
 
 The dashboard lives in `PRSM_Prototype/html/` and consumes the API configured in
-the `API_URL` constant in `app.js`. If the API is unavailable, it loads the
-deterministic demo scenario as a fallback.
+the `API_URL` constant in `app.js`. It always shows live data; if the API is
+unavailable, the status strip shows "LIVE DATA UNAVAILABLE" instead of
+substituting demo data.
 
 Do not open `index.html` directly. Start a static server instead:
 
