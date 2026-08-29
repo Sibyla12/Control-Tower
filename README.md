@@ -114,6 +114,31 @@ transactions_live_multisegment.csv
 Intermediate artifacts are written to `data/` so each stage remains inspectable
 and reproducible during the demo.
 
+## Evaluation metrics
+
+Measured on the reference run (12 minutes of live traffic, two injected
+incidents). Full methodology in
+[docs/TECHNICAL_GUIDE.md](docs/TECHNICAL_GUIDE.md#14-evaluation-metrics-kpis).
+
+| KPI | Result |
+|---|---|
+| Mean Time to Detect (MTTD) | 60 s |
+| Mean Time to Diagnose (MTTDx) | 30 s avg |
+| Root Cause Accuracy | 100% (2/2 injected incidents) |
+| False Alert Rate (reaching the dashboard) | 0% |
+| Precision | 100% (3/3) |
+| Recall | 100% (2/2) |
+| F1 Score | 100% |
+| Payment Volume at Risk | $73,029.60/hour |
+| Affected Transactions | 1,552 |
+| Excess Declines | 257 |
+| Anomaly Confidence | 99.95% avg |
+| Root Cause Confidence | 90.5% avg |
+
+Precision, Recall, and Root Cause Accuracy are measured against only 2
+ground-truth incidents — the demo's entire injected validation set — not a
+production-scale sample.
+
 ## Data and assumptions
 
 All data is synthetic. Amounts, financial configuration, retry recovery

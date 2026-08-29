@@ -440,7 +440,45 @@ python src/hierarchical_baseline.py
 python src/detection_level_baselines.py
 ```
 
-## 14. Demo limitations
+## 14. Evaluation metrics (KPIs)
+
+Measured on the reference run described throughout this document (12 minutes
+of live traffic, two injected incidents: INC-001 Adyen/BR provider and
+INC-002 BBVA/MX issuing bank). Every figure below is computed from the actual
+pipeline output files, not estimated.
+
+| KPI | What it measures | Result |
+|---|---|---|
+| Mean Time to Detect (MTTD) | Time from the anomaly's real start to statistical validation | **60 s** for both INC-001 and INC-002 |
+| Mean Time to Diagnose (MTTDx) | Time from detection to root cause confidence ≥ 70% | **30 s average** (0 s for INC-001, 60 s for INC-002) |
+| Root Cause Accuracy | % of injected incidents diagnosed with the exact correct dimension values | **100%** (2/2: Adyen+BR and BBVA+MX matched exactly) |
+| False Alert Rate | % of alerts that reach the dashboard from normal fluctuation | **0%** of the 3 incidents shown to the operator. Before FDR + persistence, 66/217 (30.4%) of raw confirmed windows were noise; after the full validator, 23/111 (20.7%) of validated *windows* were still noise, but none survived clustering and consolidation into a dashboard incident |
+| Precision | % of surfaced incidents that correspond to a real injected incident | **100%** (3/3) |
+| Recall | % of injected incidents successfully surfaced | **100%** (2/2) |
+| F1 Score | Harmonic mean of precision and recall | **100%** |
+| Payment Volume at Risk | Estimated monetary exposure across active incidents | **$73,029.60/hour** |
+| Affected Transactions | Transactions inside the diagnosed incident scope | **1,552** |
+| Excess Declines | Declines above the expected baseline | **257** |
+| Anomaly Confidence | Statistical confidence that the deviation is real (1 − p-value) | **99.95%** average across validated ground-truth windows |
+| Root Cause Confidence | `confidence_score` of the surfaced incidents | **90.5%** average (100%, 87%, 85%) |
+
+Methodology notes:
+
+- MTTD/MTTDx were computed by replaying `validated_anomalies.csv` minute by
+  minute against `incident_consolidator.py`'s own confidence formula, finding
+  the earliest cutoff where each injected incident's accumulated evidence
+  would have cleared detection and the 0.70 diagnosis threshold.
+- Precision, Recall, and Root Cause Accuracy are measured against **n = 2**
+  ground-truth incidents — the only ones this synthetic demo injects. A 100%
+  score here demonstrates correctness on the available validation set, not a
+  production-scale accuracy claim.
+- A third incident (`decline_code` / PROCESSOR_ERROR spike) is also linked to
+  INC-001's ground truth as a related secondary signal, not a duplicate false
+  positive — it is counted as a true positive above but excluded from the
+  "exact match" Root Cause Accuracy figure since it identifies a different,
+  also-correct facet of the same outage rather than the primary injected rule.
+
+## 15. Demo limitations
 
 - Data and ground truth are synthetic.
 - Exchange rates are fixed and are not market data.
