@@ -200,7 +200,8 @@ main { padding-top: 18px; }
 .market-empty { padding: 4px 2px 2px; color: var(--text-secondary); font-size: 11.5px; line-height: 1.6; }
 .market-incident { padding: 11px 12px; margin-bottom: 8px; border: 1px solid var(--hairline); border-left: 2px solid var(--warning); border-radius: var(--radius-sm); background: var(--panel-sunken); }
 .market-incident.is-caution { border-left-color: var(--caution); }
-.market-incident h5 { margin: 0 0 9px; font-size: 12px; font-weight: 600; }
+.market-incident h5 { margin: 0 0 2px; font-size: 12px; font-weight: 600; }
+.market-segment-note { margin: 0 0 9px; color: var(--text-tertiary); font-size: 9px; text-transform: uppercase; letter-spacing: .06em; font-family: var(--font-mono); }
 .market-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 12px; margin-bottom: 10px; }
 .market-fields div { display: flex; justify-content: space-between; gap: 6px; font-family: var(--font-mono); font-size: 10.5px; color: var(--text-secondary); }
 .market-fields strong { color: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
