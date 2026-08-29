@@ -389,10 +389,11 @@ Exposes health, dashboard data, incidents, incident detail, assisted analysis,
 audit history, reviews, and test notifications. It enriches incidents with the
 taxonomy, operational playbook, and priority matrix when those tables exist.
 
-Anthropic can generate a short narrative from structured incident JSON. This
-layer does not replace statistical detection or decide priority. It requires API
-credentials in environment variables. ntfy notifications are enabled when
-`NTFY_TOPIC` is configured.
+OpenAI (`gpt-4o`) can generate a short narrative from structured incident
+JSON. This layer does not replace statistical detection or decide priority.
+It requires `OPENAI_API_KEY` in the environment; without it, the analysis
+endpoint returns a clean 503 instead of executing. ntfy notifications are
+enabled when `NTFY_TOPIC` is configured.
 
 API reviews persist to `reviewed_incidents.csv` and
 `recommendation_audit_log.csv`.
