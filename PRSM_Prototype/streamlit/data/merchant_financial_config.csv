@@ -1,0 +1,4 @@
+merchant,platform_fee_rate,merchant_margin_rate,retry_recovery_rate,merchant_priority,reporting_currency,monthly_payment_volume
+Merchant_A,0.007,0.25,0.35,high,USD,2500000
+Merchant_B,0.006,0.18,0.28,medium,USD,1200000
+Merchant_C,0.008,0.22,0.4,high,USD,3100000

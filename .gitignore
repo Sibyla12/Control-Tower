@@ -208,6 +208,9 @@ tempCodeRunnerFile.py
 # macOS metadata
 .DS_Store
 
+# Local R session history
+.Rhistory
+
 # Ruff stuff:
 .ruff_cache/
 

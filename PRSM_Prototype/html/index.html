@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="PRSM — Payment Root-Cause Intelligence &amp; Signal Monitoring." />
+  <title>PRSM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-lockup">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div>
+          <div class="brand-name"><strong>PRSM</strong></div>
+          <div class="brand-subtitle">Root-cause intelligence &amp; signal monitoring</div>
+        </div>
+      </div>
+      <div class="signal-rail bracket" aria-label="Signal status">
+        <button class="beacon beacon-caution" id="beaconCaution" type="button" aria-pressed="false" title="Preventive signal — one or more flows drifting from baseline">
+          <span class="beacon-mark"></span>
+          <span class="beacon-text"><span class="beacon-label">Signal caution</span><span class="beacon-count" id="cautionCount">0</span></span>
+        </button>
+        <span class="rail-divider"></span>
+        <button class="beacon beacon-warning" id="beaconWarning" type="button" aria-pressed="false" title="Critical signal — confirmed incident with quantified GMV at risk">
+          <span class="beacon-mark"></span>
+          <span class="beacon-text"><span class="beacon-label">Critical signal</span><span class="beacon-count" id="warningCount">0</span></span>
+        </button>
+      </div>
+      <div class="topbar-meta">
+        <div class="environment"><span class="live-dot"></span> LIVE SIMULATION</div>
+        <div class="clock" id="clock">10:12:16</div>
+        <button class="icon-button" aria-label="Notifications"><span class="notification-dot"></span>⌁</button>
+        <div class="avatar" title="Payment Operations">OP</div>
+      </div>
+    </header>
+
+    <section class="demo-control" aria-label="Demo scenarios">
+      <div class="control-heading">
+        <span class="eyebrow">DEMO CONTROL</span>
+        <span class="control-note">Deterministic scenarios for a reliable live demo</span>
+      </div>
+      <div class="scenario-buttons" id="scenarioButtons">
+        <button data-scenario="normal" class="scenario-button is-active"><span>01</span>Normal</button>
+        <button data-scenario="brazil" class="scenario-button"><span>02</span>Brazil provider failure</button>
+        <button data-scenario="mexico" class="scenario-button"><span>03</span>Mexico bank failure</button>
+        <button data-scenario="both" class="scenario-button"><span>04</span>Both</button>
+        <button data-scenario="random" class="scenario-button"><span>05</span>Random incident</button>
+        <button data-scenario="ambiguous" class="scenario-button"><span>06</span>Ambiguous</button>
+        <button data-scenario="reset" class="scenario-button reset-button" title="Reset demo">↺ Reset</button>
+      </div>
+    </section>
+
+    <main>
+      <section class="status-strip" id="statusStrip" aria-live="polite">
+        <div class="status-copy">
+          <div class="status-pill" id="statusPill">SYSTEM HEALTHY</div>
+          <div>
+            <h1 id="statusTitle">Payment network operating within expected range</h1>
+            <p id="statusDescription">No meaningful deterioration detected across monitored payment flows.</p>
+          </div>
+        </div>
+        <div class="status-meta"><span id="statusTimestamp">Updated just now</span><span class="status-separator"></span><span>6-hour baseline</span></div>
+      </section>
+
+      <section class="kpi-grid" aria-label="Network metrics">
+        <article class="kpi-card primary-kpi">
+          <div class="kpi-label">Network conversion <button class="info" title="Approved payments divided by attempts">i</button></div>
+          <div class="kpi-row"><strong id="conversionValue">85.1%</strong><span class="delta neutral" id="conversionDelta">−0.3 pp</span></div>
+          <div class="kpi-foot"><span>Expected</span><strong id="conversionExpected">85.4%</strong></div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Active incidents</div>
+          <div class="kpi-row"><strong id="incidentCount">0</strong><span class="delta healthy" id="incidentDelta">Quiet</span></div>
+          <div class="kpi-foot"><span>Highest priority</span><strong id="highestPriority">—</strong></div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">GMV at risk</div>
+          <div class="kpi-row"><strong id="riskValue">$0</strong><span class="delta neutral">USD / hour</span></div>
+          <div class="kpi-foot"><span>Confidence adjusted</span><strong id="riskConfidence">$0</strong></div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label">Monitored traffic</div>
+          <div class="kpi-row"><strong>50.0K</strong><span class="delta healthy">100%</span></div>
+          <div class="kpi-foot"><span>Merchants / providers</span><strong>3 / 3</strong></div>
+        </article>
+      </section>
+
+      <section class="operations-grid">
+        <article class="panel map-panel">
+          <div class="panel-heading">
+            <div><span class="eyebrow">GEOGRAPHIC OPERATIONS</span><h2>LATAM payment network</h2></div>
+            <div class="legend"><span><i class="healthy-bg"></i>Healthy</span><span><i class="warning-bg"></i>Investigating</span><span><i class="critical-bg"></i>Incident</span></div>
+          </div>
+          <div class="map-stage" id="mapStage">
+            <canvas class="globe-canvas" id="globeCanvas" aria-hidden="true"></canvas>
+            <div class="map-readout">
+              <div>PROJECTION&nbsp;<span>ORTHOGRAPHIC</span></div>
+              <div>NODES&nbsp;<span>3 / 3 ONLINE</span></div>
+            </div>
+            <button class="country-node mexico" data-country="MX" aria-label="Open Mexico status">
+              <span class="pulse-ring"></span><span class="node-core"></span>
+              <span class="country-label"><b>Mexico</b><small id="mxStatus">HEALTHY</small><em id="mxMetric">83.2% conversion</em></span>
+            </button>
+            <button class="country-node colombia" data-country="CO" aria-label="Open Colombia status">
+              <span class="pulse-ring"></span><span class="node-core"></span>
+              <span class="country-label"><b>Colombia</b><small id="coStatus">HEALTHY</small><em id="coMetric">84.3% conversion</em></span>
+            </button>
+            <button class="country-node brazil" data-country="BR" aria-label="Open Brazil status">
+              <span class="pulse-ring"></span><span class="node-core"></span>
+              <span class="country-label"><b>Brazil</b><small id="brStatus">HEALTHY</small><em id="brMetric">88.0% conversion</em></span>
+            </button>
+            <div class="map-caption">Country health is measured against its own historical baseline—not absolute conversion.</div>
+          </div>
+          <div class="market-panel" id="marketPanel">
+            <div class="market-roster" id="marketRoster"></div>
+            <div class="market-detail" id="marketDetail" hidden></div>
+          </div>
+        </article>
+
+        <article class="panel priority-panel">
+          <div class="panel-heading">
+            <div><span class="eyebrow">INCIDENT PRIORITY</span><h2>What needs attention</h2></div>
+            <span class="sort-label">Sorted by economic impact</span>
+          </div>
+          <div class="incident-list" id="incidentList"></div>
+        </article>
+      </section>
+
+      <section class="panel chart-panel">
+        <div class="panel-heading chart-heading">
+          <div><span class="eyebrow">LIVE PERFORMANCE</span><h2>Conversion vs expected baseline</h2></div>
+          <div class="chart-legend"><span><i class="actual-line"></i>Actual</span><span><i class="expected-line"></i>Expected</span><span class="window-chip">Last 30 minutes</span></div>
+        </div>
+        <div class="chart-wrap">
+          <div class="axis-labels"><span>95%</span><span>85%</span><span>75%</span><span>65%</span><span>55%</span></div>
+          <svg id="conversionChart" viewBox="0 0 1200 250" preserveAspectRatio="none" role="img" aria-label="Actual conversion compared with expected conversion"></svg>
+          <div class="time-labels"><span>09:42</span><span>09:52</span><span>10:02</span><span>Now</span></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+  <aside class="detail-drawer" id="detailDrawer" aria-hidden="true" aria-label="Incident investigation">
+    <div class="drawer-topbar">
+      <div><span class="eyebrow">INCIDENT INVESTIGATION</span><div class="drawer-id" id="drawerId">INC-2048</div></div>
+      <button class="close-button" id="closeDrawer" aria-label="Close incident details">×</button>
+    </div>
+    <div id="drawerContent"></div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="world-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
