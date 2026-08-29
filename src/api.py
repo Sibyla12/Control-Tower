@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+import asyncio
+import json
+import os
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Literal
@@ -17,6 +21,10 @@ RECOMMENDED_INCIDENTS_PATH = Path(
 AUDIT_LOG_PATH = Path("data/recommendation_audit_log.csv")
 LIVE_SEGMENT_WINDOWS_PATH = Path("data/live_segment_windows.csv")
 BASELINE_BY_SEGMENT_PATH = Path("data/baseline_by_segment.csv")
+NOTIFIED_INCIDENTS_PATH = Path("data/notified_incidents.json")
+
+NTFY_TOPIC = os.environ.get("NTFY_TOPIC", "")
+NOTIFY_POLL_SECONDS = 30
 
 MONITORED_COUNTRIES = ["MX", "CO", "BR"]
 CONVERSION_HISTORY_MINUTES = 30
@@ -293,6 +301,103 @@ def build_dashboard_payload() -> dict:
             "providers": int(live["provider"].nunique()),
         },
     }
+
+
+def load_notified_incident_ids() -> set[str]:
+    if not NOTIFIED_INCIDENTS_PATH.exists():
+        return set()
+
+    try:
+        return set(json.loads(NOTIFIED_INCIDENTS_PATH.read_text()))
+    except (json.JSONDecodeError, OSError):
+        return set()
+
+
+def save_notified_incident_ids(incident_ids: set[str]) -> None:
+    NOTIFIED_INCIDENTS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    NOTIFIED_INCIDENTS_PATH.write_text(json.dumps(sorted(incident_ids)))
+
+
+def send_ntfy_notification(incident: dict) -> None:
+    is_p1 = incident.get("priority") == "P1"
+    risk_per_minute = incident.get("value_at_risk_per_minute_usd")
+    risk_text = (
+        f"${risk_per_minute * 60:,.0f}/h at risk"
+        if risk_per_minute is not None
+        else None
+    )
+    message = " · ".join(
+        part for part in [
+            incident.get("incident_title"),
+            risk_text,
+            incident.get("primary_action"),
+        ] if part
+    )
+    payload = {
+        "topic": NTFY_TOPIC,
+        "title": f"{incident.get('priority', 'ALERT')} - Control Tower incident",
+        "message": message,
+        "priority": 5 if is_p1 else 3,
+        "tags": ["rotating_light"] if is_p1 else ["large_orange_diamond"],
+    }
+    request = urllib.request.Request(
+        "https://ntfy.sh/",
+        data=json.dumps(payload).encode("utf-8"),
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    with urllib.request.urlopen(request, timeout=10) as response:
+        response.read()
+
+
+async def notify_new_incidents_loop() -> None:
+    if not NTFY_TOPIC:
+        return
+
+    notified = load_notified_incident_ids()
+
+    while True:
+        try:
+            dataframe = load_incidents()
+            current_ids = set(dataframe["consolidated_incident_id"])
+            new_ids = current_ids - notified
+
+            for incident_id in new_ids:
+                match = dataframe[
+                    dataframe["consolidated_incident_id"].eq(incident_id)
+                ]
+                incident = clean_record(match.iloc[0].to_dict())
+                await asyncio.to_thread(send_ntfy_notification, incident)
+
+            if new_ids:
+                notified |= new_ids
+                save_notified_incident_ids(notified)
+        except Exception as error:
+            print(f"ntfy notification loop error: {error}")
+
+        await asyncio.sleep(NOTIFY_POLL_SECONDS)
+
+
+@app.on_event("startup")
+async def start_notification_loop() -> None:
+    asyncio.create_task(notify_new_incidents_loop())
+
+
+@app.get("/notify/test")
+def send_test_notification():
+    if not NTFY_TOPIC:
+        raise HTTPException(
+            status_code=503,
+            detail="NTFY_TOPIC is not configured on this deployment.",
+        )
+
+    send_ntfy_notification({
+        "priority": "P1",
+        "incident_title": "Control Tower test alert",
+        "value_at_risk_per_minute_usd": 100.0,
+        "primary_action": "This is a test notification — no action needed.",
+    })
+    return {"message": f"Test notification sent to ntfy.sh/{NTFY_TOPIC}."}
 
 
 def load_audit_log() -> pd.DataFrame:
