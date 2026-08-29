@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Literal
 
-import anthropic
+import openai
 import pandas as pd
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -157,7 +157,7 @@ def enrich_with_playbook(record: dict) -> dict:
     }
 
 
-ANALYSIS_MODEL = "claude-opus-5"
+ANALYSIS_MODEL = "gpt-4o"
 ANALYSIS_FIELDS = [
     "consolidated_incident_id",
     "incident_title",
@@ -208,14 +208,14 @@ narrative a busy operator can read in ten seconds.
 - You are explaining the situation, not deciding it. Never tell the operator to \
 approve or reject."""
 
-_anthropic_client: anthropic.Anthropic | None = None
+_openai_client: openai.OpenAI | None = None
 
 
-def get_anthropic_client() -> anthropic.Anthropic:
-    global _anthropic_client
-    if _anthropic_client is None:
-        _anthropic_client = anthropic.Anthropic()
-    return _anthropic_client
+def get_openai_client() -> openai.OpenAI:
+    global _openai_client
+    if _openai_client is None:
+        _openai_client = openai.OpenAI()
+    return _openai_client
 
 
 def load_incidents() -> pd.DataFrame:
@@ -660,21 +660,22 @@ def analyze_incident(incident_id: str):
     grounding = {field: record.get(field) for field in ANALYSIS_FIELDS}
 
     try:
-        client = get_anthropic_client()
-        response = client.messages.create(
+        client = get_openai_client()
+        response = client.chat.completions.create(
             model=ANALYSIS_MODEL,
             max_tokens=500,
-            output_config={"effort": "medium"},
-            system=ANALYSIS_SYSTEM_PROMPT,
-            messages=[{
-                "role": "user",
-                "content": (
-                    "Incident data (JSON):\n"
-                    + json.dumps(grounding, default=str)
-                ),
-            }],
+            messages=[
+                {"role": "system", "content": ANALYSIS_SYSTEM_PROMPT},
+                {
+                    "role": "user",
+                    "content": (
+                        "Incident data (JSON):\n"
+                        + json.dumps(grounding, default=str)
+                    ),
+                },
+            ],
         )
-    except anthropic.APIStatusError as error:
+    except openai.APIStatusError as error:
         raise HTTPException(
             status_code=502,
             detail=f"AI analysis request failed: {error.message}",
@@ -685,9 +686,7 @@ def analyze_incident(incident_id: str):
             detail=f"AI analysis is not configured: {error}",
         ) from error
 
-    analysis_text = "".join(
-        block.text for block in response.content if block.type == "text"
-    ).strip()
+    analysis_text = (response.choices[0].message.content or "").strip()
 
     return {
         "consolidated_incident_id": incident_id,
