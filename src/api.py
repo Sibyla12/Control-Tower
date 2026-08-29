@@ -22,9 +22,25 @@ AUDIT_LOG_PATH = Path("data/recommendation_audit_log.csv")
 LIVE_SEGMENT_WINDOWS_PATH = Path("data/live_segment_windows.csv")
 BASELINE_BY_SEGMENT_PATH = Path("data/baseline_by_segment.csv")
 NOTIFIED_INCIDENTS_PATH = Path("data/notified_incidents.json")
+INCIDENT_TAXONOMY_PATH = Path("data/incident_taxonomy.csv")
+OPERATIONAL_PLAYBOOK_PATH = Path("data/operational_playbook.csv")
+PRIORITY_MATRIX_PATH = Path("data/priority_matrix.csv")
 
 NTFY_TOPIC = os.environ.get("NTFY_TOPIC", "")
 NOTIFY_POLL_SECONDS = 30
+
+ROOT_CAUSE_TO_INCIDENT_TYPE = {
+    "provider": "Provider Degradation",
+    "issuing_bank": "Issuing Bank Degradation",
+    "payment_method": "Payment Method Degradation",
+    "merchant": "Merchant-Specific Issue",
+    "unknown": "Unknown Root Cause",
+}
+
+# The taxonomy and playbook sheets name the no-root-cause case differently.
+PLAYBOOK_INCIDENT_TYPE_ALIASES = {
+    "Unknown Root Cause": "Unknown / Insufficient Evidence",
+}
 
 MONITORED_COUNTRIES = ["MX", "CO", "BR"]
 CONVERSION_HISTORY_MINUTES = 30
@@ -94,6 +110,46 @@ def clean_record(record: dict) -> dict:
             cleaned[key] = value
 
     return cleaned
+
+
+def load_lookup_table(path: Path, key_column: str) -> dict[str, dict]:
+    if not path.exists():
+        return {}
+
+    dataframe = pd.read_csv(path)
+    return {
+        str(row[key_column]): clean_record(row.to_dict())
+        for _, row in dataframe.iterrows()
+    }
+
+
+def enrich_with_playbook(record: dict) -> dict:
+    taxonomy = load_lookup_table(INCIDENT_TAXONOMY_PATH, "incident_type")
+    playbook = load_lookup_table(OPERATIONAL_PLAYBOOK_PATH, "incident_type")
+    priority_matrix = load_lookup_table(PRIORITY_MATRIX_PATH, "priority_code")
+
+    incident_type = ROOT_CAUSE_TO_INCIDENT_TYPE.get(
+        str(record.get("root_cause_type")), "Unknown Root Cause"
+    )
+    taxonomy_row = taxonomy.get(incident_type, {})
+    playbook_row = playbook.get(
+        PLAYBOOK_INCIDENT_TYPE_ALIASES.get(incident_type, incident_type), {}
+    )
+    matrix_row = priority_matrix.get(str(record.get("priority")), {})
+
+    return {
+        **record,
+        "incident_type": incident_type,
+        "root_cause_dimensions": taxonomy_row.get("main_dimensions"),
+        "taxonomy_evidence": taxonomy_row.get("evidence"),
+        "operational_owner": playbook_row.get("owner"),
+        "playbook_action": playbook_row.get("recommended_action"),
+        "priority_label": matrix_row.get("priority"),
+        "priority_criteria": matrix_row.get("criteria"),
+        "system_response": matrix_row.get("system_response"),
+        "escalation_level": matrix_row.get("escalation"),
+        "expected_attention": matrix_row.get("expected_attention"),
+    }
 
 
 def load_incidents() -> pd.DataFrame:
@@ -476,7 +532,7 @@ def get_incidents(
         ascending=False,
     )
     records = [
-        clean_record(record)
+        enrich_with_playbook(clean_record(record))
         for record in dataframe.to_dict(orient="records")
     ]
 
@@ -493,7 +549,7 @@ def get_incident(incident_id: str):
     if matches.empty:
         raise HTTPException(status_code=404, detail="Incident not found.")
 
-    return clean_record(matches.iloc[0].to_dict())
+    return enrich_with_playbook(clean_record(matches.iloc[0].to_dict()))
 
 
 @app.get("/audit-log")
@@ -580,6 +636,6 @@ def review_incident(incident_id: str, request: ReviewRequest):
     updated = dataframe.loc[index].to_dict()
     return {
         "message": "Review applied successfully.",
-        "incident": clean_record(updated),
+        "incident": enrich_with_playbook(clean_record(updated)),
         "audit_entry": clean_record(audit_entry),
     }

@@ -1,0 +1,5 @@
+priority,priority_code,criteria,system_response,escalation,expected_attention
+P1 — Critical,P1,"Very high financial impact, severe conversion drop, high affected volume, high confidence",Immediate alert and top dashboard position,Operations + Relevant Owner + Leadership,Immediate
+P2 — High,P2,"Significant impact and strong evidence, but lower than P1",High-priority alert,Operations + Relevant Owner,High priority
+P3 — Medium,P3,"Moderate impact, localized issue, manageable exposure",Create incident and continue monitoring,Operations,Normal investigation
+P4 — Low,P4,Low financial/operational impact or limited affected volume,Log incident and monitor,Operations / No escalation,Monitor

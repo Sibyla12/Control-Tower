@@ -112,7 +112,16 @@ function mapApiIncident(rawApiIncident) {
     engineeringAction: apiIncident.engineering_action,
     financeAction: apiIncident.finance_action,
     merchantSuccessAction: apiIncident.merchant_success_action,
-    executiveAction: apiIncident.executive_action
+    executiveAction: apiIncident.executive_action,
+    incidentType: apiIncident.incident_type,
+    rootCauseDimensions: apiIncident.root_cause_dimensions,
+    operationalOwner: apiIncident.operational_owner,
+    playbookAction: apiIncident.playbook_action,
+    priorityLabel: apiIncident.priority_label,
+    priorityCriteria: apiIncident.priority_criteria,
+    systemResponse: apiIncident.system_response,
+    escalationLevel: apiIncident.escalation_level,
+    expectedAttention: apiIncident.expected_attention
   };
 }
 
@@ -409,16 +418,18 @@ function openDrawer(i) {
   if (!i) return;
   state.selectedIncident = i;
   document.getElementById("drawerId").textContent = `${i.id} · Started ${i.started}`;
-  const diagnosticPath = i.tree ? `<div class="drawer-section"><h3>DIAGNOSTIC PATH</h3>${renderTree(i.tree)}</div>` : "";
+  const rootCauseHeading = i.incidentType ? `ROOT CAUSE · ${i.incidentType}` : "ROOT CAUSE";
+  const rootCauseBody = i.tree ? renderTree(i.tree) : `<div class="tree-root">${i.root}</div>`;
   document.getElementById("drawerContent").innerHTML = `
     <div class="drawer-title-row"><span class="severity-label ${i.priority === "P1" ? "" : "warning"}">${i.priority} · ${i.severity}</span><h2>${i.title}</h2><p>${i.affected}</p></div>
     <div class="executive-summary"><span class="eyebrow">EXECUTIVE SUMMARY</span><br>${i.executive}</div>
-    ${diagnosticPath}
+    <div class="drawer-section"><h3>${rootCauseHeading}</h3>${rootCauseBody}</div>
+    <div class="drawer-section"><h3>EVIDENCE</h3><div class="evidence-list">${i.evidence.map(e=>`<div class="evidence-item"><span class="evidence-check">✓</span><span>${e}</span></div>`).join("")}</div></div>
+    <div class="drawer-section"><h3>PRIORITY</h3><span class="severity-label ${i.priority === "P1" ? "" : "warning"}">${i.priorityLabel || `${i.priority} · ${i.severity}`}</span><p class="priority-summary">${money(i.risk)}/h at risk · ${i.confidence}% confidence${i.priorityCriteria ? ` — ${i.priorityCriteria}` : ""}</p></div>
+    <div class="drawer-section"><h3>OPERATIONAL PLAYBOOK</h3><div class="metric-grid"><div class="metric-pair"><span>Owner</span><strong>${i.operationalOwner || "—"}</strong></div><div class="metric-pair"><span>Escalation</span><strong>${i.escalationLevel || "—"}</strong></div></div><div class="recommendation"><strong>Recommended action</strong><br>${i.playbookAction || i.recommendation}</div></div>
     <div class="drawer-section"><h3>OBSERVED VS EXPECTED · AFFECTED SEGMENT</h3><div class="conversion-compare"><div><span>Expected</span><strong>${i.expected.toFixed(1)}%</strong></div><span class="compare-arrow">→</span><div class="drop-value"><span>Observed</span><strong>${i.actual.toFixed(1)}%</strong></div></div></div>
     <div class="drawer-section"><h3>ECONOMIC IMPACT</h3><div class="metric-grid"><div class="metric-pair"><span>GMV at risk</span><strong>${money(i.risk)}/h</strong></div><div class="metric-pair"><span>Recoverable</span><strong>${i.recovery}</strong></div><div class="metric-pair"><span>Affected attempts</span><strong>${i.attempts.toLocaleString()}</strong></div><div class="metric-pair"><span>Excess declines</span><strong>${i.excess.toLocaleString()}</strong></div></div></div>
     <div class="drawer-section"><h3>DIAGNOSIS CONFIDENCE</h3><div class="confidence-head"><span>${i.root}</span><strong>${i.confidence}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.confidence < 60 ? "warning" : ""}" style="width:${i.confidence}%"></div></div><div class="attribution"><div class="attribution-label"><span>Conversion loss explained</span><strong>${i.attribution}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.attribution < 60 ? "warning" : ""}" style="width:${i.attribution}%"></div></div></div></div>
-    <div class="drawer-section"><h3>ROOT-CAUSE EVIDENCE</h3><div class="evidence-list">${i.evidence.map(e=>`<div class="evidence-item"><span class="evidence-check">✓</span><span>${e}</span></div>`).join("")}</div></div>
-    <div class="drawer-section"><h3>RECOMMENDED NEXT STEP</h3><div class="recommendation"><strong>Human decision required</strong><br>${i.recommendation}</div></div>
     <div class="drawer-actions"><button class="drawer-action">Export incident</button><button class="drawer-action primary">Open investigation</button></div>`;
   document.getElementById("drawerBackdrop").hidden = false;
   document.getElementById("detailDrawer").classList.add("is-open");

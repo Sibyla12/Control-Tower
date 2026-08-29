@@ -1,0 +1,8 @@
+incident_type,what_it_means,main_dimensions,evidence,example,operational_response
+Provider Degradation,A provider experiences abnormal approval deterioration,Provider + Country,"Conversion drop, excess declines",Stripe performance drops in Brazil,Investigate provider and evaluate routing alternatives
+Issuing Bank Degradation,Declines concentrate in one issuing bank,Issuing Bank + Country,Increased declines for one bank,BBVA declines increase in Mexico,Escalate bank-specific issue
+Payment Method Degradation,One payment method performs abnormally,Payment Method + Country,Conversion drop by method,PIX approval drops in Brazil,Verify payment method availability
+Merchant-Specific Issue,Anomaly affects one merchant disproportionately,Merchant,Merchant conversion vs baseline,Merchant_B conversion drops,Review merchant configuration
+Country-Specific Issue,Degradation is concentrated geographically,Country,Country conversion vs baseline,Brazil conversion falls,Investigate local infrastructure/providers
+Decline Code Spike,One rejection reason increases abnormally,Decline Code,Excess frequency of decline code,DO_NOT_HONOR suddenly increases,Investigate related provider/bank
+Unknown Root Cause,Anomaly exists but no dimension explains it reliably,Multiple,"High anomaly confidence, low RCA confidence",Conversion falls but no clear concentration,Continue monitoring and collect evidence

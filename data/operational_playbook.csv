@@ -1,0 +1,11 @@
+incident_type,meaning_es,recommended_action,owner
+Provider Degradation,Un proveedor presenta una caída anormal de aprobación,"Check provider status, compare performance with alternative providers, and evaluate temporary routing alternatives",Operations + Provider Management
+Issuing Bank Degradation,Los rechazos se concentran en un banco emisor específico,"Escalate the bank-specific issue, monitor other issuers, and verify whether the problem is isolated",Operations + Provider/Bank Relations
+Payment Method Degradation,Un método de pago presenta deterioro anormal,"Verify payment method availability, configuration, provider connectivity, and recent changes",Operations + Technical Team
+Merchant-Specific Issue,El problema afecta principalmente a un merchant,"Review merchant configuration, recent changes, routing rules, and transaction patterns",Merchant Success + Operations
+Country-Specific Issue,La degradación está concentrada en un país,Compare providers and payment methods in the affected country and investigate local dependencies,Operations + Regional/Provider Team
+Decline Code Spike,Un código de rechazo aumenta de forma anormal,"Identify which provider, bank, merchant, or method is generating the decline code and investigate the related dependency",Operations + Relevant Owner
+Processing Latency Degradation,Aumenta el tiempo de procesamiento de pagos,"Review provider/API latency, infrastructure performance, and recent technical changes",Engineering + Operations
+Retry / Recovery Issue,Los reintentos dejan de recuperar pagos al nivel esperado,"Review retry logic, recovery performance, and failure patterns",Engineering + Operations
+Multiple Simultaneous Incidents,Existen dos o más incidentes independientes al mismo tiempo,"Separate incidents, calculate impact individually, and prioritize them according to severity and financial exposure",Operations
+Unknown / Insufficient Evidence,"Existe una anomalía, pero no hay evidencia suficiente para confirmar la causa","Continue monitoring, collect additional evidence, and avoid confirming an unsupported root cause",Operations + Data Team
