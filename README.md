@@ -23,6 +23,12 @@ three merchants, three providers, local payment methods, and issuing banks.
   Pareto ranking across active incidents.
 - A baseline data-quality signal distinguishing diagnostic confidence from
   how much historical evidence backs the comparison.
+- Incident memory: recognizes when an incident's fingerprint (root cause,
+  provider/bank, country, decline code) was already seen in an earlier
+  pipeline run, with real first/last-seen timestamps.
+- A per-incident segment breakdown, tracing the pipeline's own candidate
+  lineage to show which underlying segment explains what share of the
+  excess declines, Pareto-ranked.
 - Explainable P1–P4 prioritization with operational guardrails.
 - An "under investigation" view for anomalies without enough evidence to
   confirm a root cause, instead of forcing a guess.
@@ -71,6 +77,7 @@ Available routes:
 - `GET /dashboard`
 - `GET /incidents`
 - `GET /incidents/{incident_id}`
+- `GET /incidents/{incident_id}/segments`
 - `GET /unresolved-candidates`
 - `POST /incidents/{incident_id}/analysis`
 - `GET /audit-log`

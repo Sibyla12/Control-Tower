@@ -410,7 +410,24 @@ operational playbook, and priority matrix when those tables exist, plus:
 - a baseline data-quality signal per incident, sourced from the real
   `baseline_reliable` flags in `detection_level_baselines.csv` for the
   relevant detection level (falling back to a live-evidence-volume heuristic
-  for `decline_code`, which has no dedicated level).
+  for `decline_code`, which has no dedicated level);
+- incident memory: incidents are fingerprinted by root cause type,
+  provider/bank, country, and decline code (not by
+  `consolidated_incident_id`, which is random on every pipeline run) and
+  persisted to `data/incident_memory.csv` with a real wall-clock timestamp.
+  A later run producing a new ID for an already-seen fingerprint is flagged
+  `is_repeat_incident` with the real first/last-seen times and occurrence
+  count. Recording is idempotent per incident ID, so repeated polling of
+  the same live incident doesn't inflate the count;
+- `GET /incidents/{id}/segments`: a per-incident Pareto breakdown. It
+  retraces the pipeline's own lineage
+  (`consolidated_incidents` → `source_incident_ids` → `root_cause_incidents`
+  → `source_candidates` → `clustered_incidents`) to recover the individual
+  provider/bank/merchant/method segments folded into the incident, then
+  computes `expected_declines`, `actual_declines`, `excess_declines`,
+  `contribution_pct`, `cumulative_pct`, and a per-segment confidence
+  (`1 - p_value` from that segment's own z-score) - every field derived
+  from real pipeline output, nothing fabricated.
 
 OpenAI (`gpt-4o`) can generate a short narrative from structured incident
 JSON. This layer does not replace statistical detection or decide priority.
