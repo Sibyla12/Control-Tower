@@ -88,6 +88,9 @@ Después abre `http://localhost:5500`.
 
 ## Flujo analítico
 
+La explicación completa de arquitectura, estadística, falsos positivos y lógica
+de cada módulo está en [docs/TECHNICAL_GUIDE.md](docs/TECHNICAL_GUIDE.md).
+
 ```text
 transactions_live_multisegment.csv
   → detection_aggregator.py

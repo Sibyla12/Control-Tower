@@ -13,6 +13,7 @@ OUTPUT_PATH = "data/consolidated_incidents.csv"
 ROOT_TYPE_WEIGHT = {
     "provider": 1.00,
     "issuing_bank": 1.00,
+    "decline_code": 0.80,
     "payment_method": 0.70,
     "merchant": 0.65,
     "unknown": 0.35,
@@ -21,6 +22,7 @@ ROOT_TYPE_WEIGHT = {
 ROOT_CAUSE_PRIORITY = {
     "provider": 4,
     "issuing_bank": 4,
+    "decline_code": 3,
     "payment_method": 2,
     "merchant": 1,
     "unknown": 0,
@@ -278,6 +280,7 @@ def select_primary_incidents(
         eligible_root = candidate["root_cause_type"] in {
             "provider",
             "issuing_bank",
+            "decline_code",
         }
         strong_enough = float(candidate["confidence_score"]) >= 0.70
 

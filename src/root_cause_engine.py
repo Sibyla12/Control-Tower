@@ -86,6 +86,17 @@ def method_root_match(
     )
 
 
+def decline_code_root_match(
+    row_a: pd.Series,
+    row_b: pd.Series,
+) -> bool:
+    return (
+        same_value(row_a, row_b, "dominant_decline_code")
+        and same_value(row_a, row_b, "country")
+        and time_overlap(row_a, row_b)
+    )
+
+
 def infer_candidate_type(row: pd.Series) -> str:
     level = str(row["detection_level"])
 
@@ -107,6 +118,13 @@ def infer_candidate_type(row: pd.Series) -> str:
     if level == "L2_METHOD_COUNTRY":
         return "payment_method"
 
+    # The detection level couldn't attribute this candidate to a specific
+    # provider/bank/merchant/method (e.g. the issuing bank behind the drop
+    # wasn't resolved). A concentrated decline code is still a diagnosable
+    # dimension on its own - fall back to it before giving up entirely.
+    if pd.notna(row["dominant_decline_code"]):
+        return "decline_code"
+
     return "unknown"
 
 
@@ -126,6 +144,9 @@ def candidate_matches_group(
 
     if root_type == "payment_method":
         return method_root_match(row, group_seed)
+
+    if root_type == "decline_code":
+        return decline_code_root_match(row, group_seed)
 
     return False
 
