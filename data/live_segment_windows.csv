@@ -1,0 +1,1814 @@
+minute,merchant,provider,payment_method,country,issuing_bank,attempts,approvals,declines,average_amount,dominant_decline_code,injected_incident_id,approval_rate,weekday,hour
+2026-08-31 10:00:00,Merchant_A,Adyen,PIX,BR,,18,17,1,,INSUFFICIENT_FUNDS,,0.9444,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,PSE,CO,,18,17,1,,INSUFFICIENT_FUNDS,,0.9444,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,card,BR,Banco do Brasil,4,4,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,card,BR,Bradesco,1,1,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,card,BR,Itau,5,5,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,card,BR,Nubank,2,2,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,card,CO,Banco de Bogota,9,7,2,,DO_NOT_HONOR,,0.7778,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,card,CO,Bancolombia,5,4,1,,INVALID_CARD,,0.8,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,card,CO,Davivienda,1,1,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,card,MX,BBVA,2,2,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,card,MX,Banorte,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,card,MX,Citibanamex,4,4,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,cash_in_store,MX,,15,14,1,,DO_NOT_HONOR,,0.9333,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,wallet,BR,,17,17,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,wallet,CO,,17,16,1,,INSUFFICIENT_FUNDS,,0.9412,0,10
+2026-08-31 10:00:00,Merchant_A,Adyen,wallet,MX,,16,12,4,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,PIX,BR,,13,12,1,,DO_NOT_HONOR,,0.9231,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,PSE,CO,,9,6,3,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,card,BR,Banco do Brasil,6,5,1,,SUSPECTED_FRAUD,,0.8333,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,card,BR,Bradesco,4,4,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,card,BR,Nubank,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,card,CO,Banco de Bogota,4,4,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,card,CO,Bancolombia,5,5,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,card,MX,BBVA,7,7,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,card,MX,Banorte,1,1,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,card,MX,Citibanamex,4,2,2,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,cash_in_store,MX,,13,10,3,,INVALID_CARD,,0.7692,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,wallet,BR,,21,20,1,,SUSPECTED_FRAUD,,0.9524,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,wallet,CO,,15,14,1,,DO_NOT_HONOR,,0.9333,0,10
+2026-08-31 10:00:00,Merchant_A,Stripe,wallet,MX,,15,14,1,,INSUFFICIENT_FUNDS,,0.9333,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,PIX,BR,,19,19,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,PSE,CO,,20,18,2,,DO_NOT_HONOR,,0.9,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,card,BR,Banco do Brasil,3,2,1,,INVALID_CARD,,0.6667,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,card,BR,Itau,5,4,1,,INVALID_CARD,,0.8,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,card,BR,Nubank,5,5,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,card,CO,Banco de Bogota,5,5,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,card,CO,Bancolombia,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,card,CO,Davivienda,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,card,MX,BBVA,6,6,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,card,MX,Banorte,4,4,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,card,MX,Santander,2,2,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,cash_in_store,MX,,12,9,3,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,wallet,BR,,17,13,4,,INVALID_CARD,,0.7647,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,wallet,CO,,18,18,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_A,dLocal,wallet,MX,,13,13,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,PIX,BR,,9,8,1,,DO_NOT_HONOR,,0.8889,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,PSE,CO,,18,18,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,card,BR,Banco do Brasil,1,1,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,card,BR,Bradesco,5,5,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,card,BR,Itau,5,5,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,card,BR,Nubank,5,5,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,card,CO,Banco de Bogota,3,2,1,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,card,CO,Bancolombia,5,5,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,card,CO,Davivienda,7,7,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,card,MX,BBVA,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,card,MX,Banorte,1,1,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,card,MX,Citibanamex,2,1,1,,SUSPECTED_FRAUD,,0.5,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,cash_in_store,MX,,13,11,2,,INSUFFICIENT_FUNDS,,0.8462,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,wallet,BR,,14,13,1,,INVALID_CARD,,0.9286,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,wallet,CO,,13,12,1,,INVALID_CARD,,0.9231,0,10
+2026-08-31 10:00:00,Merchant_B,Adyen,wallet,MX,,18,17,1,,INVALID_CARD,,0.9444,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,PIX,BR,,16,16,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,PSE,CO,,13,13,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,card,BR,Banco do Brasil,6,6,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,card,BR,Nubank,6,6,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,card,CO,Banco de Bogota,8,7,1,,INVALID_CARD,,0.875,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,card,CO,Bancolombia,5,5,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,card,CO,Davivienda,7,7,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,card,MX,BBVA,3,3,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,card,MX,Banorte,1,1,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,card,MX,Citibanamex,6,6,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,card,MX,Santander,4,4,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,cash_in_store,MX,,13,11,2,,DO_NOT_HONOR,,0.8462,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,wallet,BR,,20,19,1,,DO_NOT_HONOR,,0.95,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,wallet,CO,,15,12,3,,DO_NOT_HONOR,,0.8,0,10
+2026-08-31 10:00:00,Merchant_B,Stripe,wallet,MX,,13,11,2,,INVALID_CARD,,0.8462,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,PIX,BR,,6,5,1,,INVALID_CARD,,0.8333,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,PSE,CO,,12,10,2,,INSUFFICIENT_FUNDS,,0.8333,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,card,BR,Banco do Brasil,2,2,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,card,BR,Itau,2,1,1,,INVALID_CARD,,0.5,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,card,BR,Nubank,8,6,2,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,card,CO,Banco de Bogota,2,2,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,card,CO,Bancolombia,6,5,1,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,card,MX,BBVA,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,card,MX,Banorte,2,1,1,,INVALID_CARD,,0.5,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,card,MX,Citibanamex,2,1,1,,INVALID_CARD,,0.5,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,card,MX,Santander,2,1,1,,SUSPECTED_FRAUD,,0.5,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,cash_in_store,MX,,18,16,2,,INVALID_CARD,,0.8889,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,wallet,BR,,22,20,2,,DO_NOT_HONOR,,0.9091,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,wallet,CO,,16,14,2,,INVALID_CARD,,0.875,0,10
+2026-08-31 10:00:00,Merchant_B,dLocal,wallet,MX,,14,13,1,,SUSPECTED_FRAUD,,0.9286,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,PIX,BR,,21,19,2,,INVALID_CARD,,0.9048,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,PSE,CO,,14,14,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,card,BR,Banco do Brasil,1,1,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,card,BR,Bradesco,4,4,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,card,BR,Itau,4,4,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,card,BR,Nubank,1,1,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,card,CO,Banco de Bogota,4,4,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,card,CO,Bancolombia,3,2,1,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,card,CO,Davivienda,5,5,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,card,MX,BBVA,5,5,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,card,MX,Citibanamex,6,6,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,card,MX,Santander,7,7,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,cash_in_store,MX,,14,12,2,,DO_NOT_HONOR,,0.8571,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,wallet,BR,,20,20,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,wallet,CO,,18,14,4,,SUSPECTED_FRAUD,,0.7778,0,10
+2026-08-31 10:00:00,Merchant_C,Adyen,wallet,MX,,16,16,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,PIX,BR,,15,13,2,,INSUFFICIENT_FUNDS,,0.8667,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,PSE,CO,,13,11,2,,DO_NOT_HONOR,,0.8462,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,card,BR,Banco do Brasil,5,3,2,,DO_NOT_HONOR,,0.6,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,card,BR,Bradesco,5,5,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,card,BR,Itau,3,3,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,card,BR,Nubank,4,2,2,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,card,CO,Banco de Bogota,7,6,1,,INVALID_CARD,,0.8571,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,card,CO,Bancolombia,4,2,2,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,card,CO,Davivienda,7,7,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,card,MX,BBVA,1,1,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,card,MX,Banorte,3,2,1,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,card,MX,Citibanamex,4,2,2,,DO_NOT_HONOR,,0.5,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,card,MX,Santander,1,1,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,cash_in_store,MX,,13,10,3,,SUSPECTED_FRAUD,,0.7692,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,wallet,BR,,14,13,1,,SUSPECTED_FRAUD,,0.9286,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,wallet,CO,,12,11,1,,INVALID_CARD,,0.9167,0,10
+2026-08-31 10:00:00,Merchant_C,Stripe,wallet,MX,,9,8,1,,INVALID_CARD,,0.8889,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,PIX,BR,,11,11,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,PSE,CO,,10,10,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,card,BR,Banco do Brasil,2,2,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,card,BR,Bradesco,6,6,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,card,BR,Nubank,3,2,1,,INVALID_CARD,,0.6667,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,card,CO,Banco de Bogota,3,2,1,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,card,CO,Bancolombia,4,3,1,,SUSPECTED_FRAUD,,0.75,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,card,CO,Davivienda,5,5,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,card,MX,BBVA,8,8,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,card,MX,Banorte,5,1,4,,INVALID_CARD,,0.2,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,card,MX,Citibanamex,3,2,1,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,card,MX,Santander,4,3,1,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,cash_in_store,MX,,14,11,3,,INVALID_CARD,,0.7857,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,wallet,BR,,11,11,0,,,,1.0,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,wallet,CO,,18,14,4,,SUSPECTED_FRAUD,,0.7778,0,10
+2026-08-31 10:00:00,Merchant_C,dLocal,wallet,MX,,17,15,2,,INVALID_CARD,,0.8824,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,PIX,BR,,13,12,1,,SUSPECTED_FRAUD,,0.9231,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,PSE,CO,,22,17,5,,INVALID_CARD,,0.7727,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,card,BR,Bradesco,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,card,BR,Itau,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,card,BR,Nubank,2,2,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,card,CO,Banco de Bogota,7,5,2,,DO_NOT_HONOR,,0.7143,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,card,CO,Bancolombia,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,card,CO,Davivienda,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,card,MX,BBVA,5,5,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,card,MX,Banorte,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,card,MX,Citibanamex,2,2,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,card,MX,Santander,6,6,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,cash_in_store,MX,,15,12,3,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,wallet,BR,,22,20,2,,INVALID_CARD,,0.9091,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,wallet,CO,,19,19,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Adyen,wallet,MX,,21,21,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,PIX,BR,,14,14,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,PSE,CO,,22,22,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,card,BR,Banco do Brasil,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,card,BR,Nubank,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,card,CO,Banco de Bogota,4,3,1,,SUSPECTED_FRAUD,,0.75,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,card,CO,Bancolombia,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,card,CO,Davivienda,3,2,1,,SUSPECTED_FRAUD,,0.6667,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,card,MX,BBVA,1,1,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,card,MX,Banorte,7,7,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,card,MX,Citibanamex,5,5,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,card,MX,Santander,6,6,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,cash_in_store,MX,,9,9,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,wallet,BR,,12,11,1,,INVALID_CARD,,0.9167,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,wallet,CO,,14,13,1,,SUSPECTED_FRAUD,,0.9286,0,10
+2026-08-31 10:01:00,Merchant_A,Stripe,wallet,MX,,16,15,1,,INVALID_CARD,,0.9375,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,PIX,BR,,14,14,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,PSE,CO,,13,12,1,,INSUFFICIENT_FUNDS,,0.9231,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,card,BR,Banco do Brasil,5,5,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,card,BR,Bradesco,1,1,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,card,BR,Itau,9,8,1,,DO_NOT_HONOR,,0.8889,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,card,BR,Nubank,3,3,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,card,CO,Banco de Bogota,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,card,CO,Bancolombia,8,8,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,card,MX,BBVA,2,2,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,card,MX,Banorte,2,1,1,,SUSPECTED_FRAUD,,0.5,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,card,MX,Citibanamex,2,1,1,,SUSPECTED_FRAUD,,0.5,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,card,MX,Santander,8,7,1,,DO_NOT_HONOR,,0.875,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,cash_in_store,MX,,14,9,5,,SUSPECTED_FRAUD,,0.6429,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,wallet,BR,,12,11,1,,SUSPECTED_FRAUD,,0.9167,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,wallet,CO,,7,6,1,,SUSPECTED_FRAUD,,0.8571,0,10
+2026-08-31 10:01:00,Merchant_A,dLocal,wallet,MX,,11,8,3,,INSUFFICIENT_FUNDS,,0.7273,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,PIX,BR,,16,15,1,,SUSPECTED_FRAUD,,0.9375,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,PSE,CO,,12,9,3,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,card,BR,Banco do Brasil,1,1,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,card,BR,Itau,1,1,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,card,BR,Nubank,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,card,CO,Banco de Bogota,2,2,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,card,CO,Bancolombia,8,7,1,,INVALID_CARD,,0.875,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,card,CO,Davivienda,1,1,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,card,MX,BBVA,2,2,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,card,MX,Banorte,4,2,2,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,card,MX,Santander,1,1,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,cash_in_store,MX,,20,15,5,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,wallet,BR,,20,16,4,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,wallet,CO,,18,18,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Adyen,wallet,MX,,10,8,2,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,PIX,BR,,13,13,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,PSE,CO,,8,6,2,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,card,BR,Itau,3,3,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,card,BR,Nubank,7,7,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,card,CO,Banco de Bogota,10,9,1,,INSUFFICIENT_FUNDS,,0.9,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,card,CO,Bancolombia,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,card,CO,Davivienda,1,1,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,card,MX,BBVA,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,card,MX,Banorte,6,6,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,card,MX,Citibanamex,6,6,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,card,MX,Santander,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,cash_in_store,MX,,10,7,3,,DO_NOT_HONOR,,0.7,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,wallet,BR,,18,14,4,,DO_NOT_HONOR,,0.7778,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,wallet,CO,,12,11,1,,DO_NOT_HONOR,,0.9167,0,10
+2026-08-31 10:01:00,Merchant_B,Stripe,wallet,MX,,23,22,1,,SUSPECTED_FRAUD,,0.9565,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,PIX,BR,,16,16,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,PSE,CO,,22,20,2,,DO_NOT_HONOR,,0.9091,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,card,BR,Banco do Brasil,2,2,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,card,BR,Bradesco,3,1,2,,DO_NOT_HONOR,,0.3333,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,card,BR,Itau,2,1,1,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,card,BR,Nubank,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,card,CO,Banco de Bogota,3,3,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,card,CO,Bancolombia,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,card,MX,BBVA,3,3,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,card,MX,Banorte,4,3,1,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,card,MX,Citibanamex,6,4,2,,INVALID_CARD,,0.6667,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,card,MX,Santander,3,2,1,,INVALID_CARD,,0.6667,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,cash_in_store,MX,,17,12,5,,INSUFFICIENT_FUNDS,,0.7059,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,wallet,BR,,11,10,1,,DO_NOT_HONOR,,0.9091,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,wallet,CO,,19,18,1,,DO_NOT_HONOR,,0.9474,0,10
+2026-08-31 10:01:00,Merchant_B,dLocal,wallet,MX,,13,13,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,PIX,BR,,16,15,1,,INVALID_CARD,,0.9375,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,PSE,CO,,15,12,3,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,card,BR,Banco do Brasil,2,2,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,card,BR,Bradesco,3,2,1,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,card,BR,Itau,3,3,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,card,BR,Nubank,7,5,2,,INVALID_CARD,,0.7143,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,card,CO,Banco de Bogota,5,5,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,card,CO,Bancolombia,6,5,1,,INVALID_CARD,,0.8333,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,card,CO,Davivienda,5,5,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,card,MX,BBVA,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,card,MX,Banorte,3,2,1,,INVALID_CARD,,0.6667,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,card,MX,Citibanamex,2,2,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,cash_in_store,MX,,12,10,2,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,wallet,BR,,15,15,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,wallet,CO,,21,21,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Adyen,wallet,MX,,17,17,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,PIX,BR,,12,11,1,,INSUFFICIENT_FUNDS,,0.9167,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,PSE,CO,,15,15,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,card,BR,Banco do Brasil,5,5,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,card,BR,Bradesco,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,card,BR,Itau,6,6,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,card,BR,Nubank,7,7,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,card,CO,Banco de Bogota,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,card,CO,Bancolombia,3,2,1,,SUSPECTED_FRAUD,,0.6667,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,card,CO,Davivienda,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,card,MX,BBVA,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,card,MX,Banorte,10,10,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,card,MX,Santander,6,5,1,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,cash_in_store,MX,,11,8,3,,INSUFFICIENT_FUNDS,,0.7273,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,wallet,BR,,7,7,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,wallet,CO,,14,13,1,,INVALID_CARD,,0.9286,0,10
+2026-08-31 10:01:00,Merchant_C,Stripe,wallet,MX,,15,15,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,PIX,BR,,19,19,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,PSE,CO,,10,9,1,,SUSPECTED_FRAUD,,0.9,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,card,BR,Banco do Brasil,1,0,1,,INSUFFICIENT_FUNDS,,0.0,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,card,BR,Itau,6,5,1,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,card,BR,Nubank,1,1,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,card,CO,Banco de Bogota,5,5,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,card,CO,Bancolombia,4,4,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,card,CO,Davivienda,7,6,1,,INVALID_CARD,,0.8571,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,card,MX,BBVA,7,5,2,,INVALID_CARD,,0.7143,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,card,MX,Banorte,2,2,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,cash_in_store,MX,,12,9,3,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,wallet,BR,,16,15,1,,INSUFFICIENT_FUNDS,,0.9375,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,wallet,CO,,15,14,1,,DO_NOT_HONOR,,0.9333,0,10
+2026-08-31 10:01:00,Merchant_C,dLocal,wallet,MX,,15,14,1,,SUSPECTED_FRAUD,,0.9333,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,PIX,BR,,17,16,1,,DO_NOT_HONOR,,0.9412,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,PSE,CO,,15,12,3,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,card,BR,Banco do Brasil,1,1,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,card,BR,Itau,6,5,1,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,card,BR,Nubank,5,3,2,,DO_NOT_HONOR,,0.6,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,card,CO,Banco de Bogota,6,6,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,card,CO,Davivienda,5,3,2,,INSUFFICIENT_FUNDS,,0.6,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,card,MX,BBVA,3,3,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,card,MX,Santander,5,3,2,,INVALID_CARD,,0.6,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,cash_in_store,MX,,15,14,1,,DO_NOT_HONOR,,0.9333,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,wallet,BR,,19,17,2,,INVALID_CARD,,0.8947,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,wallet,CO,,14,12,2,,INSUFFICIENT_FUNDS,,0.8571,0,10
+2026-08-31 10:02:00,Merchant_A,Adyen,wallet,MX,,8,7,1,,DO_NOT_HONOR,,0.875,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,PIX,BR,,15,14,1,,INVALID_CARD,,0.9333,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,PSE,CO,,15,14,1,,DO_NOT_HONOR,,0.9333,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,card,BR,Banco do Brasil,6,6,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,card,BR,Bradesco,4,4,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,card,BR,Nubank,2,2,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,card,CO,Banco de Bogota,3,3,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,card,CO,Bancolombia,3,3,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,card,CO,Davivienda,7,7,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,card,MX,BBVA,9,8,1,,SUSPECTED_FRAUD,,0.8889,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,card,MX,Banorte,5,4,1,,DO_NOT_HONOR,,0.8,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,card,MX,Santander,3,2,1,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,cash_in_store,MX,,17,16,1,,SUSPECTED_FRAUD,,0.9412,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,wallet,BR,,18,17,1,,INVALID_CARD,,0.9444,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,wallet,CO,,17,16,1,,SUSPECTED_FRAUD,,0.9412,0,10
+2026-08-31 10:02:00,Merchant_A,Stripe,wallet,MX,,20,19,1,,DO_NOT_HONOR,,0.95,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,PIX,BR,,18,17,1,,DO_NOT_HONOR,,0.9444,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,PSE,CO,,17,15,2,,INSUFFICIENT_FUNDS,,0.8824,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,card,BR,Banco do Brasil,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,card,BR,Bradesco,5,5,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,card,BR,Itau,7,5,2,,SUSPECTED_FRAUD,,0.7143,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,card,BR,Nubank,6,6,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,card,CO,Banco de Bogota,9,7,2,,SUSPECTED_FRAUD,,0.7778,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,card,CO,Bancolombia,4,4,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,card,CO,Davivienda,8,7,1,,INSUFFICIENT_FUNDS,,0.875,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,card,MX,BBVA,6,5,1,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,card,MX,Santander,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,cash_in_store,MX,,13,12,1,,SUSPECTED_FRAUD,,0.9231,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,wallet,BR,,26,23,3,,INSUFFICIENT_FUNDS,,0.8846,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,wallet,CO,,9,9,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_A,dLocal,wallet,MX,,9,9,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,PIX,BR,,13,13,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,PSE,CO,,12,10,2,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,card,BR,Banco do Brasil,7,7,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,card,BR,Itau,1,1,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,card,BR,Nubank,5,5,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,card,CO,Banco de Bogota,4,4,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,card,CO,Bancolombia,3,3,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,card,CO,Davivienda,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,card,MX,BBVA,3,3,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,card,MX,Banorte,4,4,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,card,MX,Santander,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,cash_in_store,MX,,11,11,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,wallet,BR,,11,11,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,wallet,CO,,15,14,1,,INVALID_CARD,,0.9333,0,10
+2026-08-31 10:02:00,Merchant_B,Adyen,wallet,MX,,17,15,2,,SUSPECTED_FRAUD,,0.8824,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,PIX,BR,,18,16,2,,INSUFFICIENT_FUNDS,,0.8889,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,PSE,CO,,18,15,3,,INSUFFICIENT_FUNDS,,0.8333,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,card,BR,Banco do Brasil,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,card,BR,Bradesco,5,5,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,card,BR,Itau,5,5,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,card,CO,Banco de Bogota,5,5,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,card,CO,Bancolombia,12,9,3,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,card,CO,Davivienda,5,5,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,card,MX,BBVA,6,6,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,card,MX,Banorte,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,card,MX,Citibanamex,2,2,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,card,MX,Santander,5,5,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,cash_in_store,MX,,16,13,3,,DO_NOT_HONOR,,0.8125,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,wallet,BR,,24,24,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,wallet,CO,,13,10,3,,DO_NOT_HONOR,,0.7692,0,10
+2026-08-31 10:02:00,Merchant_B,Stripe,wallet,MX,,16,15,1,,DO_NOT_HONOR,,0.9375,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,PIX,BR,,13,13,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,PSE,CO,,16,16,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,card,BR,Banco do Brasil,6,5,1,,SUSPECTED_FRAUD,,0.8333,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,card,BR,Itau,3,3,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,card,BR,Nubank,6,6,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,card,CO,Banco de Bogota,6,4,2,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,card,CO,Bancolombia,3,3,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,card,CO,Davivienda,6,5,1,,SUSPECTED_FRAUD,,0.8333,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,card,MX,BBVA,3,1,2,,INVALID_CARD,,0.3333,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,card,MX,Citibanamex,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,card,MX,Santander,3,2,1,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,cash_in_store,MX,,15,12,3,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,wallet,BR,,15,13,2,,DO_NOT_HONOR,,0.8667,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,wallet,CO,,13,13,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_B,dLocal,wallet,MX,,17,16,1,,INSUFFICIENT_FUNDS,,0.9412,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,PIX,BR,,13,12,1,,SUSPECTED_FRAUD,,0.9231,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,PSE,CO,,8,6,2,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,card,BR,Banco do Brasil,6,5,1,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,card,BR,Bradesco,1,1,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,card,BR,Itau,4,3,1,,SUSPECTED_FRAUD,,0.75,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,card,BR,Nubank,1,1,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,card,CO,Banco de Bogota,6,6,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,card,CO,Bancolombia,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,card,CO,Davivienda,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,card,MX,BBVA,4,4,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,card,MX,Banorte,6,6,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,card,MX,Citibanamex,5,3,2,,INSUFFICIENT_FUNDS,,0.6,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,card,MX,Santander,1,0,1,,SUSPECTED_FRAUD,,0.0,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,cash_in_store,MX,,15,13,2,,SUSPECTED_FRAUD,,0.8667,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,wallet,BR,,20,19,1,,DO_NOT_HONOR,,0.95,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,wallet,CO,,15,15,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Adyen,wallet,MX,,9,9,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,PIX,BR,,19,18,1,,INSUFFICIENT_FUNDS,,0.9474,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,PSE,CO,,12,9,3,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,card,BR,Itau,4,2,2,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,card,BR,Nubank,3,3,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,card,CO,Banco de Bogota,7,5,2,,DO_NOT_HONOR,,0.7143,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,card,CO,Bancolombia,7,7,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,card,CO,Davivienda,2,2,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,card,MX,BBVA,5,5,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,card,MX,Banorte,6,6,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,card,MX,Citibanamex,2,2,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,card,MX,Santander,4,4,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,cash_in_store,MX,,13,11,2,,DO_NOT_HONOR,,0.8462,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,wallet,BR,,8,7,1,,SUSPECTED_FRAUD,,0.875,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,wallet,CO,,12,12,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,Stripe,wallet,MX,,13,12,1,,SUSPECTED_FRAUD,,0.9231,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,PIX,BR,,12,11,1,,INSUFFICIENT_FUNDS,,0.9167,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,PSE,CO,,14,11,3,,INSUFFICIENT_FUNDS,,0.7857,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,card,BR,Banco do Brasil,5,4,1,,DO_NOT_HONOR,,0.8,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,card,BR,Bradesco,5,5,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,card,BR,Itau,3,3,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,card,BR,Nubank,2,2,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,card,CO,Banco de Bogota,7,6,1,,DO_NOT_HONOR,,0.8571,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,card,CO,Bancolombia,4,3,1,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,card,CO,Davivienda,3,3,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,card,MX,BBVA,1,1,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,card,MX,Banorte,3,2,1,,SUSPECTED_FRAUD,,0.6667,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,card,MX,Citibanamex,1,1,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,card,MX,Santander,5,5,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,cash_in_store,MX,,14,12,2,,DO_NOT_HONOR,,0.8571,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,wallet,BR,,11,10,1,,SUSPECTED_FRAUD,,0.9091,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,wallet,CO,,14,14,0,,,,1.0,0,10
+2026-08-31 10:02:00,Merchant_C,dLocal,wallet,MX,,10,8,2,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,PIX,BR,,14,4,10,,PROCESSOR_ERROR,INC-001,0.2857,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,PSE,CO,,10,10,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,card,BR,Banco do Brasil,5,3,2,,PROCESSOR_ERROR,INC-001,0.6,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,card,BR,Bradesco,1,1,0,,,INC-001,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,card,BR,Itau,3,2,1,,PROCESSOR_ERROR,INC-001,0.6667,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,card,BR,Nubank,3,1,2,,PROCESSOR_ERROR,INC-001,0.3333,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,card,CO,Banco de Bogota,3,3,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,card,CO,Bancolombia,6,6,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,card,CO,Davivienda,3,3,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,card,MX,BBVA,4,4,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,card,MX,Citibanamex,1,1,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,card,MX,Santander,4,4,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,cash_in_store,MX,,14,13,1,,INSUFFICIENT_FUNDS,,0.9286,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,wallet,BR,,17,10,7,,PROCESSOR_ERROR,INC-001,0.5882,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,wallet,CO,,21,19,2,,INSUFFICIENT_FUNDS,,0.9048,0,10
+2026-08-31 10:03:00,Merchant_A,Adyen,wallet,MX,,17,17,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,PIX,BR,,19,19,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,PSE,CO,,22,18,4,,SUSPECTED_FRAUD,,0.8182,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,card,BR,Banco do Brasil,5,5,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,card,BR,Bradesco,4,3,1,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,card,BR,Nubank,8,8,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,card,CO,Banco de Bogota,6,6,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,card,CO,Bancolombia,5,5,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,card,MX,BBVA,8,7,1,,DO_NOT_HONOR,,0.875,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,card,MX,Citibanamex,5,3,2,,SUSPECTED_FRAUD,,0.6,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,card,MX,Santander,4,3,1,,SUSPECTED_FRAUD,,0.75,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,cash_in_store,MX,,18,16,2,,DO_NOT_HONOR,,0.8889,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,wallet,BR,,15,13,2,,INVALID_CARD,,0.8667,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,wallet,CO,,8,6,2,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:03:00,Merchant_A,Stripe,wallet,MX,,16,16,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,PIX,BR,,11,10,1,,DO_NOT_HONOR,,0.9091,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,PSE,CO,,14,12,2,,INVALID_CARD,,0.8571,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,card,BR,Bradesco,7,7,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,card,BR,Itau,3,2,1,,INVALID_CARD,,0.6667,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,card,BR,Nubank,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,card,CO,Banco de Bogota,2,2,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,card,CO,Bancolombia,8,8,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,card,CO,Davivienda,3,3,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,card,MX,BBVA,1,1,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,card,MX,Citibanamex,7,5,2,,SUSPECTED_FRAUD,,0.7143,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,card,MX,Santander,1,1,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,cash_in_store,MX,,14,13,1,,DO_NOT_HONOR,,0.9286,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,wallet,BR,,13,12,1,,DO_NOT_HONOR,,0.9231,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,wallet,CO,,18,17,1,,DO_NOT_HONOR,,0.9444,0,10
+2026-08-31 10:03:00,Merchant_A,dLocal,wallet,MX,,24,23,1,,DO_NOT_HONOR,,0.9583,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,PIX,BR,,14,6,8,,PROCESSOR_ERROR,INC-001,0.4286,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,PSE,CO,,9,9,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,card,BR,Banco do Brasil,3,1,2,,PROCESSOR_ERROR,INC-001,0.3333,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,card,BR,Bradesco,1,1,0,,,INC-001,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,card,BR,Itau,3,3,0,,,INC-001,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,card,BR,Nubank,3,2,1,,PROCESSOR_ERROR,INC-001,0.6667,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,card,CO,Banco de Bogota,6,6,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,card,CO,Bancolombia,4,4,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,card,MX,BBVA,6,6,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,card,MX,Banorte,2,2,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,card,MX,Citibanamex,8,7,1,,DO_NOT_HONOR,,0.875,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,card,MX,Santander,2,2,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,cash_in_store,MX,,14,13,1,,INSUFFICIENT_FUNDS,,0.9286,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,wallet,BR,,13,5,8,,PROCESSOR_ERROR,INC-001,0.3846,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,wallet,CO,,11,10,1,,DO_NOT_HONOR,,0.9091,0,10
+2026-08-31 10:03:00,Merchant_B,Adyen,wallet,MX,,12,12,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,PIX,BR,,17,16,1,,SUSPECTED_FRAUD,,0.9412,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,PSE,CO,,11,11,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,card,BR,Banco do Brasil,7,6,1,,INVALID_CARD,,0.8571,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,card,BR,Nubank,7,6,1,,DO_NOT_HONOR,,0.8571,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,card,CO,Banco de Bogota,5,5,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,card,CO,Bancolombia,6,5,1,,INVALID_CARD,,0.8333,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,card,MX,BBVA,3,3,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,card,MX,Banorte,8,8,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,card,MX,Citibanamex,8,5,3,,DO_NOT_HONOR,,0.625,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,cash_in_store,MX,,10,7,3,,DO_NOT_HONOR,,0.7,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,wallet,BR,,17,14,3,,DO_NOT_HONOR,,0.8235,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,wallet,CO,,15,13,2,,DO_NOT_HONOR,,0.8667,0,10
+2026-08-31 10:03:00,Merchant_B,Stripe,wallet,MX,,11,11,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,PIX,BR,,14,13,1,,INSUFFICIENT_FUNDS,,0.9286,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,PSE,CO,,17,14,3,,INSUFFICIENT_FUNDS,,0.8235,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,card,BR,Banco do Brasil,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,card,BR,Bradesco,3,2,1,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,card,BR,Itau,3,3,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,card,BR,Nubank,2,2,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,card,CO,Banco de Bogota,3,3,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,card,CO,Bancolombia,8,6,2,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,card,CO,Davivienda,2,2,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,card,MX,BBVA,3,3,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,card,MX,Banorte,1,1,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,card,MX,Citibanamex,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,card,MX,Santander,4,4,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,cash_in_store,MX,,18,14,4,,DO_NOT_HONOR,,0.7778,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,wallet,BR,,22,18,4,,INSUFFICIENT_FUNDS,,0.8182,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,wallet,CO,,19,17,2,,DO_NOT_HONOR,,0.8947,0,10
+2026-08-31 10:03:00,Merchant_B,dLocal,wallet,MX,,13,13,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,PIX,BR,,13,12,1,,PROCESSOR_ERROR,INC-001,0.9231,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,PSE,CO,,16,14,2,,INVALID_CARD,,0.875,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,card,BR,Banco do Brasil,2,1,1,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,card,BR,Bradesco,2,0,2,,PROCESSOR_ERROR,INC-001,0.0,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,card,BR,Itau,2,0,2,,PROCESSOR_ERROR,INC-001,0.0,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,card,BR,Nubank,1,0,1,,PROCESSOR_ERROR,INC-001,0.0,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,card,CO,Banco de Bogota,3,3,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,card,CO,Bancolombia,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,card,CO,Davivienda,3,3,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,card,MX,BBVA,4,4,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,card,MX,Banorte,4,4,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,card,MX,Citibanamex,1,0,1,,SUSPECTED_FRAUD,,0.0,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,card,MX,Santander,7,7,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,cash_in_store,MX,,26,23,3,,DO_NOT_HONOR,,0.8846,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,wallet,BR,,19,11,8,,PROCESSOR_ERROR,INC-001,0.5789,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,wallet,CO,,12,11,1,,INVALID_CARD,,0.9167,0,10
+2026-08-31 10:03:00,Merchant_C,Adyen,wallet,MX,,16,16,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,PIX,BR,,6,5,1,,INSUFFICIENT_FUNDS,,0.8333,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,PSE,CO,,17,17,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,card,BR,Banco do Brasil,3,2,1,,INVALID_CARD,,0.6667,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,card,BR,Bradesco,8,8,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,card,BR,Nubank,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,card,CO,Banco de Bogota,4,2,2,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,card,CO,Bancolombia,6,6,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,card,CO,Davivienda,8,6,2,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,card,MX,BBVA,2,2,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,card,MX,Citibanamex,5,3,2,,DO_NOT_HONOR,,0.6,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,card,MX,Santander,6,5,1,,INVALID_CARD,,0.8333,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,cash_in_store,MX,,11,9,2,,DO_NOT_HONOR,,0.8182,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,wallet,BR,,13,13,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,wallet,CO,,9,8,1,,DO_NOT_HONOR,,0.8889,0,10
+2026-08-31 10:03:00,Merchant_C,Stripe,wallet,MX,,12,10,2,,INSUFFICIENT_FUNDS,,0.8333,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,PIX,BR,,17,17,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,PSE,CO,,18,15,3,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,card,BR,Banco do Brasil,1,1,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,card,BR,Bradesco,4,3,1,,SUSPECTED_FRAUD,,0.75,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,card,BR,Itau,5,5,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,card,BR,Nubank,6,6,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,card,CO,Banco de Bogota,4,4,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,card,CO,Bancolombia,11,11,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,card,CO,Davivienda,1,1,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,card,MX,BBVA,4,4,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,card,MX,Banorte,2,1,1,,SUSPECTED_FRAUD,,0.5,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,card,MX,Citibanamex,4,4,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,cash_in_store,MX,,9,6,3,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,wallet,BR,,14,11,3,,INSUFFICIENT_FUNDS,,0.7857,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,wallet,CO,,15,14,1,,INSUFFICIENT_FUNDS,,0.9333,0,10
+2026-08-31 10:03:00,Merchant_C,dLocal,wallet,MX,,16,14,2,,SUSPECTED_FRAUD,,0.875,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,PIX,BR,,17,11,6,,PROCESSOR_ERROR,INC-001,0.6471,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,PSE,CO,,9,8,1,,INSUFFICIENT_FUNDS,,0.8889,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,card,BR,Banco do Brasil,1,1,0,,,INC-001,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,card,BR,Bradesco,5,5,0,,,INC-001,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,card,BR,Itau,4,3,1,,PROCESSOR_ERROR,INC-001,0.75,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,card,BR,Nubank,5,3,2,,PROCESSOR_ERROR,INC-001,0.6,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,card,CO,Banco de Bogota,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,card,CO,Bancolombia,1,1,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,card,MX,BBVA,4,1,3,,ISSUER_UNAVAILABLE,INC-002,0.25,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,card,MX,Banorte,7,7,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,card,MX,Citibanamex,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,card,MX,Santander,6,6,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,cash_in_store,MX,,22,18,4,,INVALID_CARD,,0.8182,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,wallet,BR,,18,5,13,,PROCESSOR_ERROR,INC-001,0.2778,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,wallet,CO,,19,18,1,,DO_NOT_HONOR,,0.9474,0,10
+2026-08-31 10:04:00,Merchant_A,Adyen,wallet,MX,,21,19,2,,INSUFFICIENT_FUNDS,,0.9048,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,PIX,BR,,10,10,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,PSE,CO,,16,15,1,,DO_NOT_HONOR,,0.9375,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,card,BR,Banco do Brasil,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,card,BR,Bradesco,8,8,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,card,BR,Nubank,2,2,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,card,CO,Banco de Bogota,4,3,1,,SUSPECTED_FRAUD,,0.75,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,card,CO,Bancolombia,6,4,2,,INVALID_CARD,,0.6667,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,card,CO,Davivienda,6,6,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,card,MX,BBVA,1,0,1,,ISSUER_UNAVAILABLE,INC-002,0.0,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,card,MX,Banorte,4,4,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,card,MX,Citibanamex,5,5,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,cash_in_store,MX,,15,14,1,,DO_NOT_HONOR,,0.9333,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,wallet,BR,,17,16,1,,DO_NOT_HONOR,,0.9412,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,wallet,CO,,20,19,1,,INSUFFICIENT_FUNDS,,0.95,0,10
+2026-08-31 10:04:00,Merchant_A,Stripe,wallet,MX,,7,7,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,PIX,BR,,18,13,5,,DO_NOT_HONOR,,0.7222,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,PSE,CO,,6,6,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,card,BR,Banco do Brasil,6,6,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,card,BR,Itau,1,1,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,card,BR,Nubank,4,4,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,card,CO,Banco de Bogota,7,7,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,card,CO,Bancolombia,6,5,1,,SUSPECTED_FRAUD,,0.8333,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,card,CO,Davivienda,7,6,1,,DO_NOT_HONOR,,0.8571,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,card,MX,BBVA,2,0,2,,ISSUER_UNAVAILABLE,INC-002,0.0,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,card,MX,Banorte,7,5,2,,DO_NOT_HONOR,,0.7143,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,card,MX,Citibanamex,2,1,1,,INVALID_CARD,,0.5,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,card,MX,Santander,5,5,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,cash_in_store,MX,,9,5,4,,DO_NOT_HONOR,,0.5556,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,wallet,BR,,16,14,2,,DO_NOT_HONOR,,0.875,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,wallet,CO,,19,17,2,,INSUFFICIENT_FUNDS,,0.8947,0,10
+2026-08-31 10:04:00,Merchant_A,dLocal,wallet,MX,,11,11,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,PIX,BR,,17,11,6,,PROCESSOR_ERROR,INC-001,0.6471,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,PSE,CO,,14,12,2,,INSUFFICIENT_FUNDS,,0.8571,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,card,BR,Banco do Brasil,3,2,1,,PROCESSOR_ERROR,INC-001,0.6667,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,card,BR,Bradesco,2,1,1,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,card,BR,Itau,3,2,1,,PROCESSOR_ERROR,INC-001,0.6667,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,card,BR,Nubank,2,1,1,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,card,CO,Banco de Bogota,8,8,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,card,CO,Bancolombia,6,4,2,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,card,CO,Davivienda,11,11,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,card,MX,BBVA,2,2,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,card,MX,Banorte,2,1,1,,SUSPECTED_FRAUD,,0.5,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,card,MX,Santander,2,1,1,,DO_NOT_HONOR,,0.5,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,cash_in_store,MX,,20,13,7,,DO_NOT_HONOR,,0.65,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,wallet,BR,,12,6,6,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,wallet,CO,,22,19,3,,DO_NOT_HONOR,,0.8636,0,10
+2026-08-31 10:04:00,Merchant_B,Adyen,wallet,MX,,13,13,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,PIX,BR,,10,10,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,PSE,CO,,17,16,1,,DO_NOT_HONOR,,0.9412,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,card,BR,Bradesco,3,2,1,,INVALID_CARD,,0.6667,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,card,BR,Itau,4,4,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,card,BR,Nubank,1,1,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,card,CO,Banco de Bogota,6,5,1,,INSUFFICIENT_FUNDS,,0.8333,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,card,CO,Bancolombia,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,card,MX,BBVA,6,6,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,card,MX,Banorte,2,2,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,card,MX,Citibanamex,4,4,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,card,MX,Santander,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,cash_in_store,MX,,6,6,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,wallet,BR,,21,19,2,,INVALID_CARD,,0.9048,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,wallet,CO,,17,17,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,Stripe,wallet,MX,,10,10,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,PIX,BR,,15,15,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,PSE,CO,,21,17,4,,DO_NOT_HONOR,,0.8095,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,card,BR,Banco do Brasil,4,4,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,card,BR,Nubank,4,4,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,card,CO,Banco de Bogota,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,card,CO,Bancolombia,2,2,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,card,CO,Davivienda,5,5,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,card,MX,BBVA,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,card,MX,Banorte,2,1,1,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,card,MX,Citibanamex,3,2,1,,INVALID_CARD,,0.6667,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,card,MX,Santander,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,cash_in_store,MX,,13,12,1,,INSUFFICIENT_FUNDS,,0.9231,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,wallet,BR,,12,11,1,,INVALID_CARD,,0.9167,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,wallet,CO,,14,13,1,,SUSPECTED_FRAUD,,0.9286,0,10
+2026-08-31 10:04:00,Merchant_B,dLocal,wallet,MX,,22,19,3,,DO_NOT_HONOR,,0.8636,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,PIX,BR,,16,11,5,,PROCESSOR_ERROR,INC-001,0.6875,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,PSE,CO,,19,19,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,card,BR,Banco do Brasil,3,3,0,,,INC-001,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,card,BR,Bradesco,3,2,1,,PROCESSOR_ERROR,INC-001,0.6667,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,card,BR,Itau,3,2,1,,PROCESSOR_ERROR,INC-001,0.6667,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,card,BR,Nubank,2,1,1,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,card,CO,Banco de Bogota,8,8,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,card,CO,Bancolombia,6,6,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,card,MX,Banorte,1,1,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,card,MX,Citibanamex,4,4,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,card,MX,Santander,4,4,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,cash_in_store,MX,,14,12,2,,INSUFFICIENT_FUNDS,,0.8571,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,wallet,BR,,9,7,2,,PROCESSOR_ERROR,INC-001,0.7778,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,wallet,CO,,15,14,1,,INVALID_CARD,,0.9333,0,10
+2026-08-31 10:04:00,Merchant_C,Adyen,wallet,MX,,17,16,1,,DO_NOT_HONOR,,0.9412,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,PIX,BR,,16,14,2,,INSUFFICIENT_FUNDS,,0.875,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,PSE,CO,,14,11,3,,INVALID_CARD,,0.7857,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,card,BR,Banco do Brasil,2,2,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,card,BR,Bradesco,4,4,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,card,BR,Itau,3,3,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,card,BR,Nubank,4,4,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,card,CO,Banco de Bogota,9,9,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,card,CO,Bancolombia,2,2,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,card,CO,Davivienda,3,1,2,,DO_NOT_HONOR,,0.3333,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,card,MX,BBVA,2,2,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,card,MX,Banorte,2,2,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,card,MX,Citibanamex,2,2,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,cash_in_store,MX,,9,8,1,,INVALID_CARD,,0.8889,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,wallet,BR,,5,5,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,wallet,CO,,15,14,1,,INSUFFICIENT_FUNDS,,0.9333,0,10
+2026-08-31 10:04:00,Merchant_C,Stripe,wallet,MX,,9,9,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,PIX,BR,,12,11,1,,SUSPECTED_FRAUD,,0.9167,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,PSE,CO,,22,16,6,,DO_NOT_HONOR,,0.7273,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,card,BR,Bradesco,1,1,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,card,BR,Itau,6,6,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,card,BR,Nubank,5,5,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,card,CO,Banco de Bogota,8,8,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,card,CO,Bancolombia,1,0,1,,INVALID_CARD,,0.0,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,card,CO,Davivienda,8,8,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,card,MX,BBVA,9,9,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,card,MX,Banorte,4,4,0,,,,1.0,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,card,MX,Citibanamex,7,6,1,,INVALID_CARD,,0.8571,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,card,MX,Santander,2,1,1,,INVALID_CARD,,0.5,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,cash_in_store,MX,,19,18,1,,SUSPECTED_FRAUD,,0.9474,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,wallet,BR,,15,12,3,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,wallet,CO,,15,14,1,,DO_NOT_HONOR,,0.9333,0,10
+2026-08-31 10:04:00,Merchant_C,dLocal,wallet,MX,,20,18,2,,INSUFFICIENT_FUNDS,,0.9,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,PIX,BR,,21,13,8,,PROCESSOR_ERROR,INC-001,0.619,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,PSE,CO,,18,18,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,card,BR,Banco do Brasil,4,2,2,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,card,BR,Bradesco,2,1,1,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,card,BR,Itau,7,3,4,,PROCESSOR_ERROR,INC-001,0.4286,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,card,BR,Nubank,4,0,4,,PROCESSOR_ERROR,INC-001,0.0,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,card,CO,Banco de Bogota,9,8,1,,INSUFFICIENT_FUNDS,,0.8889,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,card,CO,Bancolombia,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,card,MX,BBVA,3,1,2,,ISSUER_UNAVAILABLE,INC-002,0.3333,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,card,MX,Banorte,2,2,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,card,MX,Citibanamex,6,6,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,card,MX,Santander,5,5,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,cash_in_store,MX,,11,10,1,,INSUFFICIENT_FUNDS,,0.9091,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,wallet,BR,,14,7,7,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,wallet,CO,,11,11,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,Adyen,wallet,MX,,10,10,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,PIX,BR,,21,20,1,,SUSPECTED_FRAUD,,0.9524,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,PSE,CO,,11,9,2,,INSUFFICIENT_FUNDS,,0.8182,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,card,BR,Banco do Brasil,1,1,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,card,BR,Itau,7,7,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,card,BR,Nubank,2,1,1,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,card,CO,Banco de Bogota,6,6,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,card,CO,Bancolombia,3,2,1,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,card,CO,Davivienda,3,1,2,,DO_NOT_HONOR,,0.3333,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,card,MX,BBVA,5,2,3,,ISSUER_UNAVAILABLE,INC-002,0.4,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,card,MX,Citibanamex,3,2,1,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,cash_in_store,MX,,18,14,4,,INVALID_CARD,,0.7778,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,wallet,BR,,19,17,2,,INVALID_CARD,,0.8947,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,wallet,CO,,17,16,1,,INVALID_CARD,,0.9412,0,10
+2026-08-31 10:05:00,Merchant_A,Stripe,wallet,MX,,18,14,4,,INSUFFICIENT_FUNDS,,0.7778,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,PIX,BR,,9,9,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,PSE,CO,,14,12,2,,INVALID_CARD,,0.8571,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,card,BR,Banco do Brasil,4,4,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,card,BR,Bradesco,4,2,2,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,card,CO,Banco de Bogota,6,5,1,,INSUFFICIENT_FUNDS,,0.8333,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,card,CO,Bancolombia,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,card,CO,Davivienda,10,10,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,card,MX,BBVA,2,0,2,,ISSUER_UNAVAILABLE,INC-002,0.0,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,card,MX,Banorte,3,2,1,,SUSPECTED_FRAUD,,0.6667,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,card,MX,Citibanamex,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,cash_in_store,MX,,14,13,1,,SUSPECTED_FRAUD,,0.9286,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,wallet,BR,,15,14,1,,DO_NOT_HONOR,,0.9333,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,wallet,CO,,9,7,2,,DO_NOT_HONOR,,0.7778,0,10
+2026-08-31 10:05:00,Merchant_A,dLocal,wallet,MX,,17,16,1,,DO_NOT_HONOR,,0.9412,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,PIX,BR,,18,6,12,,PROCESSOR_ERROR,INC-001,0.3333,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,PSE,CO,,21,19,2,,INSUFFICIENT_FUNDS,,0.9048,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,card,BR,Banco do Brasil,4,3,1,,PROCESSOR_ERROR,INC-001,0.75,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,card,BR,Bradesco,2,2,0,,,INC-001,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,card,BR,Itau,1,0,1,,PROCESSOR_ERROR,INC-001,0.0,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,card,BR,Nubank,1,1,0,,,INC-001,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,card,CO,Banco de Bogota,7,7,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,card,CO,Bancolombia,6,5,1,,INVALID_CARD,,0.8333,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,card,CO,Davivienda,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,card,MX,BBVA,5,5,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,card,MX,Citibanamex,2,1,1,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,card,MX,Santander,5,5,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,cash_in_store,MX,,17,13,4,,DO_NOT_HONOR,,0.7647,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,wallet,BR,,18,10,8,,PROCESSOR_ERROR,INC-001,0.5556,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,wallet,CO,,17,14,3,,DO_NOT_HONOR,,0.8235,0,10
+2026-08-31 10:05:00,Merchant_B,Adyen,wallet,MX,,17,17,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,PIX,BR,,19,19,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,PSE,CO,,13,13,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,card,BR,Itau,4,4,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,card,BR,Nubank,9,9,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,card,CO,Banco de Bogota,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,card,CO,Bancolombia,8,8,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,card,CO,Davivienda,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,card,MX,BBVA,1,1,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,card,MX,Citibanamex,4,4,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,card,MX,Santander,4,4,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,cash_in_store,MX,,11,7,4,,INVALID_CARD,,0.6364,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,wallet,BR,,21,19,2,,DO_NOT_HONOR,,0.9048,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,wallet,CO,,13,11,2,,DO_NOT_HONOR,,0.8462,0,10
+2026-08-31 10:05:00,Merchant_B,Stripe,wallet,MX,,16,14,2,,DO_NOT_HONOR,,0.875,0,10
+2026-08-31 10:05:00,Merchant_B,dLocal,PIX,BR,,19,19,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,dLocal,PSE,CO,,15,13,2,,SUSPECTED_FRAUD,,0.8667,0,10
+2026-08-31 10:05:00,Merchant_B,dLocal,card,BR,Banco do Brasil,5,3,2,,INVALID_CARD,,0.6,0,10
+2026-08-31 10:05:00,Merchant_B,dLocal,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,dLocal,card,BR,Itau,7,7,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,dLocal,card,BR,Nubank,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,dLocal,card,CO,Banco de Bogota,2,2,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,dLocal,card,CO,Bancolombia,7,7,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,dLocal,card,CO,Davivienda,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:05:00,Merchant_B,dLocal,card,MX,BBVA,2,2,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,dLocal,card,MX,Banorte,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:05:00,Merchant_B,dLocal,cash_in_store,MX,,17,17,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_B,dLocal,wallet,BR,,9,8,1,,INVALID_CARD,,0.8889,0,10
+2026-08-31 10:05:00,Merchant_B,dLocal,wallet,CO,,9,8,1,,INSUFFICIENT_FUNDS,,0.8889,0,10
+2026-08-31 10:05:00,Merchant_B,dLocal,wallet,MX,,9,7,2,,DO_NOT_HONOR,,0.7778,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,PIX,BR,,16,11,5,,PROCESSOR_ERROR,INC-001,0.6875,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,PSE,CO,,11,8,3,,INSUFFICIENT_FUNDS,,0.7273,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,card,BR,Banco do Brasil,4,1,3,,PROCESSOR_ERROR,INC-001,0.25,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,card,BR,Bradesco,2,1,1,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,card,BR,Itau,2,0,2,,PROCESSOR_ERROR,INC-001,0.0,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,card,BR,Nubank,3,1,2,,PROCESSOR_ERROR,INC-001,0.3333,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,card,CO,Banco de Bogota,7,7,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,card,CO,Bancolombia,5,5,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,card,CO,Davivienda,1,1,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,card,MX,BBVA,5,5,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,card,MX,Banorte,7,7,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,card,MX,Citibanamex,4,3,1,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,card,MX,Santander,4,4,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,cash_in_store,MX,,14,14,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,wallet,BR,,13,9,4,,PROCESSOR_ERROR,INC-001,0.6923,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,wallet,CO,,16,14,2,,INVALID_CARD,,0.875,0,10
+2026-08-31 10:05:00,Merchant_C,Adyen,wallet,MX,,17,16,1,,INVALID_CARD,,0.9412,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,PIX,BR,,15,14,1,,DO_NOT_HONOR,,0.9333,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,PSE,CO,,11,10,1,,INVALID_CARD,,0.9091,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,card,BR,Banco do Brasil,5,5,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,card,BR,Bradesco,2,1,1,,INVALID_CARD,,0.5,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,card,BR,Itau,6,6,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,card,BR,Nubank,7,7,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,card,CO,Banco de Bogota,4,3,1,,SUSPECTED_FRAUD,,0.75,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,card,CO,Bancolombia,4,4,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,card,CO,Davivienda,6,6,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,card,MX,BBVA,4,4,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,card,MX,Santander,5,4,1,,INVALID_CARD,,0.8,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,cash_in_store,MX,,9,5,4,,DO_NOT_HONOR,,0.5556,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,wallet,BR,,9,7,2,,DO_NOT_HONOR,,0.7778,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,wallet,CO,,17,15,2,,DO_NOT_HONOR,,0.8824,0,10
+2026-08-31 10:05:00,Merchant_C,Stripe,wallet,MX,,14,13,1,,SUSPECTED_FRAUD,,0.9286,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,PIX,BR,,19,18,1,,INSUFFICIENT_FUNDS,,0.9474,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,PSE,CO,,17,15,2,,INSUFFICIENT_FUNDS,,0.8824,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,card,BR,Banco do Brasil,2,2,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,card,BR,Nubank,2,2,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,card,CO,Banco de Bogota,6,6,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,card,CO,Bancolombia,7,7,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,card,CO,Davivienda,4,2,2,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,card,MX,BBVA,6,6,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,card,MX,Banorte,4,4,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,card,MX,Citibanamex,5,3,2,,DO_NOT_HONOR,,0.6,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,cash_in_store,MX,,16,15,1,,INSUFFICIENT_FUNDS,,0.9375,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,wallet,BR,,14,11,3,,INSUFFICIENT_FUNDS,,0.7857,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,wallet,CO,,23,20,3,,SUSPECTED_FRAUD,,0.8696,0,10
+2026-08-31 10:05:00,Merchant_C,dLocal,wallet,MX,,17,17,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,PIX,BR,,15,7,8,,PROCESSOR_ERROR,INC-001,0.4667,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,PSE,CO,,17,17,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,card,BR,Banco do Brasil,4,3,1,,PROCESSOR_ERROR,INC-001,0.75,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,card,BR,Bradesco,9,6,3,,PROCESSOR_ERROR,INC-001,0.6667,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,card,BR,Itau,3,1,2,,PROCESSOR_ERROR,INC-001,0.3333,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,card,BR,Nubank,3,1,2,,PROCESSOR_ERROR,INC-001,0.3333,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,card,CO,Banco de Bogota,8,8,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,card,CO,Bancolombia,5,5,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,card,MX,BBVA,4,1,3,,ISSUER_UNAVAILABLE,INC-002,0.25,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,card,MX,Banorte,7,6,1,,INVALID_CARD,,0.8571,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,cash_in_store,MX,,15,11,4,,INVALID_CARD,,0.7333,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,wallet,BR,,20,11,9,,PROCESSOR_ERROR,INC-001,0.55,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,wallet,CO,,15,13,2,,INSUFFICIENT_FUNDS,,0.8667,0,10
+2026-08-31 10:06:00,Merchant_A,Adyen,wallet,MX,,15,14,1,,DO_NOT_HONOR,,0.9333,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,PIX,BR,,11,10,1,,INVALID_CARD,,0.9091,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,PSE,CO,,18,17,1,,DO_NOT_HONOR,,0.9444,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,card,BR,Itau,4,4,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,card,BR,Nubank,2,2,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,card,CO,Banco de Bogota,3,3,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,card,CO,Bancolombia,3,3,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,card,CO,Davivienda,2,2,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,card,MX,BBVA,2,0,2,,ISSUER_UNAVAILABLE,INC-002,0.0,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,card,MX,Banorte,1,1,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,card,MX,Citibanamex,5,4,1,,DO_NOT_HONOR,,0.8,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,cash_in_store,MX,,7,7,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,wallet,BR,,16,15,1,,DO_NOT_HONOR,,0.9375,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,wallet,CO,,15,15,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,Stripe,wallet,MX,,17,16,1,,DO_NOT_HONOR,,0.9412,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,PIX,BR,,20,19,1,,INSUFFICIENT_FUNDS,,0.95,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,PSE,CO,,13,13,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,card,BR,Banco do Brasil,5,5,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,card,BR,Itau,4,4,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,card,BR,Nubank,4,3,1,,SUSPECTED_FRAUD,,0.75,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,card,CO,Banco de Bogota,4,3,1,,SUSPECTED_FRAUD,,0.75,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,card,CO,Bancolombia,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,card,CO,Davivienda,4,3,1,,SUSPECTED_FRAUD,,0.75,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,card,MX,BBVA,2,1,1,,ISSUER_UNAVAILABLE,INC-002,0.5,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,card,MX,Banorte,2,2,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,card,MX,Citibanamex,5,5,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,card,MX,Santander,3,2,1,,SUSPECTED_FRAUD,,0.6667,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,cash_in_store,MX,,15,13,2,,DO_NOT_HONOR,,0.8667,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,wallet,BR,,9,9,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,wallet,CO,,25,23,2,,INSUFFICIENT_FUNDS,,0.92,0,10
+2026-08-31 10:06:00,Merchant_A,dLocal,wallet,MX,,17,17,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,PIX,BR,,14,8,6,,PROCESSOR_ERROR,INC-001,0.5714,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,PSE,CO,,19,15,4,,INVALID_CARD,,0.7895,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,card,BR,Banco do Brasil,1,0,1,,PROCESSOR_ERROR,INC-001,0.0,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,card,BR,Bradesco,3,0,3,,PROCESSOR_ERROR,INC-001,0.0,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,card,BR,Itau,1,0,1,,PROCESSOR_ERROR,INC-001,0.0,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,card,BR,Nubank,6,1,5,,PROCESSOR_ERROR,INC-001,0.1667,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,card,CO,Banco de Bogota,3,3,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,card,CO,Bancolombia,9,8,1,,INSUFFICIENT_FUNDS,,0.8889,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,card,CO,Davivienda,7,6,1,,INVALID_CARD,,0.8571,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,card,MX,BBVA,4,4,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,card,MX,Banorte,1,1,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,card,MX,Citibanamex,4,4,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,card,MX,Santander,4,4,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,cash_in_store,MX,,17,15,2,,INVALID_CARD,,0.8824,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,wallet,BR,,15,6,9,,PROCESSOR_ERROR,INC-001,0.4,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,wallet,CO,,10,10,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,Adyen,wallet,MX,,15,14,1,,SUSPECTED_FRAUD,,0.9333,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,PIX,BR,,15,15,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,PSE,CO,,19,17,2,,INVALID_CARD,,0.8947,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,card,BR,Banco do Brasil,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,card,BR,Bradesco,2,1,1,,INVALID_CARD,,0.5,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,card,BR,Nubank,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,card,CO,Banco de Bogota,6,5,1,,INSUFFICIENT_FUNDS,,0.8333,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,card,CO,Bancolombia,6,5,1,,SUSPECTED_FRAUD,,0.8333,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,card,CO,Davivienda,6,6,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,card,MX,BBVA,5,5,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,card,MX,Banorte,5,4,1,,DO_NOT_HONOR,,0.8,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,card,MX,Citibanamex,10,9,1,,INSUFFICIENT_FUNDS,,0.9,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,card,MX,Santander,2,2,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,cash_in_store,MX,,17,13,4,,DO_NOT_HONOR,,0.7647,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,wallet,BR,,16,16,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,wallet,CO,,7,7,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,Stripe,wallet,MX,,10,9,1,,INSUFFICIENT_FUNDS,,0.9,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,PIX,BR,,14,13,1,,INSUFFICIENT_FUNDS,,0.9286,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,PSE,CO,,20,15,5,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,card,BR,Banco do Brasil,4,3,1,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,card,BR,Bradesco,4,3,1,,SUSPECTED_FRAUD,,0.75,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,card,BR,Itau,6,6,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,card,BR,Nubank,3,2,1,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,card,CO,Banco de Bogota,2,2,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,card,CO,Bancolombia,7,6,1,,DO_NOT_HONOR,,0.8571,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,card,CO,Davivienda,3,3,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,card,MX,BBVA,8,6,2,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,card,MX,Banorte,9,7,2,,DO_NOT_HONOR,,0.7778,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,card,MX,Citibanamex,4,4,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,card,MX,Santander,3,1,2,,INSUFFICIENT_FUNDS,,0.3333,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,cash_in_store,MX,,18,17,1,,INSUFFICIENT_FUNDS,,0.9444,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,wallet,BR,,13,11,2,,INSUFFICIENT_FUNDS,,0.8462,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,wallet,CO,,14,11,3,,INVALID_CARD,,0.7857,0,10
+2026-08-31 10:06:00,Merchant_B,dLocal,wallet,MX,,12,10,2,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,PIX,BR,,13,5,8,,PROCESSOR_ERROR,INC-001,0.3846,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,PSE,CO,,16,14,2,,INVALID_CARD,,0.875,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,card,BR,Banco do Brasil,7,4,3,,PROCESSOR_ERROR,INC-001,0.5714,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,card,BR,Bradesco,6,3,3,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,card,BR,Itau,5,3,2,,PROCESSOR_ERROR,INC-001,0.6,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,card,BR,Nubank,5,2,3,,PROCESSOR_ERROR,INC-001,0.4,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,card,CO,Banco de Bogota,1,1,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,card,CO,Bancolombia,3,3,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,card,CO,Davivienda,6,6,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,card,MX,BBVA,3,3,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,card,MX,Banorte,7,7,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,card,MX,Citibanamex,2,2,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,card,MX,Santander,7,7,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,cash_in_store,MX,,13,9,4,,DO_NOT_HONOR,,0.6923,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,wallet,BR,,11,7,4,,PROCESSOR_ERROR,INC-001,0.6364,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,wallet,CO,,17,15,2,,DO_NOT_HONOR,,0.8824,0,10
+2026-08-31 10:06:00,Merchant_C,Adyen,wallet,MX,,14,14,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,PIX,BR,,13,13,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,PSE,CO,,12,12,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,card,BR,Bradesco,5,4,1,,INVALID_CARD,,0.8,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,card,BR,Itau,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,card,BR,Nubank,6,6,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,card,CO,Banco de Bogota,6,6,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,card,CO,Bancolombia,1,1,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,card,CO,Davivienda,5,3,2,,INSUFFICIENT_FUNDS,,0.6,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,card,MX,BBVA,6,5,1,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,card,MX,Banorte,2,2,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,card,MX,Citibanamex,6,5,1,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,card,MX,Santander,1,1,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,cash_in_store,MX,,4,3,1,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,wallet,BR,,17,17,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,wallet,CO,,12,12,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,Stripe,wallet,MX,,13,12,1,,INSUFFICIENT_FUNDS,,0.9231,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,PIX,BR,,19,19,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,PSE,CO,,16,14,2,,INSUFFICIENT_FUNDS,,0.875,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,card,BR,Banco do Brasil,6,4,2,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,card,BR,Nubank,4,4,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,card,CO,Banco de Bogota,4,4,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,card,CO,Bancolombia,2,2,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,card,CO,Davivienda,3,3,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,card,MX,BBVA,5,5,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,card,MX,Banorte,1,1,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,card,MX,Citibanamex,1,1,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,card,MX,Santander,5,5,0,,,,1.0,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,cash_in_store,MX,,9,7,2,,DO_NOT_HONOR,,0.7778,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,wallet,BR,,15,14,1,,SUSPECTED_FRAUD,,0.9333,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,wallet,CO,,18,17,1,,INVALID_CARD,,0.9444,0,10
+2026-08-31 10:06:00,Merchant_C,dLocal,wallet,MX,,18,16,2,,SUSPECTED_FRAUD,,0.8889,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,PIX,BR,,14,7,7,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,PSE,CO,,15,13,2,,INSUFFICIENT_FUNDS,,0.8667,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,card,BR,Banco do Brasil,3,3,0,,,INC-001,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,card,BR,Bradesco,4,2,2,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,card,BR,Itau,4,3,1,,PROCESSOR_ERROR,INC-001,0.75,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,card,BR,Nubank,2,0,2,,PROCESSOR_ERROR,INC-001,0.0,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,card,CO,Banco de Bogota,6,6,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,card,CO,Bancolombia,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,card,CO,Davivienda,6,5,1,,INSUFFICIENT_FUNDS,,0.8333,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,card,MX,BBVA,3,0,3,,ISSUER_UNAVAILABLE,INC-002,0.0,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,card,MX,Citibanamex,4,4,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,card,MX,Santander,1,1,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,cash_in_store,MX,,11,8,3,,SUSPECTED_FRAUD,,0.7273,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,wallet,BR,,18,12,6,,PROCESSOR_ERROR,INC-001,0.6667,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,wallet,CO,,24,22,2,,DO_NOT_HONOR,,0.9167,0,10
+2026-08-31 10:07:00,Merchant_A,Adyen,wallet,MX,,13,13,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,PIX,BR,,12,12,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,PSE,CO,,31,23,8,,DO_NOT_HONOR,,0.7419,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,card,BR,Banco do Brasil,2,2,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,card,BR,Itau,4,2,2,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,card,BR,Nubank,2,1,1,,DO_NOT_HONOR,,0.5,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,card,CO,Banco de Bogota,5,5,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,card,CO,Bancolombia,5,4,1,,INVALID_CARD,,0.8,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,card,CO,Davivienda,5,5,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,card,MX,BBVA,3,2,1,,ISSUER_UNAVAILABLE,INC-002,0.6667,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,card,MX,Citibanamex,1,1,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,card,MX,Santander,4,4,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,cash_in_store,MX,,18,17,1,,DO_NOT_HONOR,,0.9444,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,wallet,BR,,16,13,3,,SUSPECTED_FRAUD,,0.8125,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,wallet,CO,,14,13,1,,DO_NOT_HONOR,,0.9286,0,10
+2026-08-31 10:07:00,Merchant_A,Stripe,wallet,MX,,16,14,2,,INSUFFICIENT_FUNDS,,0.875,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,PIX,BR,,14,12,2,,DO_NOT_HONOR,,0.8571,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,PSE,CO,,20,18,2,,DO_NOT_HONOR,,0.9,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,card,BR,Banco do Brasil,4,4,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,card,BR,Bradesco,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,card,BR,Itau,4,4,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,card,BR,Nubank,1,1,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,card,CO,Banco de Bogota,6,6,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,card,CO,Bancolombia,5,5,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,card,MX,BBVA,1,0,1,,ISSUER_UNAVAILABLE,INC-002,0.0,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,card,MX,Banorte,4,4,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,card,MX,Citibanamex,6,5,1,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,card,MX,Santander,1,1,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,cash_in_store,MX,,11,8,3,,INVALID_CARD,,0.7273,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,wallet,BR,,20,20,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,wallet,CO,,15,14,1,,INSUFFICIENT_FUNDS,,0.9333,0,10
+2026-08-31 10:07:00,Merchant_A,dLocal,wallet,MX,,21,19,2,,INSUFFICIENT_FUNDS,,0.9048,0,10
+2026-08-31 10:07:00,Merchant_B,Adyen,PIX,BR,,19,11,8,,PROCESSOR_ERROR,INC-001,0.5789,0,10
+2026-08-31 10:07:00,Merchant_B,Adyen,PSE,CO,,16,15,1,,DO_NOT_HONOR,,0.9375,0,10
+2026-08-31 10:07:00,Merchant_B,Adyen,card,BR,Banco do Brasil,3,2,1,,PROCESSOR_ERROR,INC-001,0.6667,0,10
+2026-08-31 10:07:00,Merchant_B,Adyen,card,BR,Bradesco,1,0,1,,PROCESSOR_ERROR,INC-001,0.0,0,10
+2026-08-31 10:07:00,Merchant_B,Adyen,card,BR,Itau,6,2,4,,PROCESSOR_ERROR,INC-001,0.3333,0,10
+2026-08-31 10:07:00,Merchant_B,Adyen,card,BR,Nubank,2,2,0,,,INC-001,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,Adyen,card,CO,Bancolombia,4,4,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,Adyen,card,CO,Davivienda,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:07:00,Merchant_B,Adyen,card,MX,Citibanamex,2,1,1,,INVALID_CARD,,0.5,0,10
+2026-08-31 10:07:00,Merchant_B,Adyen,card,MX,Santander,4,4,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,Adyen,cash_in_store,MX,,13,10,3,,DO_NOT_HONOR,,0.7692,0,10
+2026-08-31 10:07:00,Merchant_B,Adyen,wallet,BR,,13,5,8,,PROCESSOR_ERROR,INC-001,0.3846,0,10
+2026-08-31 10:07:00,Merchant_B,Adyen,wallet,CO,,17,15,2,,DO_NOT_HONOR,,0.8824,0,10
+2026-08-31 10:07:00,Merchant_B,Adyen,wallet,MX,,21,17,4,,INSUFFICIENT_FUNDS,,0.8095,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,PIX,BR,,10,10,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,PSE,CO,,12,10,2,,SUSPECTED_FRAUD,,0.8333,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,card,BR,Banco do Brasil,3,1,2,,DO_NOT_HONOR,,0.3333,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,card,BR,Itau,3,3,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,card,BR,Nubank,5,5,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,card,CO,Banco de Bogota,3,3,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,card,CO,Bancolombia,4,4,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,card,CO,Davivienda,7,7,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,card,MX,BBVA,3,2,1,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,card,MX,Banorte,6,6,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,card,MX,Santander,2,2,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,cash_in_store,MX,,18,14,4,,INSUFFICIENT_FUNDS,,0.7778,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,wallet,BR,,19,19,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,wallet,CO,,23,23,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,Stripe,wallet,MX,,17,17,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,PIX,BR,,14,10,4,,SUSPECTED_FRAUD,,0.7143,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,PSE,CO,,17,16,1,,INVALID_CARD,,0.9412,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,card,BR,Banco do Brasil,6,6,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,card,BR,Itau,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,card,BR,Nubank,4,4,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,card,CO,Banco de Bogota,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,card,CO,Bancolombia,3,2,1,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,card,CO,Davivienda,8,7,1,,DO_NOT_HONOR,,0.875,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,card,MX,BBVA,3,2,1,,SUSPECTED_FRAUD,,0.6667,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,card,MX,Santander,5,5,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,cash_in_store,MX,,9,6,3,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,wallet,BR,,12,12,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,wallet,CO,,16,16,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_B,dLocal,wallet,MX,,10,10,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,PIX,BR,,22,11,11,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,PSE,CO,,11,11,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,card,BR,Banco do Brasil,2,1,1,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,card,BR,Bradesco,2,1,1,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,card,BR,Itau,5,3,2,,PROCESSOR_ERROR,INC-001,0.6,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,card,BR,Nubank,4,2,2,,PROCESSOR_ERROR,INC-001,0.5,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,card,CO,Banco de Bogota,6,5,1,,INVALID_CARD,,0.8333,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,card,CO,Bancolombia,6,5,1,,INVALID_CARD,,0.8333,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,card,CO,Davivienda,5,5,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,card,MX,BBVA,2,2,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,card,MX,Citibanamex,4,4,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,card,MX,Santander,2,2,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,cash_in_store,MX,,16,13,3,,DO_NOT_HONOR,,0.8125,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,wallet,BR,,12,3,9,,PROCESSOR_ERROR,INC-001,0.25,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,wallet,CO,,10,10,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Adyen,wallet,MX,,13,13,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,PIX,BR,,18,17,1,,INVALID_CARD,,0.9444,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,PSE,CO,,11,10,1,,INVALID_CARD,,0.9091,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,card,BR,Bradesco,1,1,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,card,BR,Itau,1,1,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,card,BR,Nubank,8,8,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,card,CO,Banco de Bogota,9,8,1,,DO_NOT_HONOR,,0.8889,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,card,CO,Bancolombia,3,3,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,card,CO,Davivienda,3,2,1,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,card,MX,BBVA,7,7,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,card,MX,Citibanamex,7,7,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,card,MX,Santander,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,cash_in_store,MX,,14,12,2,,INSUFFICIENT_FUNDS,,0.8571,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,wallet,BR,,15,13,2,,INVALID_CARD,,0.8667,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,wallet,CO,,17,16,1,,INSUFFICIENT_FUNDS,,0.9412,0,10
+2026-08-31 10:07:00,Merchant_C,Stripe,wallet,MX,,7,7,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,PIX,BR,,12,11,1,,INSUFFICIENT_FUNDS,,0.9167,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,PSE,CO,,11,9,2,,INSUFFICIENT_FUNDS,,0.8182,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,card,BR,Banco do Brasil,4,4,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,card,BR,Bradesco,1,1,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,card,BR,Itau,3,2,1,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,card,BR,Nubank,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,card,CO,Banco de Bogota,5,5,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,card,CO,Bancolombia,6,5,1,,INVALID_CARD,,0.8333,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,card,CO,Davivienda,8,7,1,,INVALID_CARD,,0.875,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,card,MX,BBVA,3,3,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,card,MX,Banorte,8,7,1,,SUSPECTED_FRAUD,,0.875,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,card,MX,Santander,1,0,1,,INSUFFICIENT_FUNDS,,0.0,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,cash_in_store,MX,,18,14,4,,INSUFFICIENT_FUNDS,,0.7778,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,wallet,BR,,12,11,1,,INVALID_CARD,,0.9167,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,wallet,CO,,13,13,0,,,,1.0,0,10
+2026-08-31 10:07:00,Merchant_C,dLocal,wallet,MX,,16,14,2,,INSUFFICIENT_FUNDS,,0.875,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,PIX,BR,,14,14,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,PSE,CO,,13,13,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,card,BR,Banco do Brasil,2,2,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,card,BR,Nubank,8,6,2,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,card,CO,Banco de Bogota,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,card,CO,Bancolombia,6,6,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,card,CO,Davivienda,7,7,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,card,MX,BBVA,5,0,5,,ISSUER_UNAVAILABLE,INC-002,0.0,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,card,MX,Citibanamex,3,1,2,,INVALID_CARD,,0.3333,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,card,MX,Santander,7,6,1,,DO_NOT_HONOR,,0.8571,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,cash_in_store,MX,,12,11,1,,SUSPECTED_FRAUD,,0.9167,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,wallet,BR,,15,14,1,,SUSPECTED_FRAUD,,0.9333,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,wallet,CO,,19,18,1,,INSUFFICIENT_FUNDS,,0.9474,0,10
+2026-08-31 10:08:00,Merchant_A,Adyen,wallet,MX,,18,17,1,,DO_NOT_HONOR,,0.9444,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,PIX,BR,,15,14,1,,INSUFFICIENT_FUNDS,,0.9333,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,PSE,CO,,10,9,1,,INSUFFICIENT_FUNDS,,0.9,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,card,BR,Banco do Brasil,2,2,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,card,BR,Bradesco,3,2,1,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,card,BR,Itau,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,card,BR,Nubank,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,card,CO,Banco de Bogota,5,4,1,,INVALID_CARD,,0.8,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,card,CO,Bancolombia,6,5,1,,INVALID_CARD,,0.8333,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,card,CO,Davivienda,5,5,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,card,MX,BBVA,4,1,3,,ISSUER_UNAVAILABLE,INC-002,0.25,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,card,MX,Banorte,6,5,1,,SUSPECTED_FRAUD,,0.8333,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,card,MX,Santander,2,2,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,cash_in_store,MX,,16,12,4,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,wallet,BR,,13,11,2,,INVALID_CARD,,0.8462,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,wallet,CO,,16,15,1,,INVALID_CARD,,0.9375,0,10
+2026-08-31 10:08:00,Merchant_A,Stripe,wallet,MX,,14,13,1,,INSUFFICIENT_FUNDS,,0.9286,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,PIX,BR,,14,12,2,,SUSPECTED_FRAUD,,0.8571,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,PSE,CO,,21,17,4,,INSUFFICIENT_FUNDS,,0.8095,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,card,BR,Banco do Brasil,5,5,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,card,BR,Itau,4,4,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,card,BR,Nubank,1,1,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,card,CO,Banco de Bogota,6,5,1,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,card,CO,Bancolombia,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,card,MX,BBVA,1,1,0,,,INC-002,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,card,MX,Banorte,6,5,1,,SUSPECTED_FRAUD,,0.8333,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,card,MX,Citibanamex,2,2,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,card,MX,Santander,6,5,1,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,cash_in_store,MX,,17,14,3,,DO_NOT_HONOR,,0.8235,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,wallet,BR,,23,21,2,,INSUFFICIENT_FUNDS,,0.913,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,wallet,CO,,14,14,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_A,dLocal,wallet,MX,,12,8,4,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,PIX,BR,,12,12,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,PSE,CO,,17,16,1,,DO_NOT_HONOR,,0.9412,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,card,BR,Nubank,2,2,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,card,CO,Banco de Bogota,8,8,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,card,CO,Bancolombia,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,card,CO,Davivienda,6,6,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,card,MX,BBVA,2,2,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,card,MX,Citibanamex,7,7,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,cash_in_store,MX,,22,16,6,,INVALID_CARD,,0.7273,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,wallet,BR,,12,12,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,wallet,CO,,16,16,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Adyen,wallet,MX,,13,12,1,,INSUFFICIENT_FUNDS,,0.9231,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,PIX,BR,,14,14,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,PSE,CO,,16,12,4,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,card,BR,Banco do Brasil,5,4,1,,INVALID_CARD,,0.8,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,card,BR,Itau,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,card,BR,Nubank,2,2,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,card,CO,Banco de Bogota,7,6,1,,DO_NOT_HONOR,,0.8571,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,card,CO,Bancolombia,6,6,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,card,CO,Davivienda,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,card,MX,BBVA,1,0,1,,DO_NOT_HONOR,,0.0,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,card,MX,Santander,6,5,1,,INVALID_CARD,,0.8333,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,cash_in_store,MX,,12,10,2,,INSUFFICIENT_FUNDS,,0.8333,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,wallet,BR,,14,12,2,,DO_NOT_HONOR,,0.8571,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,wallet,CO,,13,13,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,Stripe,wallet,MX,,8,8,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,PIX,BR,,18,15,3,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,PSE,CO,,20,18,2,,DO_NOT_HONOR,,0.9,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,card,BR,Banco do Brasil,1,1,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,card,BR,Itau,4,4,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,card,BR,Nubank,7,6,1,,SUSPECTED_FRAUD,,0.8571,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,card,CO,Banco de Bogota,2,2,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,card,CO,Bancolombia,6,6,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,card,MX,BBVA,3,2,1,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,card,MX,Banorte,6,5,1,,INSUFFICIENT_FUNDS,,0.8333,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,card,MX,Citibanamex,1,1,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,card,MX,Santander,3,2,1,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,cash_in_store,MX,,11,8,3,,DO_NOT_HONOR,,0.7273,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,wallet,BR,,21,19,2,,INSUFFICIENT_FUNDS,,0.9048,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,wallet,CO,,15,14,1,,INSUFFICIENT_FUNDS,,0.9333,0,10
+2026-08-31 10:08:00,Merchant_B,dLocal,wallet,MX,,8,8,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,PIX,BR,,13,11,2,,DO_NOT_HONOR,,0.8462,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,PSE,CO,,19,18,1,,INVALID_CARD,,0.9474,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,card,BR,Banco do Brasil,4,4,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,card,BR,Itau,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,card,BR,Nubank,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,card,CO,Banco de Bogota,5,5,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,card,CO,Bancolombia,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,card,CO,Davivienda,7,7,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,card,MX,BBVA,1,1,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,card,MX,Banorte,4,4,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,card,MX,Citibanamex,4,2,2,,DO_NOT_HONOR,,0.5,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,card,MX,Santander,4,4,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,cash_in_store,MX,,11,11,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,wallet,BR,,12,12,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,wallet,CO,,17,13,4,,DO_NOT_HONOR,,0.7647,0,10
+2026-08-31 10:08:00,Merchant_C,Adyen,wallet,MX,,13,10,3,,DO_NOT_HONOR,,0.7692,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,PIX,BR,,10,9,1,,INSUFFICIENT_FUNDS,,0.9,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,PSE,CO,,14,13,1,,INSUFFICIENT_FUNDS,,0.9286,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,card,BR,Banco do Brasil,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,card,BR,Itau,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,card,BR,Nubank,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,card,CO,Banco de Bogota,7,7,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,card,CO,Bancolombia,8,7,1,,SUSPECTED_FRAUD,,0.875,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,card,CO,Davivienda,6,6,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,card,MX,BBVA,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,card,MX,Santander,9,9,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,cash_in_store,MX,,12,11,1,,DO_NOT_HONOR,,0.9167,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,wallet,BR,,13,12,1,,SUSPECTED_FRAUD,,0.9231,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,wallet,CO,,10,9,1,,INVALID_CARD,,0.9,0,10
+2026-08-31 10:08:00,Merchant_C,Stripe,wallet,MX,,11,10,1,,INSUFFICIENT_FUNDS,,0.9091,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,PIX,BR,,20,18,2,,DO_NOT_HONOR,,0.9,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,PSE,CO,,10,9,1,,SUSPECTED_FRAUD,,0.9,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,card,BR,Banco do Brasil,3,2,1,,SUSPECTED_FRAUD,,0.6667,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,card,BR,Itau,6,5,1,,INVALID_CARD,,0.8333,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,card,BR,Nubank,8,7,1,,SUSPECTED_FRAUD,,0.875,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,card,CO,Banco de Bogota,6,6,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,card,CO,Bancolombia,7,7,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,card,MX,Citibanamex,2,2,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,cash_in_store,MX,,16,12,4,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,wallet,BR,,24,22,2,,INVALID_CARD,,0.9167,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,wallet,CO,,17,16,1,,INVALID_CARD,,0.9412,0,10
+2026-08-31 10:08:00,Merchant_C,dLocal,wallet,MX,,21,20,1,,DO_NOT_HONOR,,0.9524,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,PIX,BR,,14,14,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,PSE,CO,,14,11,3,,SUSPECTED_FRAUD,,0.7857,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,card,BR,Itau,1,0,1,,DO_NOT_HONOR,,0.0,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,card,BR,Nubank,5,4,1,,INVALID_CARD,,0.8,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,card,CO,Banco de Bogota,5,4,1,,INSUFFICIENT_FUNDS,,0.8,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,card,CO,Bancolombia,6,6,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,card,CO,Davivienda,9,8,1,,SUSPECTED_FRAUD,,0.8889,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,card,MX,BBVA,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,card,MX,Citibanamex,1,1,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,card,MX,Santander,3,2,1,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,cash_in_store,MX,,12,11,1,,INSUFFICIENT_FUNDS,,0.9167,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,wallet,BR,,15,14,1,,SUSPECTED_FRAUD,,0.9333,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,wallet,CO,,15,14,1,,SUSPECTED_FRAUD,,0.9333,0,10
+2026-08-31 10:09:00,Merchant_A,Adyen,wallet,MX,,15,14,1,,INSUFFICIENT_FUNDS,,0.9333,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,PIX,BR,,11,10,1,,INVALID_CARD,,0.9091,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,PSE,CO,,16,15,1,,SUSPECTED_FRAUD,,0.9375,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,card,BR,Banco do Brasil,4,3,1,,SUSPECTED_FRAUD,,0.75,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,card,BR,Itau,4,4,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,card,BR,Nubank,1,1,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,card,CO,Banco de Bogota,11,9,2,,DO_NOT_HONOR,,0.8182,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,card,CO,Bancolombia,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,card,CO,Davivienda,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,card,MX,BBVA,4,4,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,card,MX,Citibanamex,3,2,1,,INVALID_CARD,,0.6667,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,card,MX,Santander,4,4,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,cash_in_store,MX,,20,19,1,,INVALID_CARD,,0.95,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,wallet,BR,,14,13,1,,INVALID_CARD,,0.9286,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,wallet,CO,,17,13,4,,DO_NOT_HONOR,,0.7647,0,10
+2026-08-31 10:09:00,Merchant_A,Stripe,wallet,MX,,21,21,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,PIX,BR,,9,9,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,PSE,CO,,18,16,2,,DO_NOT_HONOR,,0.8889,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,card,BR,Banco do Brasil,2,2,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,card,BR,Bradesco,5,5,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,card,BR,Nubank,2,1,1,,DO_NOT_HONOR,,0.5,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,card,CO,Banco de Bogota,2,2,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,card,CO,Bancolombia,7,7,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,card,CO,Davivienda,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,card,MX,BBVA,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,card,MX,Banorte,6,5,1,,SUSPECTED_FRAUD,,0.8333,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,card,MX,Citibanamex,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,card,MX,Santander,4,4,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,cash_in_store,MX,,15,13,2,,INVALID_CARD,,0.8667,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,wallet,BR,,16,15,1,,DO_NOT_HONOR,,0.9375,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,wallet,CO,,13,13,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_A,dLocal,wallet,MX,,18,18,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,PIX,BR,,12,12,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,PSE,CO,,12,11,1,,SUSPECTED_FRAUD,,0.9167,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,card,BR,Banco do Brasil,1,1,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,card,BR,Itau,4,4,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,card,BR,Nubank,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,card,CO,Banco de Bogota,4,4,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,card,CO,Bancolombia,9,8,1,,INVALID_CARD,,0.8889,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,card,CO,Davivienda,6,6,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,card,MX,BBVA,4,3,1,,SUSPECTED_FRAUD,,0.75,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,card,MX,Banorte,1,1,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,card,MX,Citibanamex,4,4,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,card,MX,Santander,2,2,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,cash_in_store,MX,,12,10,2,,INVALID_CARD,,0.8333,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,wallet,BR,,19,17,2,,INVALID_CARD,,0.8947,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,wallet,CO,,18,15,3,,SUSPECTED_FRAUD,,0.8333,0,10
+2026-08-31 10:09:00,Merchant_B,Adyen,wallet,MX,,10,9,1,,SUSPECTED_FRAUD,,0.9,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,PIX,BR,,15,15,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,PSE,CO,,11,10,1,,SUSPECTED_FRAUD,,0.9091,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,card,BR,Bradesco,4,2,2,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,card,BR,Itau,5,5,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,card,BR,Nubank,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,card,CO,Banco de Bogota,6,6,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,card,CO,Bancolombia,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,card,CO,Davivienda,11,9,2,,DO_NOT_HONOR,,0.8182,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,card,MX,BBVA,6,6,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,card,MX,Banorte,2,2,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,card,MX,Santander,7,6,1,,SUSPECTED_FRAUD,,0.8571,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,cash_in_store,MX,,18,15,3,,INSUFFICIENT_FUNDS,,0.8333,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,wallet,BR,,17,14,3,,DO_NOT_HONOR,,0.8235,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,wallet,CO,,14,13,1,,DO_NOT_HONOR,,0.9286,0,10
+2026-08-31 10:09:00,Merchant_B,Stripe,wallet,MX,,23,20,3,,SUSPECTED_FRAUD,,0.8696,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,PIX,BR,,20,18,2,,DO_NOT_HONOR,,0.9,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,PSE,CO,,12,12,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,card,BR,Banco do Brasil,5,4,1,,DO_NOT_HONOR,,0.8,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,card,BR,Itau,1,1,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,card,BR,Nubank,1,1,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,card,CO,Banco de Bogota,4,4,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,card,CO,Bancolombia,7,7,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,card,CO,Davivienda,6,4,2,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,card,MX,BBVA,5,4,1,,DO_NOT_HONOR,,0.8,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,card,MX,Citibanamex,2,1,1,,DO_NOT_HONOR,,0.5,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,card,MX,Santander,3,2,1,,INVALID_CARD,,0.6667,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,cash_in_store,MX,,12,10,2,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,wallet,BR,,11,10,1,,DO_NOT_HONOR,,0.9091,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,wallet,CO,,16,14,2,,DO_NOT_HONOR,,0.875,0,10
+2026-08-31 10:09:00,Merchant_B,dLocal,wallet,MX,,22,19,3,,DO_NOT_HONOR,,0.8636,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,PIX,BR,,13,12,1,,INSUFFICIENT_FUNDS,,0.9231,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,PSE,CO,,24,19,5,,INSUFFICIENT_FUNDS,,0.7917,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,card,BR,Banco do Brasil,8,7,1,,SUSPECTED_FRAUD,,0.875,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,card,BR,Itau,1,1,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,card,BR,Nubank,6,6,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,card,CO,Banco de Bogota,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,card,CO,Bancolombia,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,card,CO,Davivienda,7,6,1,,INVALID_CARD,,0.8571,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,card,MX,BBVA,4,4,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,card,MX,Banorte,2,2,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,card,MX,Citibanamex,5,5,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,cash_in_store,MX,,14,13,1,,SUSPECTED_FRAUD,,0.9286,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,wallet,BR,,18,17,1,,INSUFFICIENT_FUNDS,,0.9444,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,wallet,CO,,12,11,1,,INVALID_CARD,,0.9167,0,10
+2026-08-31 10:09:00,Merchant_C,Adyen,wallet,MX,,12,12,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,PIX,BR,,11,11,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,PSE,CO,,20,19,1,,SUSPECTED_FRAUD,,0.95,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,card,BR,Banco do Brasil,2,1,1,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,card,BR,Itau,5,5,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,card,BR,Nubank,4,2,2,,INVALID_CARD,,0.5,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,card,CO,Banco de Bogota,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,card,CO,Bancolombia,4,4,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,card,CO,Davivienda,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,card,MX,BBVA,5,5,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,card,MX,Citibanamex,1,1,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,card,MX,Santander,1,1,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,cash_in_store,MX,,18,16,2,,SUSPECTED_FRAUD,,0.8889,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,wallet,BR,,11,11,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,wallet,CO,,16,15,1,,INSUFFICIENT_FUNDS,,0.9375,0,10
+2026-08-31 10:09:00,Merchant_C,Stripe,wallet,MX,,16,15,1,,SUSPECTED_FRAUD,,0.9375,0,10
+2026-08-31 10:09:00,Merchant_C,dLocal,PIX,BR,,22,21,1,,DO_NOT_HONOR,,0.9545,0,10
+2026-08-31 10:09:00,Merchant_C,dLocal,PSE,CO,,7,7,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,dLocal,card,BR,Banco do Brasil,10,10,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,dLocal,card,BR,Bradesco,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:09:00,Merchant_C,dLocal,card,BR,Itau,6,6,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,dLocal,card,CO,Banco de Bogota,4,4,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,dLocal,card,CO,Bancolombia,5,3,2,,INVALID_CARD,,0.6,0,10
+2026-08-31 10:09:00,Merchant_C,dLocal,card,CO,Davivienda,2,1,1,,SUSPECTED_FRAUD,,0.5,0,10
+2026-08-31 10:09:00,Merchant_C,dLocal,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,dLocal,card,MX,Citibanamex,4,3,1,,INVALID_CARD,,0.75,0,10
+2026-08-31 10:09:00,Merchant_C,dLocal,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,dLocal,cash_in_store,MX,,9,8,1,,DO_NOT_HONOR,,0.8889,0,10
+2026-08-31 10:09:00,Merchant_C,dLocal,wallet,BR,,16,16,0,,,,1.0,0,10
+2026-08-31 10:09:00,Merchant_C,dLocal,wallet,CO,,17,16,1,,INVALID_CARD,,0.9412,0,10
+2026-08-31 10:09:00,Merchant_C,dLocal,wallet,MX,,12,11,1,,DO_NOT_HONOR,,0.9167,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,PIX,BR,,12,11,1,,INVALID_CARD,,0.9167,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,PSE,CO,,11,9,2,,DO_NOT_HONOR,,0.8182,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,card,BR,Bradesco,3,2,1,,INVALID_CARD,,0.6667,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,card,BR,Itau,6,5,1,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,card,BR,Nubank,6,6,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,card,CO,Banco de Bogota,5,5,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,card,CO,Bancolombia,8,8,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,card,MX,BBVA,2,2,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,card,MX,Citibanamex,6,6,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,cash_in_store,MX,,8,8,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,wallet,BR,,23,20,3,,DO_NOT_HONOR,,0.8696,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,wallet,CO,,17,15,2,,INSUFFICIENT_FUNDS,,0.8824,0,10
+2026-08-31 10:10:00,Merchant_A,Adyen,wallet,MX,,22,21,1,,INVALID_CARD,,0.9545,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,PIX,BR,,19,17,2,,INSUFFICIENT_FUNDS,,0.8947,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,PSE,CO,,10,9,1,,INSUFFICIENT_FUNDS,,0.9,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,card,BR,Banco do Brasil,2,2,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,card,BR,Bradesco,4,2,2,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,card,BR,Itau,3,1,2,,INVALID_CARD,,0.3333,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,card,BR,Nubank,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,card,CO,Banco de Bogota,2,2,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,card,CO,Bancolombia,8,7,1,,INVALID_CARD,,0.875,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,card,MX,BBVA,5,5,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,card,MX,Banorte,4,4,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,card,MX,Citibanamex,5,5,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,card,MX,Santander,1,1,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,cash_in_store,MX,,15,15,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,wallet,BR,,12,10,2,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,wallet,CO,,13,10,3,,DO_NOT_HONOR,,0.7692,0,10
+2026-08-31 10:10:00,Merchant_A,Stripe,wallet,MX,,19,16,3,,DO_NOT_HONOR,,0.8421,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,PIX,BR,,15,14,1,,INSUFFICIENT_FUNDS,,0.9333,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,PSE,CO,,9,7,2,,SUSPECTED_FRAUD,,0.7778,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,card,BR,Itau,1,0,1,,INSUFFICIENT_FUNDS,,0.0,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,card,BR,Nubank,5,5,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,card,CO,Banco de Bogota,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,card,CO,Bancolombia,6,6,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,card,CO,Davivienda,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,card,MX,BBVA,4,4,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,card,MX,Banorte,2,1,1,,DO_NOT_HONOR,,0.5,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,card,MX,Santander,3,2,1,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,cash_in_store,MX,,22,19,3,,DO_NOT_HONOR,,0.8636,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,wallet,BR,,15,14,1,,SUSPECTED_FRAUD,,0.9333,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,wallet,CO,,17,14,3,,DO_NOT_HONOR,,0.8235,0,10
+2026-08-31 10:10:00,Merchant_A,dLocal,wallet,MX,,22,22,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,PIX,BR,,16,16,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,PSE,CO,,15,11,4,,DO_NOT_HONOR,,0.7333,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,card,BR,Bradesco,5,4,1,,INVALID_CARD,,0.8,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,card,BR,Nubank,5,5,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,card,CO,Banco de Bogota,5,4,1,,INVALID_CARD,,0.8,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,card,CO,Bancolombia,7,7,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,card,CO,Davivienda,6,6,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,card,MX,BBVA,8,8,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,card,MX,Banorte,4,3,1,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,cash_in_store,MX,,10,9,1,,INVALID_CARD,,0.9,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,wallet,BR,,13,13,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,wallet,CO,,8,7,1,,DO_NOT_HONOR,,0.875,0,10
+2026-08-31 10:10:00,Merchant_B,Adyen,wallet,MX,,16,16,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,PIX,BR,,14,13,1,,INSUFFICIENT_FUNDS,,0.9286,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,PSE,CO,,15,14,1,,INVALID_CARD,,0.9333,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,card,BR,Bradesco,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,card,BR,Nubank,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,card,CO,Banco de Bogota,5,5,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,card,CO,Bancolombia,7,5,2,,DO_NOT_HONOR,,0.7143,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,card,CO,Davivienda,9,8,1,,INSUFFICIENT_FUNDS,,0.8889,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,card,MX,BBVA,2,2,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,card,MX,Banorte,6,6,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,card,MX,Citibanamex,6,5,1,,INSUFFICIENT_FUNDS,,0.8333,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,cash_in_store,MX,,19,15,4,,DO_NOT_HONOR,,0.7895,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,wallet,BR,,16,14,2,,DO_NOT_HONOR,,0.875,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,wallet,CO,,17,16,1,,INVALID_CARD,,0.9412,0,10
+2026-08-31 10:10:00,Merchant_B,Stripe,wallet,MX,,14,13,1,,INSUFFICIENT_FUNDS,,0.9286,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,PIX,BR,,14,13,1,,INSUFFICIENT_FUNDS,,0.9286,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,PSE,CO,,12,12,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,card,BR,Banco do Brasil,5,5,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,card,BR,Nubank,5,3,2,,DO_NOT_HONOR,,0.6,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,card,CO,Banco de Bogota,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,card,CO,Bancolombia,4,4,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,card,CO,Davivienda,4,4,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,card,MX,BBVA,5,5,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,card,MX,Banorte,3,2,1,,SUSPECTED_FRAUD,,0.6667,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,card,MX,Citibanamex,3,2,1,,INVALID_CARD,,0.6667,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,card,MX,Santander,1,1,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,cash_in_store,MX,,14,13,1,,SUSPECTED_FRAUD,,0.9286,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,wallet,BR,,14,13,1,,INVALID_CARD,,0.9286,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,wallet,CO,,13,10,3,,SUSPECTED_FRAUD,,0.7692,0,10
+2026-08-31 10:10:00,Merchant_B,dLocal,wallet,MX,,16,11,5,,SUSPECTED_FRAUD,,0.6875,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,PIX,BR,,16,15,1,,SUSPECTED_FRAUD,,0.9375,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,PSE,CO,,7,7,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,card,BR,Banco do Brasil,8,6,2,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,card,BR,Bradesco,6,5,1,,SUSPECTED_FRAUD,,0.8333,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,card,BR,Nubank,2,2,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,card,CO,Banco de Bogota,3,2,1,,SUSPECTED_FRAUD,,0.6667,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,card,CO,Bancolombia,9,9,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,card,CO,Davivienda,8,7,1,,SUSPECTED_FRAUD,,0.875,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,card,MX,BBVA,4,3,1,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,card,MX,Citibanamex,4,4,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,card,MX,Santander,4,4,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,cash_in_store,MX,,7,4,3,,DO_NOT_HONOR,,0.5714,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,wallet,BR,,14,10,4,,DO_NOT_HONOR,,0.7143,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,wallet,CO,,19,18,1,,SUSPECTED_FRAUD,,0.9474,0,10
+2026-08-31 10:10:00,Merchant_C,Adyen,wallet,MX,,22,19,3,,INSUFFICIENT_FUNDS,,0.8636,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,PIX,BR,,18,17,1,,SUSPECTED_FRAUD,,0.9444,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,PSE,CO,,14,12,2,,SUSPECTED_FRAUD,,0.8571,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,card,BR,Banco do Brasil,4,4,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,card,BR,Itau,5,5,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,card,BR,Nubank,1,1,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,card,CO,Banco de Bogota,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,card,CO,Bancolombia,4,2,2,,DO_NOT_HONOR,,0.5,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,card,CO,Davivienda,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,card,MX,BBVA,2,2,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,card,MX,Banorte,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,card,MX,Citibanamex,1,1,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,card,MX,Santander,1,1,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,cash_in_store,MX,,12,12,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,wallet,BR,,11,11,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,wallet,CO,,15,15,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,Stripe,wallet,MX,,17,15,2,,INVALID_CARD,,0.8824,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,PIX,BR,,12,12,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,PSE,CO,,15,14,1,,INSUFFICIENT_FUNDS,,0.9333,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,card,BR,Bradesco,8,8,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,card,BR,Nubank,1,1,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,card,CO,Banco de Bogota,6,5,1,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,card,CO,Bancolombia,2,2,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,card,CO,Davivienda,6,4,2,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,card,MX,BBVA,4,4,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,card,MX,Banorte,7,6,1,,DO_NOT_HONOR,,0.8571,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,card,MX,Citibanamex,7,6,1,,DO_NOT_HONOR,,0.8571,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,card,MX,Santander,2,2,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,cash_in_store,MX,,22,21,1,,INSUFFICIENT_FUNDS,,0.9545,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,wallet,BR,,13,13,0,,,,1.0,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,wallet,CO,,19,16,3,,DO_NOT_HONOR,,0.8421,0,10
+2026-08-31 10:10:00,Merchant_C,dLocal,wallet,MX,,12,12,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,PIX,BR,,14,14,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,PSE,CO,,11,9,2,,INSUFFICIENT_FUNDS,,0.8182,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,card,BR,Banco do Brasil,4,3,1,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,card,BR,Bradesco,5,4,1,,DO_NOT_HONOR,,0.8,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,card,BR,Itau,2,1,1,,INVALID_CARD,,0.5,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,card,BR,Nubank,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,card,CO,Banco de Bogota,6,5,1,,SUSPECTED_FRAUD,,0.8333,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,card,CO,Bancolombia,6,5,1,,SUSPECTED_FRAUD,,0.8333,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,card,CO,Davivienda,5,5,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,card,MX,BBVA,1,1,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,card,MX,Citibanamex,6,6,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,card,MX,Santander,1,1,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,cash_in_store,MX,,15,14,1,,DO_NOT_HONOR,,0.9333,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,wallet,BR,,13,13,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,wallet,CO,,14,14,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Adyen,wallet,MX,,13,12,1,,DO_NOT_HONOR,,0.9231,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,PIX,BR,,14,14,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,PSE,CO,,23,19,4,,INSUFFICIENT_FUNDS,,0.8261,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,card,BR,Banco do Brasil,2,2,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,card,BR,Bradesco,5,4,1,,DO_NOT_HONOR,,0.8,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,card,BR,Nubank,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,card,CO,Banco de Bogota,6,5,1,,INVALID_CARD,,0.8333,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,card,CO,Bancolombia,6,5,1,,DO_NOT_HONOR,,0.8333,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,card,CO,Davivienda,7,7,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,card,MX,BBVA,4,4,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,card,MX,Banorte,6,3,3,,SUSPECTED_FRAUD,,0.5,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,card,MX,Citibanamex,4,4,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,card,MX,Santander,6,4,2,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,cash_in_store,MX,,8,6,2,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,wallet,BR,,20,18,2,,INVALID_CARD,,0.9,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,wallet,CO,,17,16,1,,SUSPECTED_FRAUD,,0.9412,0,10
+2026-08-31 10:11:00,Merchant_A,Stripe,wallet,MX,,17,15,2,,SUSPECTED_FRAUD,,0.8824,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,PIX,BR,,9,9,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,PSE,CO,,27,23,4,,SUSPECTED_FRAUD,,0.8519,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,card,BR,Banco do Brasil,2,1,1,,DO_NOT_HONOR,,0.5,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,card,BR,Bradesco,3,2,1,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,card,BR,Itau,2,2,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,card,BR,Nubank,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,card,CO,Banco de Bogota,8,6,2,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,card,CO,Bancolombia,1,1,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,card,CO,Davivienda,2,2,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,card,MX,BBVA,6,5,1,,INSUFFICIENT_FUNDS,,0.8333,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,card,MX,Citibanamex,5,4,1,,INVALID_CARD,,0.8,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,card,MX,Santander,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,cash_in_store,MX,,11,11,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,wallet,BR,,15,11,4,,DO_NOT_HONOR,,0.7333,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,wallet,CO,,14,13,1,,INSUFFICIENT_FUNDS,,0.9286,0,10
+2026-08-31 10:11:00,Merchant_A,dLocal,wallet,MX,,12,12,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,PIX,BR,,20,17,3,,DO_NOT_HONOR,,0.85,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,PSE,CO,,13,11,2,,DO_NOT_HONOR,,0.8462,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,card,BR,Banco do Brasil,5,5,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,card,BR,Itau,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,card,BR,Nubank,4,3,1,,INSUFFICIENT_FUNDS,,0.75,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,card,CO,Banco de Bogota,2,2,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,card,CO,Bancolombia,3,1,2,,INVALID_CARD,,0.3333,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,card,CO,Davivienda,5,4,1,,SUSPECTED_FRAUD,,0.8,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,card,MX,Banorte,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,card,MX,Santander,6,6,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,cash_in_store,MX,,16,14,2,,INSUFFICIENT_FUNDS,,0.875,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,wallet,BR,,9,9,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,wallet,CO,,15,15,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Adyen,wallet,MX,,18,17,1,,INVALID_CARD,,0.9444,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,PIX,BR,,19,19,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,PSE,CO,,12,11,1,,INSUFFICIENT_FUNDS,,0.9167,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,card,BR,Banco do Brasil,4,4,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,card,BR,Bradesco,2,1,1,,INSUFFICIENT_FUNDS,,0.5,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,card,BR,Itau,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,card,BR,Nubank,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,card,CO,Banco de Bogota,7,5,2,,INSUFFICIENT_FUNDS,,0.7143,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,card,CO,Bancolombia,6,6,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,card,CO,Davivienda,5,5,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,card,MX,BBVA,4,4,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,card,MX,Banorte,7,7,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,card,MX,Santander,7,7,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,cash_in_store,MX,,17,13,4,,DO_NOT_HONOR,,0.7647,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,wallet,BR,,18,17,1,,DO_NOT_HONOR,,0.9444,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,wallet,CO,,13,13,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,Stripe,wallet,MX,,12,12,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,PIX,BR,,16,16,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,PSE,CO,,14,10,4,,INSUFFICIENT_FUNDS,,0.7143,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,card,BR,Bradesco,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,card,BR,Itau,5,5,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,card,BR,Nubank,6,6,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,card,CO,Banco de Bogota,5,5,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,card,CO,Bancolombia,4,4,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,card,CO,Davivienda,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,card,MX,BBVA,2,0,2,,INSUFFICIENT_FUNDS,,0.0,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,card,MX,Banorte,3,2,1,,SUSPECTED_FRAUD,,0.6667,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,card,MX,Citibanamex,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,card,MX,Santander,8,6,2,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,cash_in_store,MX,,13,10,3,,DO_NOT_HONOR,,0.7692,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,wallet,BR,,17,14,3,,DO_NOT_HONOR,,0.8235,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,wallet,CO,,17,16,1,,INSUFFICIENT_FUNDS,,0.9412,0,10
+2026-08-31 10:11:00,Merchant_B,dLocal,wallet,MX,,11,10,1,,INSUFFICIENT_FUNDS,,0.9091,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,PIX,BR,,18,18,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,PSE,CO,,9,9,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,card,BR,Banco do Brasil,6,5,1,,INVALID_CARD,,0.8333,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,card,BR,Bradesco,5,5,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,card,BR,Itau,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,card,BR,Nubank,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,card,CO,Banco de Bogota,4,4,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,card,CO,Bancolombia,3,2,1,,INSUFFICIENT_FUNDS,,0.6667,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,card,CO,Davivienda,2,2,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,card,MX,BBVA,4,4,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,card,MX,Santander,3,2,1,,INVALID_CARD,,0.6667,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,cash_in_store,MX,,20,20,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,wallet,BR,,17,15,2,,INSUFFICIENT_FUNDS,,0.8824,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,wallet,CO,,16,15,1,,DO_NOT_HONOR,,0.9375,0,10
+2026-08-31 10:11:00,Merchant_C,Adyen,wallet,MX,,20,17,3,,SUSPECTED_FRAUD,,0.85,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,PIX,BR,,9,9,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,PSE,CO,,13,10,3,,INSUFFICIENT_FUNDS,,0.7692,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,card,BR,Banco do Brasil,4,4,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,card,BR,Bradesco,2,2,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,card,BR,Itau,4,4,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,card,BR,Nubank,4,4,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,card,CO,Banco de Bogota,9,8,1,,DO_NOT_HONOR,,0.8889,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,card,CO,Bancolombia,2,2,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,card,CO,Davivienda,5,5,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,card,MX,BBVA,6,6,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,card,MX,Banorte,5,5,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,card,MX,Citibanamex,4,4,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,card,MX,Santander,3,2,1,,DO_NOT_HONOR,,0.6667,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,cash_in_store,MX,,17,12,5,,INSUFFICIENT_FUNDS,,0.7059,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,wallet,BR,,13,11,2,,INVALID_CARD,,0.8462,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,wallet,CO,,13,12,1,,INVALID_CARD,,0.9231,0,10
+2026-08-31 10:11:00,Merchant_C,Stripe,wallet,MX,,17,15,2,,INVALID_CARD,,0.8824,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,PIX,BR,,16,16,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,PSE,CO,,6,6,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,card,BR,Banco do Brasil,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,card,BR,Bradesco,10,9,1,,SUSPECTED_FRAUD,,0.9,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,card,BR,Itau,1,0,1,,DO_NOT_HONOR,,0.0,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,card,BR,Nubank,2,2,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,card,CO,Banco de Bogota,6,5,1,,INSUFFICIENT_FUNDS,,0.8333,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,card,CO,Bancolombia,5,5,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,card,CO,Davivienda,7,7,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,card,MX,BBVA,4,3,1,,DO_NOT_HONOR,,0.75,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,card,MX,Banorte,3,3,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,card,MX,Citibanamex,2,2,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,card,MX,Santander,2,2,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,cash_in_store,MX,,20,16,4,,DO_NOT_HONOR,,0.8,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,wallet,BR,,11,11,0,,,,1.0,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,wallet,CO,,8,7,1,,INSUFFICIENT_FUNDS,,0.875,0,10
+2026-08-31 10:11:00,Merchant_C,dLocal,wallet,MX,,20,20,0,,,,1.0,0,10

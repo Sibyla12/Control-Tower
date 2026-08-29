@@ -1,0 +1,122 @@
+{
+  "system_status": "incident",
+  "last_updated": "2026-08-29T14:11:00Z",
+  "global_metrics": {
+    "approval_rate": 0.862,
+    "expected_approval_rate": 0.918,
+    "attempts_per_minute": 8429,
+    "approved_per_minute": 7266,
+    "active_incidents": 2,
+    "value_at_risk_per_minute": 4850
+  },
+  "conversion_history": [
+    {"timestamp": "2026-08-29T14:01:00Z", "expected_rate": 0.918, "observed_rate": 0.916},
+    {"timestamp": "2026-08-29T14:02:00Z", "expected_rate": 0.918, "observed_rate": 0.913},
+    {"timestamp": "2026-08-29T14:03:00Z", "expected_rate": 0.918, "observed_rate": 0.889},
+    {"timestamp": "2026-08-29T14:04:00Z", "expected_rate": 0.918, "observed_rate": 0.851},
+    {"timestamp": "2026-08-29T14:05:00Z", "expected_rate": 0.918, "observed_rate": 0.822},
+    {"timestamp": "2026-08-29T14:06:00Z", "expected_rate": 0.918, "observed_rate": 0.817}
+  ],
+  "incidents": [
+    {
+      "incident_id": "INC-001",
+      "priority": "P1",
+      "status": "pending_review",
+      "title": "Provider degradation in Brazil",
+      "summary": "Provider B is over-declining card payments in Brazil.",
+      "started_at": "2026-08-29T14:03:00Z",
+      "duration_minutes": 8,
+      "confidence": 0.96,
+      "expected_conversion": 0.914,
+      "observed_conversion": 0.782,
+      "value_at_risk_per_minute": 4200,
+      "root_cause": {
+        "type": "provider_degradation",
+        "merchant": null,
+        "provider": "Provider_B",
+        "payment_method": "card",
+        "country": "BR",
+        "issuing_bank": null,
+        "decline_code": "PROCESSOR_ERROR"
+      },
+      "affected_entities": {
+        "merchants": ["Merchant_A", "Merchant_B", "Merchant_C"],
+        "providers": ["Provider_B"],
+        "countries": ["BR"],
+        "issuing_banks": ["Itau", "Bradesco", "Nubank"]
+      },
+      "evidence": [
+        {"label": "Provider contribution", "value": "82% of lost approvals"},
+        {"label": "Affected merchants", "value": "3 merchants"},
+        {"label": "Affected issuing banks", "value": "Multiple banks"},
+        {"label": "Decline-code increase", "value": "PROCESSOR_ERROR increased 9×"}
+      ],
+      "root_cause_trail": [
+        {"step": 1, "label": "Global conversion drop", "contribution": 1.0},
+        {"step": 2, "label": "Brazil", "contribution": 0.74},
+        {"step": 3, "label": "Provider B", "contribution": 0.88},
+        {"step": 4, "label": "Card", "contribution": 0.92},
+        {"step": 5, "label": "PROCESSOR_ERROR", "contribution": 0.71}
+      ],
+      "recommendations": {
+        "operations": ["Monitor eligible Brazilian card traffic.", "Prepare temporary rerouting options."],
+        "engineering": ["Review recent routing configuration changes.", "Compare provider latency against the previous hour."],
+        "provider_management": ["Contact Provider B with the incident evidence."],
+        "finance": ["Track accumulated value at risk."],
+        "merchant_success": ["Notify merchants with the highest exposure."]
+      },
+      "human_review": {
+        "status": "pending_review",
+        "reviewer": null,
+        "comment": null,
+        "priority_override": null
+      }
+    },
+    {
+      "incident_id": "INC-002",
+      "priority": "P2",
+      "status": "investigating",
+      "title": "Issuing bank outage in Mexico",
+      "summary": "Bank X is declining card payments for Merchant A in Mexico.",
+      "started_at": "2026-08-29T14:05:00Z",
+      "duration_minutes": 6,
+      "confidence": 0.89,
+      "expected_conversion": 0.902,
+      "observed_conversion": 0.51,
+      "value_at_risk_per_minute": 650,
+      "root_cause": {
+        "type": "issuing_bank_outage",
+        "merchant": "Merchant_A",
+        "provider": null,
+        "payment_method": "card",
+        "country": "MX",
+        "issuing_bank": "Bank_X",
+        "decline_code": "ISSUER_UNAVAILABLE"
+      },
+      "affected_entities": {
+        "merchants": ["Merchant_A"],
+        "providers": ["Provider_A", "Provider_B", "Provider_C"],
+        "countries": ["MX"],
+        "issuing_banks": ["Bank_X"]
+      },
+      "evidence": [
+        {"label": "Affected provider coverage", "value": "All providers"},
+        {"label": "Affected merchant", "value": "Merchant A only"},
+        {"label": "Dominant decline code", "value": "ISSUER_UNAVAILABLE"}
+      ],
+      "recommendations": {
+        "operations": ["Continue monitoring Bank X traffic."],
+        "engineering": ["Verify that no merchant-specific routing change occurred."],
+        "provider_management": [],
+        "finance": ["Track exposure for Merchant A."],
+        "merchant_success": ["Notify Merchant A operations."]
+      },
+      "human_review": {
+        "status": "pending_review",
+        "reviewer": null,
+        "comment": null,
+        "priority_override": null
+      }
+    }
+  ]
+}

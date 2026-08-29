@@ -1,0 +1,30 @@
+{
+  "system_status": "healthy",
+  "last_updated": "2026-08-29T14:03:00Z",
+  "global_metrics": {
+    "approval_rate": 0.912,
+    "expected_approval_rate": 0.918,
+    "attempts_per_minute": 8429,
+    "approved_per_minute": 7687,
+    "active_incidents": 0,
+    "value_at_risk_per_minute": null
+  },
+  "conversion_history": [
+    {
+      "timestamp": "2026-08-29T13:58:00Z",
+      "expected_rate": 0.918,
+      "observed_rate": 0.916
+    },
+    {
+      "timestamp": "2026-08-29T13:59:00Z",
+      "expected_rate": 0.918,
+      "observed_rate": 0.921
+    },
+    {
+      "timestamp": "2026-08-29T14:00:00Z",
+      "expected_rate": 0.918,
+      "observed_rate": 0.914
+    }
+  ],
+  "incidents": []
+}
