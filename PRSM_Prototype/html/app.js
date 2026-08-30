@@ -407,6 +407,21 @@ function render() {
 
 const EXEC_STATUS_LABEL = { healthy: "NORMAL", warning: "WARNING", critical: "CRITICAL" };
 
+const EXEC_INCIDENT_CARD_CAP = 3;
+
+function computeExecTrend(chart) {
+  const points = (chart || []).filter(v => v !== null && v !== undefined);
+  if (points.length < 2) return { label: "Stable", cls: "", note: "Not enough data yet" };
+  const latest = points[points.length - 1];
+  const compareIndex = Math.max(0, points.length - 6);
+  const previous = points[compareIndex];
+  const delta = +(latest - previous).toFixed(1);
+  const sign = delta > 0 ? "+" : "";
+  if (delta >= 0.5) return { label: "Recovering", cls: "is-recovering", note: `${sign}${delta} pp vs a few minutes ago` };
+  if (delta <= -0.5) return { label: "Worsening", cls: "is-worsening", note: `${sign}${delta} pp vs a few minutes ago` };
+  return { label: "Stable", cls: "", note: `${sign}${delta} pp vs a few minutes ago` };
+}
+
 function renderExecBrief(s, risk) {
   const statusEl = document.getElementById("execBriefStatus");
   statusEl.className = `exec-brief-status ${s.tone === "healthy" ? "" : `is-${s.tone}`}`;
@@ -421,22 +436,45 @@ function renderExecBrief(s, risk) {
     : "Network quiet";
   document.getElementById("execBriefExposure").textContent = money(risk);
 
-  const top = s.incidents[0];
-  const actionBlock = document.getElementById("execBriefAction");
-  const ctaButton = document.getElementById("execBriefCta");
-  if (top) {
-    document.getElementById("execBriefProblemBody").textContent = top.executive || top.title;
-    document.getElementById("execBriefActionBody").textContent = top.playbookAction || top.recommendation || "Under review.";
-    actionBlock.classList.remove("is-quiet");
-    ctaButton.hidden = false;
-    ctaButton.onclick = () => openDrawer(top);
-  } else {
-    document.getElementById("execBriefProblemBody").textContent = "No significant issues detected right now.";
-    document.getElementById("execBriefActionBody").textContent = "Continue monitoring — nothing needs a decision right now.";
-    actionBlock.classList.add("is-quiet");
-    ctaButton.hidden = true;
-    ctaButton.onclick = null;
+  const trend = computeExecTrend(s.chart);
+  const trendEl = document.getElementById("execBriefTrendValue");
+  trendEl.textContent = trend.label;
+  trendEl.className = `exec-brief-tile-value exec-brief-trend-value ${trend.cls}`;
+  document.getElementById("execBriefTrendFoot").textContent = trend.note;
+
+  const marketsEl = document.getElementById("execBriefMarkets");
+  marketsEl.innerHTML = Object.entries(s.countries).map(([code, [status]]) => {
+    const cls = status === "critical" ? "is-critical" : status === "warning" ? "is-warning" : "";
+    const label = status === "healthy" ? "Healthy" : status === "critical" ? "Critical" : "Investigating";
+    return `<span class="exec-brief-market-chip ${cls}"><span class="exec-brief-market-dot"></span>${COUNTRY_NAMES[code] || code} — ${label}</span>`;
+  }).join("");
+
+  const incidentsEl = document.getElementById("execBriefIncidents");
+  const p1s = s.incidents.filter(i => i.priority === "P1");
+  const toShow = (p1s.length ? p1s : s.incidents).slice(0, EXEC_INCIDENT_CARD_CAP);
+  const overflow = (p1s.length ? p1s : s.incidents).length - toShow.length;
+
+  if (!toShow.length) {
+    incidentsEl.innerHTML = `<div class="exec-brief-quiet">No significant issues detected right now. Continue monitoring — nothing needs a decision.</div>`;
+    return;
   }
+
+  incidentsEl.innerHTML = toShow.map(i => `
+    <div class="exec-brief-incident-card ${i.priority === "P1" ? "" : "is-p2"}" data-exec-incident="${i.id}">
+      <div class="exec-brief-incident-head"><strong>${i.priority}</strong> · ${escapeHtml(i.country || "—")} · ${i.confidence}% confidence</div>
+      <div class="exec-brief-block-label">Main problem</div>
+      <div class="exec-brief-block-body">${escapeHtml(i.executive || i.title)}</div>
+      <div class="exec-brief-block-label exec-brief-action-label">Recommended action</div>
+      <div class="exec-brief-block-body">${escapeHtml(i.playbookAction || i.recommendation || "Under review.")}</div>
+      <button class="exec-brief-cta" type="button">Review &amp; decide →</button>
+    </div>
+  `).join("") + (overflow > 0 ? `<div class="exec-brief-more">+${overflow} more P1 incident${overflow === 1 ? "" : "s"} — switch to Analyst view to see all</div>` : "");
+
+  incidentsEl.querySelectorAll("[data-exec-incident]").forEach(card => {
+    const incident = s.incidents.find(i => i.id === card.dataset.execIncident);
+    const button = card.querySelector(".exec-brief-cta");
+    if (incident && button) button.addEventListener("click", () => openDrawer(incident));
+  });
 }
 
 function renderExecutiveSummary(summary) {

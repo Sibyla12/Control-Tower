@@ -542,7 +542,7 @@ body.view-executive .exec-only-section { display: block; }
 .exec-brief-status.is-critical .exec-brief-status-label { color: var(--warning); }
 .exec-brief-status-note { color: var(--text-secondary); font-size: 13.5px; }
 
-.exec-brief-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+.exec-brief-tiles { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 18px; }
 .exec-brief-tile {
   padding: 16px 18px; border-radius: var(--radius-sm); border: 1px solid var(--hairline);
   background: var(--panel-sunken);
@@ -555,22 +555,49 @@ body.view-executive .exec-only-section { display: block; }
   font-family: var(--font-display); font-weight: 900; font-size: 40px;
   line-height: 1; color: var(--text-primary); font-variant-numeric: tabular-nums;
 }
+.exec-brief-trend-value { font-size: 26px; }
+.exec-brief-trend-value.is-recovering { color: var(--nominal); }
+.exec-brief-trend-value.is-worsening { color: var(--warning); }
 .exec-brief-tile-foot { margin-top: 8px; color: var(--text-tertiary); font-size: 11.5px; }
 
-.exec-brief-block {
+.exec-brief-markets {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px;
+}
+.exec-brief-market-chip {
+  display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px;
+  border-radius: 999px; border: 1px solid var(--hairline); background: var(--panel-sunken);
+  font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary);
+}
+.exec-brief-market-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--nominal); flex: none;
+}
+.exec-brief-market-chip.is-warning .exec-brief-market-dot { background: var(--caution); }
+.exec-brief-market-chip.is-critical .exec-brief-market-dot { background: var(--warning); }
+.exec-brief-market-chip.is-warning { color: var(--caution); border-color: var(--caution); }
+.exec-brief-market-chip.is-critical { color: var(--warning); border-color: var(--warning); }
+
+.exec-brief-incidents { display: flex; flex-direction: column; gap: 14px; }
+.exec-brief-quiet {
   padding: 18px 20px; border-radius: var(--radius-sm); border: 1px solid var(--hairline);
-  background: var(--panel-sunken); margin-bottom: 14px;
+  background: var(--panel-sunken); font-size: 15px; line-height: 1.55; color: var(--text-primary);
 }
-.exec-brief-block:last-child { margin-bottom: 0; }
-.exec-brief-block-label {
-  color: var(--text-secondary); font-size: 10.5px; letter-spacing: .04em;
-  text-transform: uppercase; font-family: var(--font-mono); margin-bottom: 8px;
-}
-.exec-brief-block-body { font-size: 15px; line-height: 1.55; color: var(--text-primary); }
-.exec-brief-action {
+.exec-brief-incident-card {
+  padding: 18px 20px; border-radius: var(--radius-sm); border: 1px solid var(--hairline);
   border-left: 3px solid var(--warning); background: var(--warning-dim);
 }
-.exec-brief-action.is-quiet { border-left-color: var(--nominal); background: var(--panel-sunken); }
+.exec-brief-incident-card.is-p2 { border-left-color: var(--caution); background: var(--caution-dim); }
+.exec-brief-incident-head {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+  font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase;
+  letter-spacing: .04em; color: var(--text-secondary);
+}
+.exec-brief-incident-head strong { color: var(--text-primary); }
+.exec-brief-block-label {
+  color: var(--text-secondary); font-size: 10.5px; letter-spacing: .04em;
+  text-transform: uppercase; font-family: var(--font-mono); margin-bottom: 6px;
+}
+.exec-brief-block-body { font-size: 14.5px; line-height: 1.55; color: var(--text-primary); }
+.exec-brief-action-label { margin-top: 12px; }
 .exec-brief-cta {
   margin-top: 14px; min-height: 38px; padding: 0 18px; border-radius: var(--radius-sm);
   border: 1px solid var(--warning); background: transparent; color: var(--text-primary);
@@ -578,7 +605,11 @@ body.view-executive .exec-only-section { display: block; }
   text-transform: uppercase; letter-spacing: .04em;
 }
 .exec-brief-cta:hover { background: var(--warning); color: #0a0a0a; }
-@media (max-width: 700px) { .exec-brief-tiles { grid-template-columns: 1fr; } }
+.exec-brief-more {
+  padding: 12px 20px; border-radius: var(--radius-sm); border: 1px dashed var(--hairline-bright);
+  color: var(--text-tertiary); font-size: 11.5px; text-align: center;
+}
+@media (max-width: 900px) { .exec-brief-tiles { grid-template-columns: 1fr; } }
 
 @keyframes pulse { 0%,100% { transform: scale(.75); opacity: .5; } 55% { transform: scale(1.3); opacity: .06; } }
 @keyframes breathe { 0%,100% { opacity: 1; } 50% { opacity: .45; } }

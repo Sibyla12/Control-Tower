@@ -518,15 +518,30 @@ anything; `renderExecBrief()` just reads the same `s` (current view) and
 Two things happen together when the toggle flips to Executive:
 
 - A purpose-built `#execBrief` panel (`renderExecBrief()`) becomes visible -
-  a big colored status word (NORMAL/WARNING/CRITICAL, from `s.tone`), two
-  large tiles (active incident count with its P1/P2 breakdown, and total
-  `$/hour` exposure), a "Main problem" block using the top incident's own
-  `executive` summary sentence, and a "Recommended action" block using its
-  `playbook_action`/`primary_action` with a "Review & decide →" button that
-  calls `openDrawer()` on that same incident. With zero incidents it shows a
-  quiet-state message instead and hides the button. This is additive markup
-  (`.exec-only-section`, hidden unless `body.view-executive`), not a
-  rewrite of the analyst layout.
+  a big colored status word (NORMAL/WARNING/CRITICAL, from `s.tone`), three
+  tiles (active incident count with its P1/P2 breakdown, total `$/hour`
+  exposure, and a trend reading), a row of per-country chips, and one card
+  per P1 incident (falling back to whatever incidents exist if there is no
+  P1) each with its own confidence, plain-language problem, and recommended
+  action. This is additive markup (`.exec-only-section`, hidden unless
+  `body.view-executive`), not a rewrite of the analyst layout.
+  - **Trend** (`computeExecTrend()`) is the only derived number in the
+    brief: it compares the latest point in `s.chart` (the same real
+    per-minute conversion history the analyst chart plots) against the
+    point ~5 minutes earlier, and labels the >=0.5pp swings Recovering/
+    Worsening, otherwise Stable. Not a separate API call - reuses data
+    already being fetched every poll.
+  - **Country chips** read the same `s.countries` status map
+    (`healthy`/`warning`/`critical`) the geographic map colors its nodes
+    from, so the two views can never disagree about which market is
+    affected.
+  - **Incident cards** are capped at `EXEC_INCIDENT_CARD_CAP = 3`; beyond
+    that it shows an "N more - switch to Analyst view" note rather than
+    growing the brief indefinitely if many P1s fire at once. Each card's
+    "Review & decide →" button calls `openDrawer()` on that specific
+    incident, so the full (still Executive-simplified) drawer is one click
+    away without leaving this view. With zero incidents the block shows a
+    quiet-state message instead.
 - Everything else that would compete with it for attention is hidden via a
   `detail-only-section` class: the normal top KPI row, the whole
   executive-summary panel (risk concentration included), the entire

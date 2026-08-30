@@ -73,16 +73,14 @@
             <div class="exec-brief-tile-value" id="execBriefExposure">$0</div>
             <div class="exec-brief-tile-foot">USD / hour, across active incidents</div>
           </div>
+          <div class="exec-brief-tile">
+            <div class="exec-brief-tile-label">Trend</div>
+            <div class="exec-brief-tile-value exec-brief-trend-value" id="execBriefTrendValue">Stable</div>
+            <div class="exec-brief-tile-foot" id="execBriefTrendFoot">vs. a few minutes ago</div>
+          </div>
         </div>
-        <div class="exec-brief-block" id="execBriefProblem">
-          <div class="exec-brief-block-label">Main problem</div>
-          <div class="exec-brief-block-body" id="execBriefProblemBody">No significant issues detected right now.</div>
-        </div>
-        <div class="exec-brief-block exec-brief-action" id="execBriefAction">
-          <div class="exec-brief-block-label">Recommended action</div>
-          <div class="exec-brief-block-body" id="execBriefActionBody">Continue monitoring — nothing needs a decision right now.</div>
-          <button class="exec-brief-cta" id="execBriefCta" type="button" hidden>Review &amp; decide →</button>
-        </div>
+        <div class="exec-brief-markets" id="execBriefMarkets"></div>
+        <div class="exec-brief-incidents" id="execBriefIncidents"></div>
       </section>
 
       <section class="kpi-grid detail-only-section" id="topKpiGrid" aria-label="Network metrics">

@@ -54,9 +54,10 @@ otherwise it returns a clean, explicit error instead of failing silently.
   separate, inventable code path.
 - An "Executive view" toggle (top right) that swaps the analyst dashboard
   for a purpose-built brief: overall status, active incident count (with
-  its P1/P2 split), total financial exposure per hour, the top incident's
-  problem in plain language, and its recommended action — with a
-  "Review & decide" button into the full incident if needed. Hides root
+  its P1/P2 split), total financial exposure per hour, a network trend
+  reading, per-country status chips, and one card per P1 incident — each
+  with its confidence, problem in plain language, and recommended action,
+  with a "Review & decide" button into the full incident. Hides root
   cause/evidence detail, the segment and provider/country/bank breakdowns,
   projections, and the diagnostic chart. Purely a display filter — no data
   changes, no extra request.
