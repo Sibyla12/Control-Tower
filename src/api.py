@@ -5,6 +5,7 @@ import json
 import os
 import shutil
 import sys
+import threading
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -143,6 +144,15 @@ class TrialByFireRequest(BaseModel):
     approval_rate: float = Field(ge=0.0, le=1.0)
     minutes: int = Field(default=5, ge=1, le=30)
 
+
+# /trial-by-fire and /trial-by-fire/reset both mutate
+# transactions_live_multisegment.csv and then rerun the pipeline, which
+# itself overwrites every data/generated/*.csv in place. Two of these
+# running at once - e.g. two people clicking the button close together -
+# would race on the same files and can corrupt them or hang the process.
+# FastAPI runs sync `def` handlers in a thread pool, so without this lock
+# nothing stops that from happening concurrently within one worker.
+TRIAL_BY_FIRE_LOCK = threading.Lock()
 
 TRIAL_BY_FIRE_DECLINE_CODES = [
     "INSUFFICIENT_FUNDS",
@@ -1610,83 +1620,96 @@ def get_trial_by_fire_options():
 
 @app.post("/trial-by-fire")
 def run_trial_by_fire(request: TrialByFireRequest):
-    try:
-        injection = inject_live_incident.inject_incident(
-            decline_code=request.decline_code,
-            approval_rate=request.approval_rate,
-            minutes=request.minutes,
-            merchant=request.merchant,
-            provider=request.provider,
-            payment_method=request.payment_method,
-            country=request.country,
-            issuing_bank=request.issuing_bank,
-        )
-    except (ValueError, FileNotFoundError) as error:
-        raise HTTPException(status_code=422, detail=str(error)) from error
-
-    try:
-        run_pipeline.main()
-    except RuntimeError as error:
+    if not TRIAL_BY_FIRE_LOCK.acquire(blocking=False):
         raise HTTPException(
-            status_code=500,
+            status_code=409,
             detail=(
-                "Transactions were injected, but the detection pipeline "
-                f"failed while processing them: {error}"
+                "Another trial-by-fire injection or reset is already "
+                "running - wait for it to finish (about 15-20s) and try "
+                "again."
             ),
-        ) from error
+        )
 
-    incident_id = injection["incident_id"]
+    try:
+        try:
+            injection = inject_live_incident.inject_incident(
+                decline_code=request.decline_code,
+                approval_rate=request.approval_rate,
+                minutes=request.minutes,
+                merchant=request.merchant,
+                provider=request.provider,
+                payment_method=request.payment_method,
+                country=request.country,
+                issuing_bank=request.issuing_bank,
+            )
+        except (ValueError, FileNotFoundError) as error:
+            raise HTTPException(status_code=422, detail=str(error)) from error
 
-    incidents = load_incidents()
-    detected_incidents = []
-    if "ground_truth_ids" in incidents.columns:
-        matches = incidents[
-            incidents["ground_truth_ids"]
-            .fillna("")
-            .astype(str)
-            .str.contains(incident_id, regex=False)
+        try:
+            run_pipeline.main()
+        except RuntimeError as error:
+            raise HTTPException(
+                status_code=500,
+                detail=(
+                    "Transactions were injected, but the detection "
+                    f"pipeline failed while processing them: {error}"
+                ),
+            ) from error
+
+        incident_id = injection["incident_id"]
+
+        incidents = load_incidents()
+        detected_incidents = []
+        if "ground_truth_ids" in incidents.columns:
+            matches = incidents[
+                incidents["ground_truth_ids"]
+                .fillna("")
+                .astype(str)
+                .str.contains(incident_id, regex=False)
+            ]
+            detected_incidents = [
+                enrich_with_playbook(clean_record(record))
+                for record in matches.to_dict(orient="records")
+            ]
+
+        unresolved = get_unresolved_candidates()
+        detected_unresolved = [
+            candidate
+            for candidate in unresolved["candidates"]
+            if incident_id in str(candidate.get("ground_truth_ids") or "")
         ]
-        detected_incidents = [
-            enrich_with_playbook(clean_record(record))
-            for record in matches.to_dict(orient="records")
-        ]
 
-    unresolved = get_unresolved_candidates()
-    detected_unresolved = [
-        candidate
-        for candidate in unresolved["candidates"]
-        if incident_id in str(candidate.get("ground_truth_ids") or "")
-    ]
+        if detected_incidents:
+            outcome = "confirmed_incident"
+            message = (
+                f"Detected and confirmed as {len(detected_incidents)} "
+                "incident(s)."
+            )
+        elif detected_unresolved:
+            outcome = "unresolved_candidate"
+            message = (
+                f"Statistically flagged as {len(detected_unresolved)} "
+                "anomaly candidate(s), but confidence stayed below the "
+                "0.70 gate - shown as under investigation, not a "
+                "confirmed incident."
+            )
+        else:
+            outcome = "not_detected"
+            message = (
+                "Not detected as an anomaly at all yet - try a lower "
+                "approval_rate, more minutes, or a combination with "
+                "enough attempts to clear the n >= 30 minimum."
+            )
 
-    if detected_incidents:
-        outcome = "confirmed_incident"
-        message = (
-            f"Detected and confirmed as {len(detected_incidents)} "
-            "incident(s)."
-        )
-    elif detected_unresolved:
-        outcome = "unresolved_candidate"
-        message = (
-            f"Statistically flagged as {len(detected_unresolved)} "
-            "anomaly candidate(s), but confidence stayed below the 0.70 "
-            "gate - shown as under investigation, not a confirmed "
-            "incident."
-        )
-    else:
-        outcome = "not_detected"
-        message = (
-            "Not detected as an anomaly at all yet - try a lower "
-            "approval_rate, more minutes, or a combination with enough "
-            "attempts to clear the n >= 30 minimum."
-        )
-
-    return {
-        "injection": injection,
-        "outcome": outcome,
-        "message": message,
-        "detected_incidents": detected_incidents,
-        "detected_unresolved_candidates": detected_unresolved,
-    }
+        return {
+            "injection": injection,
+            "outcome": outcome,
+            "message": message,
+            "detected_incidents": detected_incidents,
+            "detected_unresolved_candidates": detected_unresolved,
+        }
+    finally:
+        TRIAL_BY_FIRE_LOCK.release()
 
 
 BASELINE_TRANSACTIONS_PATH = Path(
@@ -1700,34 +1723,49 @@ def reset_trial_by_fire():
     appends), restoring the live feed to its committed baseline, then
     reruns the pipeline so every derived file matches. The counterpart to
     /trial-by-fire - both work entirely from the dashboard, no terminal.
+    Shares TRIAL_BY_FIRE_LOCK with /trial-by-fire so the two can never run
+    concurrently and race on the same files.
     """
-    if not BASELINE_TRANSACTIONS_PATH.exists():
+    if not TRIAL_BY_FIRE_LOCK.acquire(blocking=False):
         raise HTTPException(
-            status_code=500,
+            status_code=409,
             detail=(
-                f"Baseline file {BASELINE_TRANSACTIONS_PATH} is missing - "
-                "cannot reset."
+                "Another trial-by-fire injection or reset is already "
+                "running - wait for it to finish (about 15-20s) and try "
+                "again."
             ),
         )
 
-    shutil.copyfile(
-        BASELINE_TRANSACTIONS_PATH,
-        inject_live_incident.TRANSACTIONS_PATH,
-    )
-
     try:
-        run_pipeline.main()
-    except RuntimeError as error:
-        raise HTTPException(
-            status_code=500,
-            detail=(
-                "Restored the baseline live feed, but the detection "
-                f"pipeline failed while reprocessing it: {error}"
-            ),
-        ) from error
+        if not BASELINE_TRANSACTIONS_PATH.exists():
+            raise HTTPException(
+                status_code=500,
+                detail=(
+                    f"Baseline file {BASELINE_TRANSACTIONS_PATH} is "
+                    "missing - cannot reset."
+                ),
+            )
 
-    dashboard = build_dashboard_payload()
-    return {
-        "message": "Live feed and every derived file reset to baseline.",
-        "active_incidents": dashboard["global_metrics"]["active_incidents"],
-    }
+        shutil.copyfile(
+            BASELINE_TRANSACTIONS_PATH,
+            inject_live_incident.TRANSACTIONS_PATH,
+        )
+
+        try:
+            run_pipeline.main()
+        except RuntimeError as error:
+            raise HTTPException(
+                status_code=500,
+                detail=(
+                    "Restored the baseline live feed, but the detection "
+                    f"pipeline failed while reprocessing it: {error}"
+                ),
+            ) from error
+
+        dashboard = build_dashboard_payload()
+        return {
+            "message": "Live feed and every derived file reset to baseline.",
+            "active_incidents": dashboard["global_metrics"]["active_incidents"],
+        }
+    finally:
+        TRIAL_BY_FIRE_LOCK.release()
