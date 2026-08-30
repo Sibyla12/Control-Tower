@@ -535,7 +535,9 @@ body.view-executive .exec-only-section { display: block; }
   padding-bottom: 20px; margin-bottom: 22px; border-bottom: 1px solid var(--hairline);
 }
 .exec-brief-status-label {
-  font-family: var(--font-display); font-weight: 900; font-size: 34px;
+  /* font-weight 700 is the heaviest used anywhere else on the dashboard
+     (eyebrows, badges) - 900 doesn't exist elsewhere, so it's not used here. */
+  font-family: var(--font-display); font-weight: 700; font-size: 30px;
   letter-spacing: .02em; color: var(--nominal);
 }
 .exec-brief-status.is-warning .exec-brief-status-label { color: var(--caution); }
@@ -552,10 +554,13 @@ body.view-executive .exec-only-section { display: block; }
   text-transform: uppercase; font-family: var(--font-mono); margin-bottom: 8px;
 }
 .exec-brief-tile-value {
-  font-family: var(--font-display); font-weight: 900; font-size: 40px;
+  /* Matches the numeric styling used everywhere else on the dashboard
+     (.kpi-row > strong, .conversion-compare strong, etc.) - mono, 600,
+     tabular figures - just sized up for emphasis, not a different font. */
+  font-family: var(--font-mono); font-weight: 600; font-size: 34px;
   line-height: 1; color: var(--text-primary); font-variant-numeric: tabular-nums;
 }
-.exec-brief-trend-value { font-size: 26px; }
+.exec-brief-trend-value { font-size: 24px; }
 .exec-brief-trend-value.is-recovering { color: var(--nominal); }
 .exec-brief-trend-value.is-worsening { color: var(--warning); }
 .exec-brief-tile-foot { margin-top: 8px; color: var(--text-tertiary); font-size: 11.5px; }
