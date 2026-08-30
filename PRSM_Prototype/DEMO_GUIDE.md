@@ -2,9 +2,12 @@
 
 The dashboard (`PRSM_Prototype/html/`) always shows **live data** from the real
 API — there is no demo/scripted mode anymore. Everything below is driven by
-what's actually in `data/` at the moment you present, so run
-`python3 src/run_pipeline.py` once before the demo starts to make sure the
-data on disk matches this script.
+what's actually in `data/` at the moment you present, so run `./run_demo.sh`
+from the repo root once before the demo starts (creates the venv, installs
+dependencies, runs the pipeline, starts the API and the dashboard, and opens
+the browser — one command, nothing else to type) to make sure the data on
+disk matches this script. For a field-by-field explanation of every button
+and panel, see [GUIA_DEMO_COMPLETA.md](GUIA_DEMO_COMPLETA.md) (Spanish).
 
 ## 0:00–0:30 — Establish the normal state
 
@@ -89,6 +92,25 @@ python3 src/run_pipeline.py
 
 Open the new incident and walk through root cause, evidence, priority and
 the recommended action, same as the rehearsed ones.
+
+## Bonus, if there's extra time or a judge asks
+
+Two features that don't have a dedicated slot in the 4 minutes above, worth
+showing if there's room:
+
+- **Executive view** (toggle top right, next to the "OP" avatar) — swaps
+  the analyst dashboard for a one-screen brief: overall status, incident
+  count, financial exposure, a trend reading, per-country chips, and one
+  card per P1 incident with its own confidence and recommended action. It's
+  a pure display filter (same data, same API calls) — good for showing that
+  the same system serves both an analyst and someone who just needs to
+  decide fast.
+- **Ask PRISM** (floating button, bottom right) — a chat that answers
+  questions about the live incident state by calling the same backend
+  functions the REST endpoints use, so it can't invent an answer. Try:
+  "how many P1 incidents are there right now?" or, to show it chaining
+  more than one lookup, "what's the highest-priority incident and which
+  segment explains most of its excess declines?"
 
 ## 3:45–4:00 — Close on value
 

@@ -4,7 +4,16 @@ Two coordinated prototypes for a payment-operations incident intelligence produc
 
 ## 1. HTML / CSS / JavaScript
 
-Open `html/index.html` directly in a browser. It polls the real Control Tower API (`API_URL` in `html/app.js`) and shows live network status, incidents, and conversion data — no invented numbers, no demo scenarios.
+Open `html/index.html` directly in a browser, or run `./run_demo.sh` from
+the repo root for a one-command bootstrap. It polls the real Control Tower
+API (`API_URL` in `html/app.js`) and shows live network status, incidents,
+and conversion data — no invented numbers, no demo scenarios. It also has
+an "Ask PRISM" chat (grounded in the same live data), a "Trial by fire"
+panel to inject and detect a judge-named incident with no terminal, and an
+"Executive view" toggle that swaps the analyst dashboard for a one-screen
+decision brief. See [GUIA_DEMO_COMPLETA.md](GUIA_DEMO_COMPLETA.md) for a
+field-by-field explanation of every button and panel (Spanish), or
+[DEMO_GUIDE.md](DEMO_GUIDE.md) for a timed presentation script.
 
 ## 2. Python + Streamlit
 

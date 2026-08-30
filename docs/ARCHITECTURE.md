@@ -17,9 +17,10 @@ npx -p @mermaid-js/mermaid-cli mmdc -i docs/diagrams/pipeline_dataflow.mmd -o do
 
 ```mermaid
 flowchart TB
-    subgraph SOURCES["Data sources (data/*.csv)"]
+    subgraph SOURCES["Data sources (data/source/*.csv)"]
         HIST["transactions_history_60_days.csv<br/>500K attempts, 60 days"]
         LIVE["transactions_live_multisegment.csv<br/>live traffic, injected_incident_id ground truth"]
+        BASELINE_SNAPSHOT["transactions_live_multisegment.baseline.csv<br/>committed, untouched snapshot -<br/>used by /trial-by-fire/reset"]
     end
 
     subgraph SIM["Simulation (src/)"]
@@ -43,7 +44,7 @@ flowchart TB
         RUNALL["run_pipeline.py<br/>runs every stage above, one command"]
     end
 
-    subgraph STATE["Persistent state (data/*.csv + *.json)"]
+    subgraph STATE["Persistent state (data/generated/*.csv + *.json)"]
         LSW["live_segment_windows.csv"]
         REV["reviewed_incidents.csv"]
         AUDIT["recommendation_audit_log.csv"]
@@ -52,7 +53,7 @@ flowchart TB
         NOTIF["notified_incidents.json<br/>(ntfy dedup, gitignored)"]
     end
 
-    subgraph CONFIG["Config tables (data/*.csv)"]
+    subgraph CONFIG["Config tables (data/source/*.csv)"]
         TAX["incident_taxonomy.csv"]
         PLAY["operational_playbook.csv"]
         PRIO["priority_matrix.csv"]
@@ -60,19 +61,22 @@ flowchart TB
     end
 
     subgraph API["FastAPI backend (src/api.py)"]
-        ENDPOINTS["/dashboard  /incidents  /incidents/{id}<br/>/incidents/{id}/segments<br/>/unresolved-candidates  /audit-log<br/>POST /incidents/{id}/review<br/>POST /incidents/{id}/analysis"]
+        ENDPOINTS["/dashboard  /incidents  /incidents/{id}<br/>/incidents/{id}/segments<br/>/unresolved-candidates  /audit-log<br/>POST /incidents/{id}/review<br/>POST /incidents/{id}/analysis<br/>POST /agent/ask<br/>GET /trial-by-fire/options<br/>POST /trial-by-fire (+ /reset)"]
         ENRICH["Enrichment layer: taxonomy + playbook + priority<br/>matrix, cost projections, economic impact,<br/>executive summary, risk concentration,<br/>Pareto ranking, data quality, incident memory"]
+        AGENTTOOLS["Ask PRISM: tool-calling agent -<br/>calls the same enrichment functions as<br/>ENDPOINTS, never a separate data path"]
+        TBFLOCK["/trial-by-fire + /trial-by-fire/reset:<br/>threading.Lock() serializes the two -<br/>concurrent calls get 409, not a race"]
         LOOP["Background task:<br/>notify_new_incidents_loop (every 30s)"]
     end
 
     subgraph EXT["External services"]
-        OPENAI["OpenAI gpt-4o<br/>grounded incident narrative"]
+        OPENAI["OpenAI gpt-4o<br/>incident narrative + Ask PRISM tool-calling"]
         NTFY["ntfy.sh<br/>phone push notifications"]
     end
 
     subgraph UI["HTML dashboard (PRSM_Prototype/html/)"]
-        DASH["Live view: KPIs, map, incident queue,<br/>executive summary, under-investigation panel"]
+        DASH["Analyst view: KPIs, map, incident queue,<br/>executive summary, under-investigation panel<br/>· Executive view: status/exposure/trend brief,<br/>one card per P1 incident (display filter only)"]
         DRAWER["Incident drawer: root cause, evidence,<br/>priority, playbook, projections, segment<br/>breakdown, human decision"]
+        TBFUI["Trial by fire panel + Ask PRISM chat<br/>(floating button) - both run entirely<br/>from the browser, no terminal"]
     end
 
     HIST --> BASE
@@ -97,15 +101,23 @@ flowchart TB
     MEM --> ENRICH
     ENRICH --> ENDPOINTS
     ENDPOINTS --> ENRICH
+    ENRICH --> AGENTTOOLS
     LOOP --> NOTIF
     REV --> LOOP
 
+    TBFUI -->|inject: appends, then reruns pipeline| TBFLOCK
+    TBFLOCK -->|calls, same as RUNALL| AGG
+    TBFLOCK -->|calls, same as RUNALL| DET
+    BASELINE_SNAPSHOT -.->|reset: overwrites| LIVE
+
     ENRICH -. on demand, costs money .-> OPENAI
+    AGENTTOOLS -. on demand, costs money .-> OPENAI
     LOOP -. new incident detected .-> NTFY
 
     ENDPOINTS <-->|polls every 20s, GET| DASH
     DASH --> DRAWER
     DRAWER -->|POST review / analysis| ENDPOINTS
+    TBFUI <-->|POST /agent/ask, /trial-by-fire*| ENDPOINTS
 ```
 
 ## 2. Detection & diagnosis pipeline (data flow)
@@ -149,3 +161,13 @@ flowchart LR
 - **`data/generated/incident_memory.csv` and `data/generated/notified_incidents.json`** are
   runtime state written by the running API, not source data — gitignored,
   regenerated on first use.
+- **`data/` splits into `source/` (never rewritten by the pipeline) and
+  `generated/` (everything `run_pipeline.py` writes)** - every stage's
+  `INPUT_PATH`/`OUTPUT_PATH` points at one or the other, never a bare
+  `data/`.
+- **Ask PRISM and Trial by fire both run entirely from the browser, no
+  terminal.** Ask PRISM's tools call the exact same enrichment functions
+  the REST endpoints use, so it can't answer with anything the dashboard
+  itself couldn't show. Trial by fire's inject and reset actions share one
+  `threading.Lock`, so two people using either at the same time get an
+  immediate, honest 409 instead of racing on the same files.

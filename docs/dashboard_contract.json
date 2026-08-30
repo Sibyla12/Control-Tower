@@ -1,30 +1,85 @@
 {
-  "system_status": "healthy",
-  "last_updated": "2026-08-29T14:03:00Z",
+  "_comment": "Real GET /dashboard response, captured live from the deployed API. Not fabricated — see docs/TECHNICAL_GUIDE.md #12 for what builds each field.",
+  "system_status": "critical",
+  "last_updated": "2026-08-31T10:11:00",
   "global_metrics": {
-    "approval_rate": 0.912,
-    "expected_approval_rate": 0.918,
-    "attempts_per_minute": 8429,
-    "approved_per_minute": 7687,
-    "active_incidents": 0,
-    "value_at_risk_per_minute": null
+    "approval_rate": 0.8938333333333334,
+    "expected_approval_rate": 0.900089007565643,
+    "attempts_per_minute": 1200.0,
+    "approved_per_minute": 1072.6,
+    "active_incidents": 3,
+    "value_at_risk_per_minute": 1217.16
+  },
+  "countries": {
+    "MX": {
+      "status": "warning",
+      "approval_rate": 0.8878364905284147,
+      "expected_approval_rate": 0.8898531375166889,
+      "attempts_per_minute": 401.2
+    },
+    "CO": {
+      "status": "healthy",
+      "approval_rate": 0.9023073146784487,
+      "expected_approval_rate": 0.8918918918918919,
+      "attempts_per_minute": 407.4
+    },
+    "BR": {
+      "status": "critical",
+      "approval_rate": 0.8911599386816556,
+      "expected_approval_rate": 0.9175788795878944,
+      "attempts_per_minute": 391.4
+    }
   },
   "conversion_history": [
+    { "timestamp": "2026-08-31T10:09:00", "observed_rate": 0.9116666666666666, "expected_rate": 0.900089007565643 },
+    { "timestamp": "2026-08-31T10:10:00", "observed_rate": 0.9016666666666666, "expected_rate": 0.900089007565643 },
+    { "timestamp": "2026-08-31T10:11:00", "observed_rate": 0.9033333333333333, "expected_rate": 0.900089007565643 }
+  ],
+  "monitored_traffic": {
+    "attempts_total": 14400,
+    "merchants": 3,
+    "providers": 3
+  },
+  "executive_summary": {
+    "active_incident_count": 3,
+    "total_gmv_at_risk_usd": 14441.79,
+    "total_gmv_at_risk_adjusted_usd": 9403.74,
+    "total_platform_revenue_at_risk_usd": 65.82,
+    "total_merchant_economic_impact_usd": 2190.44,
+    "total_economic_impact_usd": 2256.26
+  },
+  "risk_concentration": [
     {
-      "timestamp": "2026-08-29T13:58:00Z",
-      "expected_rate": 0.918,
-      "observed_rate": 0.916
+      "dimension": "country",
+      "value": "BR",
+      "gmv_at_risk_adjusted_usd": 8702.7,
+      "concentration_pct": 0.9255,
+      "incident_count": 2
     },
     {
-      "timestamp": "2026-08-29T13:59:00Z",
-      "expected_rate": 0.918,
-      "observed_rate": 0.921
-    },
-    {
-      "timestamp": "2026-08-29T14:00:00Z",
-      "expected_rate": 0.918,
-      "observed_rate": 0.914
+      "dimension": "provider",
+      "value": "Adyen",
+      "gmv_at_risk_adjusted_usd": 7069.16,
+      "concentration_pct": 0.7517,
+      "incident_count": 1
     }
   ],
-  "incidents": []
+  "risk_ranking": [
+    {
+      "rank": 1,
+      "consolidated_incident_id": "ROOT-AD83EFD1",
+      "incident_title": "Adyen degradation in BR",
+      "gmv_at_risk_adjusted_usd": 7069.16,
+      "cumulative_gmv_at_risk_adjusted_usd": 7069.16,
+      "cumulative_pct": 0.7517
+    },
+    {
+      "rank": 2,
+      "consolidated_incident_id": "ROOT-A5CFBA70",
+      "incident_title": "PROCESSOR_ERROR spike in BR",
+      "gmv_at_risk_adjusted_usd": 1633.54,
+      "cumulative_gmv_at_risk_adjusted_usd": 8702.7,
+      "cumulative_pct": 0.9255
+    }
+  ]
 }
