@@ -560,3 +560,39 @@ Methodology notes:
 - Recommendations require human approval.
 - Production should replace CSV persistence with durable storage and add
   authentication, authorization, observability, and secure secret management.
+
+## 16. Evaluating SQL
+
+CSV was kept for this build (see
+[docs/DECISIONS.md](DECISIONS.md#2-storage-csv-files-vs-a-sql-database)); this
+section scopes what a migration would actually involve, without committing to
+one.
+
+- **What would move.** Every file in `data/*.csv` maps naturally to a table:
+  the pipeline stage outputs (`detection_windows`, `clustered_incidents`,
+  `consolidated_incidents`, `incidents_with_financial_impact`,
+  `prioritized_incidents`, `incidents_with_recommendations`,
+  `reviewed_incidents`) and the config tables (`incident_taxonomy`,
+  `operational_playbook`, `priority_matrix`, `merchant_financial_config`).
+  `reviewed_incidents` is the one table a human-driven UI would actually
+  write concurrently (Approve/Modify/Reject/Execute) — everything upstream of
+  it is written once per pipeline run by a single process.
+- **What it would buy.** Row-level locking instead of whole-file rewrites,
+  so a human reviewing an incident can't race a pipeline re-run; indexed
+  lookups instead of a full pandas read per API request; and a real place to
+  enforce foreign keys (e.g. `source_incident_ids` linking
+  `consolidated_incidents` back to `clustered_incidents`) instead of joining
+  on string columns in Python.
+- **What it would cost.** Every stage script currently reads/writes a CSV
+  with its own hardcoded `INPUT_PATH`/`OUTPUT_PATH` and is runnable and
+  diffable standalone — a judge or teammate can open any intermediate file
+  directly. Moving to SQL means introducing a schema migration tool, a
+  connection-managed session per script, and losing the "just open the CSV"
+  transparency that the pipeline's `run_pipeline.py` orchestration and the
+  trial-by-fire demo flow depend on for inspectability.
+- **Recommended path if this became necessary:** SQLite first, not a
+  networked database. It keeps the "single file, no server to provision"
+  property that makes the CSV approach easy to demo, while adding real
+  transactions and indexing; only `reviewed_incidents` needs write
+  concurrency, so that table alone could move first with everything else
+  staying CSV, if a partial migration was preferred over a full rewrite.

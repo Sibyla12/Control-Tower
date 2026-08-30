@@ -1,0 +1,15 @@
+flowchart LR
+    LIVE["transactions_live_multisegment.csv"] --> DA["detection_aggregator.py"]
+    DA -->|"detection_windows.csv<br/>(6 detection levels)"| AW["adaptive_windows.py"]
+    AW -->|"adaptive_detection_windows.csv<br/>(1-min, falls back to 5-min)"| AS["anomaly_scanner.py"]
+    AS -->|"anomaly_candidates.csv<br/>z >= 2, drop >= 5pp, n >= 30"| AV["anomaly_validator.py"]
+    AV -->|"validated_anomalies.csv<br/>FDR + 2 consecutive minutes"| IC["incident_clusterer.py"]
+    IC -->|"clustered_incidents.csv<br/>temporal clusters, gap <= 2 min"| RCE["root_cause_engine.py"]
+    RCE -->|"root_cause_incidents.csv<br/>provider / bank / merchant / method / decline_code"| CONS["incident_consolidator.py"]
+    CONS -->|"consolidated_incidents.csv<br/>confidence >= 0.70 to be a primary incident"| FI["financial_impact.py"]
+    CONS -.->|"confidence < 0.70"| UNRES["unresolved_incident_candidates.csv"]
+    FI -->|"incidents_with_financial_impact.csv"| PE["priority_engine.py"]
+    PE -->|"prioritized_incidents.csv (P1-P4)"| RE["recommendation_engine.py"]
+    RE -->|"incidents_with_recommendations.csv"| HR["human_review.py"]
+    HR -->|"reviewed_incidents.csv"| API["src/api.py"]
+    UNRES --> API

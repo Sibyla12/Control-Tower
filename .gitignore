@@ -228,3 +228,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+.demo_api.pid
+.demo_frontend.pid
+logs/

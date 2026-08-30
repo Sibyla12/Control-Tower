@@ -51,6 +51,24 @@ Control-Tower/
 └── Procfile
 ```
 
+## Quickstart (one command)
+
+```bash
+./run_demo.sh
+```
+
+This creates the virtual environment, installs dependencies, runs the full
+detection-to-diagnosis pipeline on the committed live dataset, starts the API
+on `http://localhost:8000`, serves the dashboard on `http://localhost:5500`,
+and opens it in your browser — no manual steps in between. Stop everything
+with `./stop_demo.sh`. Logs are written to `logs/api.log` and
+`logs/frontend.log`.
+
+The steps below are the same thing done manually, useful if you want to run
+a piece in isolation (e.g. re-run just the pipeline after
+`inject_live_incident.py`, or start the API with `--reload` during
+development).
+
 ## Installation
 
 Python 3.12 or a compatible version is required.
@@ -109,6 +127,18 @@ python -m http.server 5500
 ```
 
 Then open `http://localhost:5500`, or just double-click `index.html`.
+
+## Architecture
+
+Two diagrams (system overview and pipeline data flow), as Mermaid source and
+as standalone PNGs, live in
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+## Decision log
+
+Real trade-offs made while building this system — what was considered, what
+was picked, and what was given up — are recorded in
+[docs/DECISIONS.md](docs/DECISIONS.md).
 
 ## Analytics pipeline
 

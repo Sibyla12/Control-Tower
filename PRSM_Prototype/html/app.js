@@ -1,4 +1,10 @@
-const API_URL = "https://control-tower-vl22.onrender.com";
+// When the dashboard is served from localhost/127.0.0.1 (e.g. by run_demo.sh),
+// talk to the locally running backend instead of the deployed one — this keeps
+// the local "trial by fire" demo fast and working offline, while a publicly
+// hosted copy of this page still defaults to the deployed API.
+const API_URL = ["localhost", "127.0.0.1"].includes(window.location.hostname)
+  ? "http://localhost:8000"
+  : "https://control-tower-vl22.onrender.com";
 const LIVE_POLL_MS = 20000;
 
 function humanizeMerchant(value) {
