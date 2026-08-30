@@ -1,6 +1,6 @@
 # Decision log
 
-Real trade-offs made while building Control Tower / PRSM, not a changelog.
+Real trade-offs made while building Control Tower / PRISM, not a changelog.
 Each entry states the alternatives that were actually considered, what we
 picked, and what we gave up by picking it.
 
@@ -96,7 +96,7 @@ system;
 (c) require a human operator to approve, modify, or reject the
 recommendation before execution.
 
-**Decision:** option (c). PRSM generates a proposed action, but the
+**Decision:** option (c). PRISM generates a proposed action, but the
 recommendation remains in `proposed` status until an operator reviews it.
 The valid transitions are enforced by the API:
 `proposed → approved / modified / rejected`, and only an `approved`
@@ -109,10 +109,10 @@ remediation would minimize time to mitigation, especially for high-impact
 provider incidents, but a wrong diagnosis or overly broad routing change
 could worsen conversion, duplicate retries, or move traffic into a less
 healthy path. Keeping recommendations completely outside the system would
-reduce technical risk, but would make PRSM little more than an alerting
+reduce technical risk, but would make PRISM little more than an alerting
 dashboard and would leave no structured decision trail.
 
 We accepted a small delay between diagnosis and execution in exchange for
 explicit accountability, reversible actions, and a complete audit trail.
-PRSM can recommend and prioritize, but it does not silently change
+PRISM can recommend and prioritize, but it does not silently change
 production payment routing without human approval.
