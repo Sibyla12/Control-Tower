@@ -511,22 +511,43 @@ UNAVAILABLE" instead of substituting fake data.
 
 **Executive view** (the toggle top right, next to the "OP" avatar) is a pure
 CSS/DOM display filter, not a second data model - it never changes what
-`fetchLive()` requests or how `buildLiveScenario()` computes anything.
-Every element meant to disappear in this mode carries a `detail-only-section`
-class (risk concentration, the geographic map, the live performance chart,
-the "under investigation" panel, the signal-rail beacons, three of the four
-executive-summary KPI cards, and - inside the incident drawer - root cause,
-evidence, observed-vs-expected, diagnosis confidence, segment breakdown, and
-projections); `body.view-executive .detail-only-section { display: none }`
-hides all of them at once. The incident list keeps only the first card
-(`.incident-card:not(:first-child)`) - already the highest-priority
-incident, since the list is sorted by `priority_score` - and reveals a
-`.exec-recommendation` line under it showing that incident's own
-`playbook_action`/`primary_action`, hidden by default and shown only for
-that first card in this mode. The chosen mode is remembered per browser via
-`localStorage` (`prsm_view_mode`), wrapped in try/catch so a blocked or
-unavailable store just falls back to Analyst view rather than breaking the
-toggle.
+`fetchLive()` requests or how `buildLiveScenario()`/`render()` compute
+anything; `renderExecBrief()` just reads the same `s` (current view) and
+`risk` values every other render function already uses.
+
+Two things happen together when the toggle flips to Executive:
+
+- A purpose-built `#execBrief` panel (`renderExecBrief()`) becomes visible -
+  a big colored status word (NORMAL/WARNING/CRITICAL, from `s.tone`), two
+  large tiles (active incident count with its P1/P2 breakdown, and total
+  `$/hour` exposure), a "Main problem" block using the top incident's own
+  `executive` summary sentence, and a "Recommended action" block using its
+  `playbook_action`/`primary_action` with a "Review & decide →" button that
+  calls `openDrawer()` on that same incident. With zero incidents it shows a
+  quiet-state message instead and hides the button. This is additive markup
+  (`.exec-only-section`, hidden unless `body.view-executive`), not a
+  rewrite of the analyst layout.
+- Everything else that would compete with it for attention is hidden via a
+  `detail-only-section` class: the normal top KPI row, the whole
+  executive-summary panel (risk concentration included), the entire
+  operations grid (map and incident list - the brief's own CTA replaces
+  clicking into the list), the live performance chart, the "under
+  investigation" panel, the signal-rail beacons, and - inside the incident
+  drawer, since the CTA opens it too - root cause, evidence,
+  observed-vs-expected, diagnosis confidence, segment breakdown, and
+  projections. One rule, `body.view-executive .detail-only-section {
+  display: none }`, covers all of them.
+
+The chosen mode is remembered per browser via `localStorage`
+(`prsm_view_mode`), wrapped in try/catch so a blocked or unavailable store
+just falls back to Analyst view rather than breaking the toggle. One
+side-effect worth knowing: the orthographic globe canvas in the map panel
+computes its radius from its container's measured size every frame: hiding
+that container collapses it to zero, which used to throw
+(`createRadialGradient` rejects a negative radius) - `draw()` now no-ops
+when `radius <= 0`, and switching back to Analyst explicitly calls
+`Globe.resize()` after a short delay so the canvas re-measures against its
+now-visible container instead of staying frozen at the stale size.
 
 ### `PRSM_Prototype/streamlit/`
 

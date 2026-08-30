@@ -313,6 +313,10 @@ function applyViewMode(mode) {
   toggle.setAttribute("aria-pressed", String(isExecutive));
   toggle.textContent = isExecutive ? "Executive view" : "Analyst view";
   try { localStorage.setItem("prsm_view_mode", mode); } catch (error) { /* per-viewer convenience only */ }
+  // The map panel is display:none in Executive view, so its canvas collapses
+  // to zero size; re-measure once it's visible again rather than leaving the
+  // globe frozen at that stale (invalid) size.
+  if (!isExecutive) setTimeout(() => { if (typeof Globe !== "undefined") Globe.resize(); }, 50);
 }
 
 function setTimeView(view) {
@@ -398,6 +402,41 @@ function render() {
   renderRiskConcentration(s.riskConcentration || []);
   renderChart(s.chart, s.expectedChart, s.marker);
   renderAnnunciators(s.incidents);
+  renderExecBrief(s, risk);
+}
+
+const EXEC_STATUS_LABEL = { healthy: "NORMAL", warning: "WARNING", critical: "CRITICAL" };
+
+function renderExecBrief(s, risk) {
+  const statusEl = document.getElementById("execBriefStatus");
+  statusEl.className = `exec-brief-status ${s.tone === "healthy" ? "" : `is-${s.tone}`}`;
+  document.getElementById("execBriefStatusLabel").textContent = EXEC_STATUS_LABEL[s.tone] || s.tone.toUpperCase();
+  document.getElementById("execBriefStatusNote").textContent = s.title;
+
+  const p1 = s.incidents.filter(i => i.priority === "P1").length;
+  const p2 = s.incidents.filter(i => i.priority === "P2").length;
+  document.getElementById("execBriefIncidentCount").textContent = s.incidents.length;
+  document.getElementById("execBriefIncidentBreakdown").textContent = s.incidents.length
+    ? `${p1} P1 · ${p2} P2${s.incidents.length - p1 - p2 > 0 ? ` · ${s.incidents.length - p1 - p2} other` : ""}`
+    : "Network quiet";
+  document.getElementById("execBriefExposure").textContent = money(risk);
+
+  const top = s.incidents[0];
+  const actionBlock = document.getElementById("execBriefAction");
+  const ctaButton = document.getElementById("execBriefCta");
+  if (top) {
+    document.getElementById("execBriefProblemBody").textContent = top.executive || top.title;
+    document.getElementById("execBriefActionBody").textContent = top.playbookAction || top.recommendation || "Under review.";
+    actionBlock.classList.remove("is-quiet");
+    ctaButton.hidden = false;
+    ctaButton.onclick = () => openDrawer(top);
+  } else {
+    document.getElementById("execBriefProblemBody").textContent = "No significant issues detected right now.";
+    document.getElementById("execBriefActionBody").textContent = "Continue monitoring — nothing needs a decision right now.";
+    actionBlock.classList.add("is-quiet");
+    ctaButton.hidden = true;
+    ctaButton.onclick = null;
+  }
 }
 
 function renderExecutiveSummary(summary) {
@@ -896,6 +935,11 @@ const Globe = (() => {
   }
 
   function draw(rotation) {
+    // radius collapses to 0 (or negative, after the -2px inset) when the
+    // map panel is hidden - e.g. display:none in Executive view - since
+    // its container then reports zero size. Skip the frame rather than
+    // pass an invalid radius to the canvas APIs.
+    if (radius <= 0) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const shade = ctx.createRadialGradient(cx - radius * 0.35, cy - radius * 0.35, radius * 0.08, cx, cy, radius);
     shade.addColorStop(0, "#1e1e1e");
@@ -954,7 +998,7 @@ const Globe = (() => {
     window.addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { resize(); draw(BASE_LNG); }, 120); });
   }
 
-  return { start };
+  return { start, resize };
 })();
 Globe.start();
 

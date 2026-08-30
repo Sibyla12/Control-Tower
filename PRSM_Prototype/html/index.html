@@ -57,7 +57,35 @@
         <div class="status-meta"><span id="statusTimestamp">Updated just now</span><span class="status-separator"></span><span>6-hour baseline</span></div>
       </section>
 
-      <section class="kpi-grid" aria-label="Network metrics">
+      <section class="exec-brief exec-only-section" id="execBrief" aria-label="Executive brief">
+        <div class="exec-brief-status" id="execBriefStatus">
+          <span class="exec-brief-status-label" id="execBriefStatusLabel">NORMAL</span>
+          <span class="exec-brief-status-note" id="execBriefStatusNote">Payment network operating within expected range.</span>
+        </div>
+        <div class="exec-brief-tiles">
+          <div class="exec-brief-tile">
+            <div class="exec-brief-tile-label">Active incidents</div>
+            <div class="exec-brief-tile-value" id="execBriefIncidentCount">0</div>
+            <div class="exec-brief-tile-foot" id="execBriefIncidentBreakdown">Network quiet</div>
+          </div>
+          <div class="exec-brief-tile">
+            <div class="exec-brief-tile-label">Financial exposure</div>
+            <div class="exec-brief-tile-value" id="execBriefExposure">$0</div>
+            <div class="exec-brief-tile-foot">USD / hour, across active incidents</div>
+          </div>
+        </div>
+        <div class="exec-brief-block" id="execBriefProblem">
+          <div class="exec-brief-block-label">Main problem</div>
+          <div class="exec-brief-block-body" id="execBriefProblemBody">No significant issues detected right now.</div>
+        </div>
+        <div class="exec-brief-block exec-brief-action" id="execBriefAction">
+          <div class="exec-brief-block-label">Recommended action</div>
+          <div class="exec-brief-block-body" id="execBriefActionBody">Continue monitoring — nothing needs a decision right now.</div>
+          <button class="exec-brief-cta" id="execBriefCta" type="button" hidden>Review &amp; decide →</button>
+        </div>
+      </section>
+
+      <section class="kpi-grid detail-only-section" id="topKpiGrid" aria-label="Network metrics">
         <article class="kpi-card primary-kpi">
           <div class="kpi-label">Network conversion <button class="info" title="Approved payments divided by attempts">i</button></div>
           <div class="kpi-row"><strong id="conversionValue">85.1%</strong><span class="delta neutral" id="conversionDelta">−0.3 pp</span></div>
@@ -80,7 +108,7 @@
         </article>
       </section>
 
-      <section class="panel executive-panel">
+      <section class="panel executive-panel detail-only-section">
         <div class="panel-heading">
           <div><span class="eyebrow">EXECUTIVE SUMMARY</span><h2>Network-wide financial exposure</h2></div>
           <span class="sort-label">Across all active incidents</span>
@@ -110,8 +138,8 @@
         <div class="risk-concentration detail-only-section" id="riskConcentration"></div>
       </section>
 
-      <section class="operations-grid">
-        <article class="panel map-panel detail-only-section">
+      <section class="operations-grid detail-only-section">
+        <article class="panel map-panel">
           <div class="panel-heading">
             <div><span class="eyebrow">GEOGRAPHIC OPERATIONS</span><h2>LATAM payment network</h2></div>
             <div class="legend"><span><i class="healthy-bg"></i>Healthy</span><span><i class="warning-bg"></i>Investigating</span><span><i class="critical-bg"></i>Incident</span></div>
