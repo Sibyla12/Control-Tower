@@ -21,10 +21,11 @@ otherwise it returns a clean, explicit error instead of failing silently.
 
 - A synthetic 60-day history with 500,000 transactions.
 - Multi-segment live traffic with controlled incident injection: a
-  "🔥 Trial by fire" button in the dashboard lets a judge-specified,
+  "Trial by fire" button in the dashboard lets a judge-specified,
   unrehearsed incident be injected and detected end-to-end from the
-  browser — no terminal — or the same thing from a script
-  (`src/inject_live_incident.py`).
+  browser — no terminal — with a matching "Reset" button to undo every
+  injection and return to baseline. Same thing from a script
+  (`src/inject_live_incident.py`) if you'd rather.
 - Historical baselines aligned with every live detection level.
 - Adaptive one-minute and five-minute windows.
 - Statistical detection with FDR correction and temporal persistence.
@@ -96,7 +97,6 @@ Python 3.12 or a compatible version is required.
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-pip install numpy scipy
 ```
 
 ## API
@@ -123,6 +123,7 @@ Available routes:
 - `POST /agent/ask`
 - `GET /trial-by-fire/options`
 - `POST /trial-by-fire`
+- `POST /trial-by-fire/reset`
 
 Interactive local documentation is available at
 `http://127.0.0.1:8000/docs`.

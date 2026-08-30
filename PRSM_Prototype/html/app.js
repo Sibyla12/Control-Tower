@@ -1205,12 +1205,50 @@ async function submitTbfForm(event) {
   }
 }
 
+async function resetTbfDemo() {
+  if (tbfState.running) return;
+  const confirmed = window.confirm(
+    "Reset the live feed to its baseline? This removes every incident " +
+    "injected via Trial by fire (including the rehearsed demo incidents' " +
+    "current state) and reruns detection — takes about 15-20 seconds."
+  );
+  if (!confirmed) return;
+
+  tbfState.running = true;
+  document.getElementById("tbfSubmit").disabled = true;
+  document.getElementById("tbfRandomize").disabled = true;
+  document.getElementById("tbfReset").disabled = true;
+  setTbfStatus("is-pending", "Restoring the baseline live feed and rerunning detection — about 15–20 seconds…");
+
+  try {
+    const response = await fetch(`${API_URL}/trial-by-fire/reset`, { method: "POST" });
+    const body = await response.json();
+    if (!response.ok) {
+      setTbfStatus("is-error", escapeHtml(body.detail || `Request failed (${response.status}).`));
+    } else {
+      setTbfStatus(
+        "is-missed",
+        `${escapeHtml(body.message)}<div class="tbf-status-detail">${body.active_incidents} active incident(s) after reset</div>`
+      );
+      fetchLive();
+    }
+  } catch (error) {
+    setTbfStatus("is-error", "Could not reach the API — check your connection.");
+  } finally {
+    tbfState.running = false;
+    document.getElementById("tbfSubmit").disabled = false;
+    document.getElementById("tbfRandomize").disabled = false;
+    document.getElementById("tbfReset").disabled = false;
+  }
+}
+
 document.getElementById("tbfToggle").addEventListener("click", () => toggleTbfModal());
 document.getElementById("tbfClose").addEventListener("click", () => toggleTbfModal(false));
 document.getElementById("tbfBackdrop").addEventListener("click", () => toggleTbfModal(false));
 document.getElementById("tbfCountry").addEventListener("change", refreshTbfMethodAndBankOptions);
 document.getElementById("tbfRandomize").addEventListener("click", randomizeTbfForm);
 document.getElementById("tbfForm").addEventListener("submit", submitTbfForm);
+document.getElementById("tbfReset").addEventListener("click", resetTbfDemo);
 document.addEventListener("keydown", e => {
   if (e.key === "Escape" && tbfState.open) toggleTbfModal(false);
 });

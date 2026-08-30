@@ -39,7 +39,7 @@
       <div class="time-view-toggle" id="timeViewToggle" role="group" aria-label="Time view">
         <button data-view="live" class="time-view-button is-active" type="button">Live now</button>
         <button data-view="quiet" class="time-view-button" type="button">Replay: before the incidents (10:00–10:02)</button>
-        <button class="time-view-button tbf-trigger" id="tbfToggle" type="button">🔥 Trial by fire</button>
+        <button class="time-view-button tbf-trigger" id="tbfToggle" type="button">Trial by fire</button>
       </div>
 
       <section class="status-strip" id="statusStrip" aria-live="polite">
@@ -191,6 +191,7 @@
       The full detection-to-diagnosis pipeline runs for real — this takes
       about 15–20 seconds — then you'll see whether it was confirmed as an
       incident, flagged as low-confidence, or missed.
+      <button type="button" class="tbf-reset-link" id="tbfReset">Reset live feed to baseline</button>
     </p>
     <form class="tbf-form" id="tbfForm">
       <div class="tbf-grid">
@@ -204,7 +205,7 @@
         <label>Duration (minutes)<input type="number" id="tbfMinutes" min="1" max="30" value="5" required></label>
       </div>
       <div class="tbf-actions">
-        <button type="button" class="tbf-secondary" id="tbfRandomize">🎲 Randomize</button>
+        <button type="button" class="tbf-secondary" id="tbfRandomize">Randomize</button>
         <button type="submit" class="tbf-primary" id="tbfSubmit">Inject &amp; run detection</button>
       </div>
     </form>

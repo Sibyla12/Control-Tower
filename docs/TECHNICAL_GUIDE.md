@@ -468,6 +468,14 @@ while it runs). `GET /trial-by-fire/options` returns the real, current
 the dashboard's form is always sourced from the same values the generator
 actually uses rather than a hand-maintained duplicate.
 
+`POST /trial-by-fire/reset` is the undo: injection only ever appends, so
+resetting overwrites the live file with
+`data/source/transactions_live_multisegment.baseline.csv` - a committed,
+untouched copy of the original live dataset - then reruns the pipeline.
+This restores the file (and therefore every derived incident) rather than
+relying on `git checkout` at runtime, which would assume a git working tree
+exists in whatever environment the API happens to be deployed to.
+
 ### `PRSM_Prototype/html/app.js`
 
 Polls `/dashboard`, `/incidents`, and `/unresolved-candidates` from the public

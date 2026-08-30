@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+import shutil
 import sys
 import urllib.request
 from datetime import datetime, timezone
@@ -1685,4 +1686,48 @@ def run_trial_by_fire(request: TrialByFireRequest):
         "message": message,
         "detected_incidents": detected_incidents,
         "detected_unresolved_candidates": detected_unresolved,
+    }
+
+
+BASELINE_TRANSACTIONS_PATH = Path(
+    "data/source/transactions_live_multisegment.baseline.csv"
+)
+
+
+@app.post("/trial-by-fire/reset")
+def reset_trial_by_fire():
+    """Undoes every injection made through /trial-by-fire (which only ever
+    appends), restoring the live feed to its committed baseline, then
+    reruns the pipeline so every derived file matches. The counterpart to
+    /trial-by-fire - both work entirely from the dashboard, no terminal.
+    """
+    if not BASELINE_TRANSACTIONS_PATH.exists():
+        raise HTTPException(
+            status_code=500,
+            detail=(
+                f"Baseline file {BASELINE_TRANSACTIONS_PATH} is missing - "
+                "cannot reset."
+            ),
+        )
+
+    shutil.copyfile(
+        BASELINE_TRANSACTIONS_PATH,
+        inject_live_incident.TRANSACTIONS_PATH,
+    )
+
+    try:
+        run_pipeline.main()
+    except RuntimeError as error:
+        raise HTTPException(
+            status_code=500,
+            detail=(
+                "Restored the baseline live feed, but the detection "
+                f"pipeline failed while reprocessing it: {error}"
+            ),
+        ) from error
+
+    dashboard = build_dashboard_payload()
+    return {
+        "message": "Live feed and every derived file reset to baseline.",
+        "active_incidents": dashboard["global_metrics"]["active_incidents"],
     }
