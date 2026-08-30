@@ -86,14 +86,7 @@ code, .mono { font-family: var(--font-mono); }
 .topbar { height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--hairline); }
 .brand-lockup, .topbar-meta, .status-copy, .kpi-row, .kpi-foot, .panel-heading, .legend, .chart-legend, .incident-top, .incident-metrics, .drawer-topbar, .metric-pair, .confidence-head { display: flex; align-items: center; }
 .brand-lockup { gap: 13px; }
-.brand-mark { width: 38px; height: 38px; display: grid; grid-template-columns: repeat(3, 1fr); align-items: end; gap: 3px; padding: 8px; border: 1px solid var(--hairline-bright); border-radius: var(--radius-sm); background: var(--panel-raised); }
-.brand-mark span { border-radius: 1px; background: var(--select); box-shadow: 0 0 6px rgba(255, 255, 255, .35); }
-.brand-mark span:nth-child(1) { height: 45%; opacity: .55; }
-.brand-mark span:nth-child(2) { height: 100%; }
-.brand-mark span:nth-child(3) { height: 70%; opacity: .8; }
-.brand-name { font-size: 21px; letter-spacing: .1em; text-transform: uppercase; }
-.brand-name strong { color: var(--select); font-weight: 700; }
-.brand-subtitle { color: var(--text-tertiary); font-size: 9.5px; margin-top: 5px; letter-spacing: .1em; text-transform: uppercase; font-family: var(--font-mono); }
+.brand-logo { height: 42px; width: auto; display: block; }
 
 .signal-rail { display: flex; align-items: center; gap: 14px; height: 46px; padding: 0 16px; background: var(--panel-sunken); }
 .rail-divider { width: 1px; height: 22px; background: var(--hairline); }
