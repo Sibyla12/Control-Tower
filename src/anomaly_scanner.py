@@ -59,32 +59,48 @@ def row_to_segment(row: pd.Series) -> dict[str, Any]:
     }
 
 
-def find_exact_detection_baseline(
+def detection_baseline_key(
+    level: str,
+    dimensions: list[str],
+    row: pd.Series,
+) -> tuple:
+    return (level,) + tuple(
+        None if pd.isna(row[dimension]) else row[dimension]
+        for dimension in dimensions
+    )
+
+
+def build_detection_baseline_index(
     baselines: pd.DataFrame,
+) -> dict[tuple, pd.Series]:
+    """Precomputes the same exact-match lookup
+    find_exact_detection_baseline used to redo per row (filtering the
+    whole dataframe down by detection_level + every dimension column,
+    every single time) as a single dict, built once. Same matching rules
+    - reliable rows only, first match wins per key - just O(rows) instead
+    of O(rows x candidates) to build, and O(1) instead of O(candidates)
+    to look up.
+    """
+    reliable = baselines[baselines["baseline_reliable"].eq(True)]
+    index: dict[tuple, pd.Series] = {}
+
+    for level, dimensions in DETECTION_DIMENSIONS.items():
+        level_rows = reliable[reliable["detection_level"].eq(level)]
+
+        for _, baseline_row in level_rows.iterrows():
+            key = detection_baseline_key(level, dimensions, baseline_row)
+            index.setdefault(key, baseline_row)
+
+    return index
+
+
+def find_exact_detection_baseline(
+    index: dict[tuple, pd.Series],
     row: pd.Series,
 ) -> pd.Series | None:
     level = row["detection_level"]
-    candidates = baselines[
-        baselines["detection_level"].eq(level)
-    ].copy()
     dimensions = DETECTION_DIMENSIONS[level]
-
-    for dimension in dimensions:
-        value = row[dimension]
-
-        if pd.isna(value):
-            candidates = candidates[candidates[dimension].isna()]
-        else:
-            candidates = candidates[candidates[dimension].eq(value)]
-
-    candidates = candidates[
-        candidates["baseline_reliable"].eq(True)
-    ]
-
-    if candidates.empty:
-        return None
-
-    return candidates.iloc[0]
+    return index.get(detection_baseline_key(level, dimensions, row))
 
 
 def scan_windows(
@@ -93,6 +109,9 @@ def scan_windows(
     detection_baselines: pd.DataFrame,
 ) -> pd.DataFrame:
     results = []
+    detection_baseline_index = build_detection_baseline_index(
+        detection_baselines
+    )
 
     for _, row in windows.iterrows():
         if row["window_strategy"] == "insufficient_data":
@@ -117,7 +136,7 @@ def scan_windows(
         segment = row_to_segment(row)
 
         baseline_row = find_exact_detection_baseline(
-            baselines=detection_baselines,
+            index=detection_baseline_index,
             row=row,
         )
 

@@ -362,14 +362,15 @@ button:focus-visible, .country-node:focus-visible, [tabindex]:focus-visible {
   border-radius: var(--radius); box-shadow: 0 24px 64px rgba(0, 0, 0, .55);
 }
 .tbf-intro { color: var(--text-secondary); font-size: 12px; line-height: 1.6; margin: 16px 0; }
-.tbf-reset-link {
-  display: inline-block; margin-top: 8px; padding: 0; border: none; background: none;
-  color: var(--text-tertiary); font-family: var(--font-mono); font-size: 10.5px;
-  text-transform: uppercase; letter-spacing: .03em; text-decoration: underline;
-  cursor: pointer;
+.tbf-reset-button {
+  display: block; width: 100%; margin-top: 12px; min-height: 40px;
+  border-radius: var(--radius-sm); border: 1px solid var(--caution);
+  background: var(--caution-dim); color: var(--caution); cursor: pointer;
+  font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .04em;
 }
-.tbf-reset-link:hover { color: var(--text-primary); }
-.tbf-reset-link:disabled { opacity: .5; cursor: default; }
+.tbf-reset-button:hover { background: var(--caution); color: #0a0a0a; }
+.tbf-reset-button:disabled { opacity: .5; cursor: default; }
 .tbf-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px;
 }
