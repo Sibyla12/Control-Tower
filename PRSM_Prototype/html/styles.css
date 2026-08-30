@@ -400,12 +400,27 @@ button:focus-visible, .country-node:focus-visible, [tabindex]:focus-visible {
   border: 1px solid var(--hairline); background: var(--panel-sunken);
   font-size: 12px; line-height: 1.6;
 }
-.tbf-status.is-pending { color: var(--text-secondary); font-style: italic; }
+.tbf-status.is-pending { color: var(--text-secondary); }
 .tbf-status.is-confirmed { border-color: var(--warning); background: var(--warning-dim); }
 .tbf-status.is-unresolved { border-color: var(--caution); background: var(--caution-dim); }
 .tbf-status.is-missed { border-color: var(--hairline-bright); }
 .tbf-status.is-error { border-color: var(--warning); background: var(--warning-dim); }
 .tbf-status-detail { margin-top: 8px; color: var(--text-secondary); font-family: var(--font-mono); font-size: 10.5px; }
+
+.tbf-progress-label { font-style: italic; font-size: 11.5px; }
+.tbf-progress-track {
+  margin-top: 10px; height: 6px; border-radius: 3px; overflow: hidden;
+  background: var(--panel-raised); border: 1px solid var(--hairline);
+}
+.tbf-progress-fill {
+  height: 100%; width: 0%; background: var(--warning);
+  transition: width .3s linear;
+}
+.tbf-progress-meta {
+  margin-top: 6px; display: flex; justify-content: space-between;
+  color: var(--text-tertiary); font-family: var(--font-mono); font-size: 10px;
+  text-transform: uppercase; letter-spacing: .03em;
+}
 
 .agent-fab {
   position: fixed; z-index: 26; right: 24px; bottom: 24px;

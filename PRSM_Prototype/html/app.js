@@ -1169,10 +1169,59 @@ function randomizeTbfForm() {
 }
 
 function setTbfStatus(cls, html) {
+  stopTbfProgress();
   const el = document.getElementById("tbfStatus");
   el.hidden = false;
   el.className = `tbf-status ${cls}`;
   el.innerHTML = html;
+}
+
+// Progress is estimated, not streamed from the backend (the pipeline runs
+// as one blocking request) — the moving bar and rotating stage labels exist
+// so a ~15-20s wait doesn't read as "nothing is happening."
+const TBF_ESTIMATED_SECONDS = 19;
+const TBF_PROGRESS_STAGES_AFTER_FIRST = [
+  { at: 2, label: "Aggregating live traffic across detection levels…" },
+  { at: 5, label: "Scanning for statistically significant drops…" },
+  { at: 9, label: "Clustering validated anomalies and inferring root cause…" },
+  { at: 13, label: "Estimating financial impact and priority…" },
+  { at: 16, label: "Finalizing recommendations…" },
+];
+let tbfProgressTimer = null;
+
+function startTbfProgress(firstStageLabel) {
+  stopTbfProgress();
+  const stages = [{ at: 0, label: firstStageLabel }, ...TBF_PROGRESS_STAGES_AFTER_FIRST];
+  const el = document.getElementById("tbfStatus");
+  el.hidden = false;
+  el.className = "tbf-status is-pending";
+  el.innerHTML = `
+    <div class="tbf-progress-label" id="tbfProgressLabel">${escapeHtml(firstStageLabel)}</div>
+    <div class="tbf-progress-track"><div class="tbf-progress-fill" id="tbfProgressFill"></div></div>
+    <div class="tbf-progress-meta"><span id="tbfProgressElapsed">0s elapsed</span><span>~15-20s total</span></div>
+  `;
+
+  const startedAt = Date.now();
+  tbfProgressTimer = setInterval(() => {
+    const fill = document.getElementById("tbfProgressFill");
+    const elapsedEl = document.getElementById("tbfProgressElapsed");
+    const labelEl = document.getElementById("tbfProgressLabel");
+    if (!fill || !elapsedEl || !labelEl) { stopTbfProgress(); return; }
+
+    const elapsedSeconds = (Date.now() - startedAt) / 1000;
+    const pct = Math.min(95, (elapsedSeconds / TBF_ESTIMATED_SECONDS) * 100);
+    fill.style.width = `${pct}%`;
+    elapsedEl.textContent = `${Math.floor(elapsedSeconds)}s elapsed`;
+    const stage = [...stages].reverse().find(s => elapsedSeconds >= s.at);
+    if (stage) labelEl.textContent = stage.label;
+  }, 250);
+}
+
+function stopTbfProgress() {
+  if (tbfProgressTimer) {
+    clearInterval(tbfProgressTimer);
+    tbfProgressTimer = null;
+  }
 }
 
 async function submitTbfForm(event) {
@@ -1181,7 +1230,7 @@ async function submitTbfForm(event) {
   tbfState.running = true;
   document.getElementById("tbfSubmit").disabled = true;
   document.getElementById("tbfRandomize").disabled = true;
-  setTbfStatus("is-pending", "Injecting transactions and running the full detection pipeline — this takes about 15–20 seconds…");
+  startTbfProgress("Appending matching transactions to the live feed…");
 
   const payload = {
     merchant: document.getElementById("tbfMerchant").value || null,
@@ -1238,7 +1287,7 @@ async function resetTbfDemo() {
   document.getElementById("tbfSubmit").disabled = true;
   document.getElementById("tbfRandomize").disabled = true;
   document.getElementById("tbfReset").disabled = true;
-  setTbfStatus("is-pending", "Restoring the baseline live feed and rerunning detection — about 15–20 seconds…");
+  startTbfProgress("Restoring the baseline live feed…");
 
   try {
     const response = await fetch(`${API_URL}/trial-by-fire/reset`, { method: "POST" });
