@@ -509,6 +509,25 @@ API every 20 seconds and maps the backend contract to the visual model. There
 is no demo mode: if the API fails, the status strip shows "LIVE DATA
 UNAVAILABLE" instead of substituting fake data.
 
+**Executive view** (the toggle top right, next to the "OP" avatar) is a pure
+CSS/DOM display filter, not a second data model - it never changes what
+`fetchLive()` requests or how `buildLiveScenario()` computes anything.
+Every element meant to disappear in this mode carries a `detail-only-section`
+class (risk concentration, the geographic map, the live performance chart,
+the "under investigation" panel, the signal-rail beacons, three of the four
+executive-summary KPI cards, and - inside the incident drawer - root cause,
+evidence, observed-vs-expected, diagnosis confidence, segment breakdown, and
+projections); `body.view-executive .detail-only-section { display: none }`
+hides all of them at once. The incident list keeps only the first card
+(`.incident-card:not(:first-child)`) - already the highest-priority
+incident, since the list is sorted by `priority_score` - and reveals a
+`.exec-recommendation` line under it showing that incident's own
+`playbook_action`/`primary_action`, hidden by default and shown only for
+that first card in this mode. The chosen mode is remembered per browser via
+`localStorage` (`prsm_view_mode`), wrapped in try/catch so a blocked or
+unavailable store just falls back to Analyst view rather than breaking the
+toggle.
+
 ### `PRSM_Prototype/streamlit/`
 
 Contains an alternative prototype. It uses data bundled in its own directory

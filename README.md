@@ -52,6 +52,12 @@ otherwise it returns a clean, explicit error instead of failing silently.
   answers natural-language questions about the live incident state by
   calling the same data functions the REST endpoints use — never a
   separate, inventable code path.
+- An "Executive view" toggle (top right) that simplifies the dashboard down
+  to status, the top-priority incident, its recommended action, and headline
+  economic impact — hiding root cause/evidence detail, the segment and
+  provider/country/bank breakdowns, projections, and the diagnostic chart,
+  for faster decisions. Purely a display filter — no data changes, no extra
+  request.
 - A FastAPI backend and an HTML dashboard connected to the API.
 
 ## Repository structure

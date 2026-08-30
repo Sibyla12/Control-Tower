@@ -16,7 +16,7 @@
       <div class="brand-lockup">
         <img src="logo.png" alt="Prism — Payment Incident Intelligence" class="brand-logo">
       </div>
-      <div class="signal-rail bracket" aria-label="Signal status">
+      <div class="signal-rail bracket detail-only-section" aria-label="Signal status">
         <button class="beacon beacon-caution" id="beaconCaution" type="button" aria-pressed="false" title="Preventive signal — one or more flows drifting from baseline">
           <span class="beacon-mark"></span>
           <span class="beacon-text"><span class="beacon-label">Signal caution</span><span class="beacon-count" id="cautionCount">0</span></span>
@@ -31,6 +31,10 @@
         <div class="environment"><span class="live-dot"></span> LIVE SIMULATION</div>
         <div class="clock" id="clock">10:12:16</div>
         <button class="icon-button" aria-label="Notifications"><span class="notification-dot"></span>⌁</button>
+        <button class="view-mode-toggle" id="viewModeToggle" type="button" aria-pressed="false"
+                title="Simplified view for fast decisions: status, top incident, and its recommendation only">
+          Executive view
+        </button>
         <div class="avatar" title="Payment Operations">OP</div>
       </div>
     </header>
@@ -87,27 +91,27 @@
             <div class="kpi-row"><strong id="execTotalImpact">$0</strong></div>
             <div class="kpi-foot"><span>Active incidents</span><strong id="execIncidentCount">0</strong></div>
           </article>
-          <article class="kpi-card">
+          <article class="kpi-card exec-secondary-metric">
             <div class="kpi-label">GMV at risk (adjusted)</div>
             <div class="kpi-row"><strong id="execGmvAdjusted">$0</strong></div>
             <div class="kpi-foot"><span>Gross, unadjusted</span><strong id="execGmvGross">$0</strong></div>
           </article>
-          <article class="kpi-card">
+          <article class="kpi-card exec-secondary-metric">
             <div class="kpi-label">Platform revenue at risk</div>
             <div class="kpi-row"><strong id="execPlatformRisk">$0</strong></div>
             <div class="kpi-foot"><span>Fee revenue exposure</span><strong>—</strong></div>
           </article>
-          <article class="kpi-card">
+          <article class="kpi-card exec-secondary-metric">
             <div class="kpi-label">Merchant economic impact</div>
             <div class="kpi-row"><strong id="execMerchantImpact">$0</strong></div>
             <div class="kpi-foot"><span>Merchants' lost margin</span><strong>—</strong></div>
           </article>
         </div>
-        <div class="risk-concentration" id="riskConcentration"></div>
+        <div class="risk-concentration detail-only-section" id="riskConcentration"></div>
       </section>
 
       <section class="operations-grid">
-        <article class="panel map-panel">
+        <article class="panel map-panel detail-only-section">
           <div class="panel-heading">
             <div><span class="eyebrow">GEOGRAPHIC OPERATIONS</span><h2>LATAM payment network</h2></div>
             <div class="legend"><span><i class="healthy-bg"></i>Healthy</span><span><i class="warning-bg"></i>Investigating</span><span><i class="critical-bg"></i>Incident</span></div>
@@ -147,7 +151,7 @@
         </article>
       </section>
 
-      <section class="panel unresolved-panel">
+      <section class="panel unresolved-panel detail-only-section">
         <div class="panel-heading">
           <div><span class="eyebrow">UNDER INVESTIGATION</span><h2>Anomalies without enough evidence yet</h2></div>
           <span class="sort-label" id="unresolvedCount">0 candidates</span>
@@ -155,7 +159,7 @@
         <div class="unresolved-list" id="unresolvedList"></div>
       </section>
 
-      <section class="panel chart-panel">
+      <section class="panel chart-panel detail-only-section">
         <div class="panel-heading chart-heading">
           <div><span class="eyebrow">LIVE PERFORMANCE</span><h2>Conversion vs expected baseline</h2></div>
           <div class="chart-legend"><span><i class="actual-line"></i>Actual</span><span><i class="expected-line"></i>Expected</span><span class="window-chip">Last 30 minutes</span></div>

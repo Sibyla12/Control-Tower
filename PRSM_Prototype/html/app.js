@@ -300,6 +300,21 @@ const QUIET_PERIOD_AS_OF = "2026-08-31T10:02:00";
 
 const state = { selectedIncident: null, liveData: null, liveError: null, liveTimer: null, reviewUi: { modifying: false }, asOf: null };
 
+function getStoredViewMode() {
+  try { return localStorage.getItem("prsm_view_mode") === "executive" ? "executive" : "analyst"; }
+  catch (error) { return "analyst"; }
+}
+
+function applyViewMode(mode) {
+  const isExecutive = mode === "executive";
+  document.body.classList.toggle("view-executive", isExecutive);
+  const toggle = document.getElementById("viewModeToggle");
+  toggle.classList.toggle("is-active", isExecutive);
+  toggle.setAttribute("aria-pressed", String(isExecutive));
+  toggle.textContent = isExecutive ? "Executive view" : "Analyst view";
+  try { localStorage.setItem("prsm_view_mode", mode); } catch (error) { /* per-viewer convenience only */ }
+}
+
 function setTimeView(view) {
   state.asOf = view === "quiet" ? QUIET_PERIOD_AS_OF : null;
   document.querySelectorAll("#timeViewToggle [data-view]").forEach(b => b.classList.toggle("is-active", b.dataset.view === view));
@@ -508,6 +523,7 @@ function renderIncidents(list) {
     <div class="incident-top"><span class="priority-tag ${i.priority === "P1" ? "" : "warning"}">${i.priority} · ${i.severity}</span><span class="incident-time">Since ${i.started}</span></div>
     <h3>${i.title}</h3><p>${i.subtitle}</p>
     <div class="incident-metrics"><span>Drop<strong>−${(i.expected-i.actual).toFixed(1)} pp</strong></span><span>Confidence<strong>${i.confidence}%</strong></span><span>GMV risk<strong>${money(i.risk)}/h</strong></span><span class="incident-arrow">→</span></div>
+    <p class="exec-recommendation"><strong>Recommendation</strong> ${i.playbookAction || i.recommendation || "—"}</p>
   </button>`).join("");
   el.querySelectorAll("[data-incident]").forEach(button => button.addEventListener("click", () => {
     const item = list.find(i => i.id === button.dataset.incident); openDrawer(item);
@@ -755,15 +771,15 @@ function openDrawer(i) {
       <button class="drawer-action" id="generateAnalysisButton">Generate analysis</button>
       <div class="ai-analysis-output" id="aiAnalysisOutput" hidden></div>
     </div>
-    <div class="drawer-section"><h3>${rootCauseHeading}</h3>${rootCauseBody}</div>
-    <div class="drawer-section"><h3>EVIDENCE</h3><div class="evidence-list">${i.evidence.map(e=>`<div class="evidence-item"><span class="evidence-check">✓</span><span>${e}</span></div>`).join("")}</div></div>
+    <div class="drawer-section detail-only-section"><h3>${rootCauseHeading}</h3>${rootCauseBody}</div>
+    <div class="drawer-section detail-only-section"><h3>EVIDENCE</h3><div class="evidence-list">${i.evidence.map(e=>`<div class="evidence-item"><span class="evidence-check">✓</span><span>${e}</span></div>`).join("")}</div></div>
     <div class="drawer-section"><h3>PRIORITY</h3><span class="severity-label ${i.priority === "P1" ? "" : "warning"}">${i.priorityLabel || `${i.priority} · ${i.severity}`}</span><p class="priority-summary">${money(i.risk)}/h at risk · ${i.confidence}% confidence${i.priorityCriteria ? ` — ${i.priorityCriteria}` : ""}</p>${i.rank ? `<p class="priority-summary">Rank ${i.rank} of the active incidents — explains ${Math.round(i.cumulativePct * 100)}% of total adjusted GMV at risk so far (cumulative).</p>` : ""}</div>
     <div class="drawer-section"><h3>OPERATIONAL PLAYBOOK</h3><div class="metric-grid"><div class="metric-pair"><span>Owner</span><strong>${i.operationalOwner || "—"}</strong></div><div class="metric-pair"><span>Escalation</span><strong>${i.escalationLevel || "—"}</strong></div></div><div class="recommendation"><strong>Recommended action</strong><br>${i.playbookAction || i.recommendation}</div></div>
-    <div class="drawer-section"><h3>OBSERVED VS EXPECTED · AFFECTED SEGMENT</h3><div class="conversion-compare"><div><span>Expected</span><strong>${i.expected.toFixed(1)}%</strong></div><span class="compare-arrow">→</span><div class="drop-value"><span>Observed</span><strong>${i.actual.toFixed(1)}%</strong></div></div></div>
+    <div class="drawer-section detail-only-section"><h3>OBSERVED VS EXPECTED · AFFECTED SEGMENT</h3><div class="conversion-compare"><div><span>Expected</span><strong>${i.expected.toFixed(1)}%</strong></div><span class="compare-arrow">→</span><div class="drop-value"><span>Observed</span><strong>${i.actual.toFixed(1)}%</strong></div></div></div>
     <div class="drawer-section"><h3>ECONOMIC IMPACT</h3><div class="metric-grid"><div class="metric-pair"><span>GMV at risk</span><strong>${money(i.risk)}/h</strong></div><div class="metric-pair"><span>Recoverable</span><strong>${i.recovery}</strong></div><div class="metric-pair"><span>Affected attempts</span><strong>${i.attempts.toLocaleString()}</strong></div><div class="metric-pair"><span>Excess declines</span><strong>${i.excess.toLocaleString()}</strong></div></div></div>
-    ${buildProjectionSection(i)}
-    <div class="drawer-section"><h3>DIAGNOSIS CONFIDENCE</h3><div class="confidence-head"><span>${i.root}</span><strong>${i.confidence}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.confidence < 60 ? "warning" : ""}" style="width:${i.confidence}%"></div></div><div class="attribution"><div class="attribution-label"><span>Conversion loss explained</span><strong>${i.attribution}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.attribution < 60 ? "warning" : ""}" style="width:${i.attribution}%"></div></div></div>${i.dataQuality ? `<div class="attribution"><div class="attribution-label"><span>Baseline data quality — ${i.baselineSource}${i.baselineHistoricalAttempts ? ` (${i.baselineHistoricalAttempts.toLocaleString()} historical attempts)` : ""}</span><strong>${i.dataQuality}</strong></div></div>` : ""}</div>
-    <div class="drawer-section"><h3>SEGMENT BREAKDOWN</h3><p class="priority-summary">Which underlying segment explains the excess declines, ranked Pareto-style.</p><div id="segmentBreakdown"><p class="priority-summary">Loading…</p></div></div>
+    <div class="detail-only-section">${buildProjectionSection(i)}</div>
+    <div class="drawer-section detail-only-section"><h3>DIAGNOSIS CONFIDENCE</h3><div class="confidence-head"><span>${i.root}</span><strong>${i.confidence}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.confidence < 60 ? "warning" : ""}" style="width:${i.confidence}%"></div></div><div class="attribution"><div class="attribution-label"><span>Conversion loss explained</span><strong>${i.attribution}%</strong></div><div class="confidence-track"><div class="confidence-fill ${i.attribution < 60 ? "warning" : ""}" style="width:${i.attribution}%"></div></div></div>${i.dataQuality ? `<div class="attribution"><div class="attribution-label"><span>Baseline data quality — ${i.baselineSource}${i.baselineHistoricalAttempts ? ` (${i.baselineHistoricalAttempts.toLocaleString()} historical attempts)` : ""}</span><strong>${i.dataQuality}</strong></div></div>` : ""}</div>
+    <div class="drawer-section detail-only-section"><h3>SEGMENT BREAKDOWN</h3><p class="priority-summary">Which underlying segment explains the excess declines, ranked Pareto-style.</p><div id="segmentBreakdown"><p class="priority-summary">Loading…</p></div></div>
     <div class="drawer-section" id="humanDecisionSection"></div>`;
   state.reviewUi = { modifying: false };
   renderHumanDecision(i);
@@ -950,6 +966,10 @@ document.getElementById("timeViewToggle").addEventListener("click", e => { const
 document.getElementById("closeDrawer").addEventListener("click",closeDrawer);
 document.getElementById("drawerBackdrop").addEventListener("click",closeDrawer);
 document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeDrawer(); });
+document.getElementById("viewModeToggle").addEventListener("click", () => {
+  applyViewMode(document.body.classList.contains("view-executive") ? "analyst" : "executive");
+});
+applyViewMode(getStoredViewMode());
 setInterval(updateClock, 1000);
 updateClock();
 render();
