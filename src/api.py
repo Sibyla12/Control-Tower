@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+import sys
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -14,6 +15,16 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from scipy.stats import norm
+
+# inject_live_incident.py / run_pipeline.py / live_simulator.py are written
+# as standalone scripts (bare "import xxx" between themselves, run via
+# "python3 src/xxx.py"). Adding this file's own directory to sys.path lets
+# the /trial-by-fire endpoint below import and call them the same way the
+# CLI does, without turning them into a proper package.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import inject_live_incident  # noqa: E402
+import live_simulator  # noqa: E402
+import run_pipeline  # noqa: E402
 
 
 REVIEWED_INCIDENTS_PATH = Path("data/generated/reviewed_incidents.csv")
@@ -119,6 +130,27 @@ class AgentMessage(BaseModel):
 
 class AgentAskRequest(BaseModel):
     messages: list[AgentMessage] = Field(min_length=1, max_length=20)
+
+
+class TrialByFireRequest(BaseModel):
+    merchant: str | None = None
+    provider: str | None = None
+    payment_method: str | None = None
+    country: str | None = None
+    issuing_bank: str | None = None
+    decline_code: str = Field(min_length=1, max_length=60)
+    approval_rate: float = Field(ge=0.0, le=1.0)
+    minutes: int = Field(default=5, ge=1, le=30)
+
+
+TRIAL_BY_FIRE_DECLINE_CODES = [
+    "INSUFFICIENT_FUNDS",
+    "DO_NOT_HONOR",
+    "SUSPECTED_FRAUD",
+    "INVALID_CARD",
+    "PROCESSOR_ERROR",
+    "ISSUER_UNAVAILABLE",
+]
 
 
 STATUS_TRANSITIONS = {
@@ -1551,4 +1583,106 @@ def ask_agent(request: AgentAskRequest):
             "I wasn't able to reach a final answer within the tool-call "
             "limit."
         )
+    }
+
+
+# --- Trial by fire ---------------------------------------------------
+#
+# Lets a judge-named (or self-served) incident combination be injected and
+# detected entirely from the dashboard, no terminal required: appends
+# matching transactions to the live file, then runs the full detection ->
+# diagnosis pipeline synchronously, and reports back whether it was
+# confirmed as an incident, flagged as a low-confidence candidate, or not
+# detected at all.
+
+@app.get("/trial-by-fire/options")
+def get_trial_by_fire_options():
+    return {
+        "merchants": live_simulator.MERCHANTS,
+        "providers": live_simulator.PROVIDERS,
+        "countries": live_simulator.COUNTRIES,
+        "payment_methods_by_country": live_simulator.PAYMENT_METHODS_BY_COUNTRY,
+        "issuing_banks_by_country": live_simulator.BANKS_BY_COUNTRY,
+        "decline_codes": TRIAL_BY_FIRE_DECLINE_CODES,
+    }
+
+
+@app.post("/trial-by-fire")
+def run_trial_by_fire(request: TrialByFireRequest):
+    try:
+        injection = inject_live_incident.inject_incident(
+            decline_code=request.decline_code,
+            approval_rate=request.approval_rate,
+            minutes=request.minutes,
+            merchant=request.merchant,
+            provider=request.provider,
+            payment_method=request.payment_method,
+            country=request.country,
+            issuing_bank=request.issuing_bank,
+        )
+    except (ValueError, FileNotFoundError) as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+
+    try:
+        run_pipeline.main()
+    except RuntimeError as error:
+        raise HTTPException(
+            status_code=500,
+            detail=(
+                "Transactions were injected, but the detection pipeline "
+                f"failed while processing them: {error}"
+            ),
+        ) from error
+
+    incident_id = injection["incident_id"]
+
+    incidents = load_incidents()
+    detected_incidents = []
+    if "ground_truth_ids" in incidents.columns:
+        matches = incidents[
+            incidents["ground_truth_ids"]
+            .fillna("")
+            .astype(str)
+            .str.contains(incident_id, regex=False)
+        ]
+        detected_incidents = [
+            enrich_with_playbook(clean_record(record))
+            for record in matches.to_dict(orient="records")
+        ]
+
+    unresolved = get_unresolved_candidates()
+    detected_unresolved = [
+        candidate
+        for candidate in unresolved["candidates"]
+        if incident_id in str(candidate.get("ground_truth_ids") or "")
+    ]
+
+    if detected_incidents:
+        outcome = "confirmed_incident"
+        message = (
+            f"Detected and confirmed as {len(detected_incidents)} "
+            "incident(s)."
+        )
+    elif detected_unresolved:
+        outcome = "unresolved_candidate"
+        message = (
+            f"Statistically flagged as {len(detected_unresolved)} "
+            "anomaly candidate(s), but confidence stayed below the 0.70 "
+            "gate - shown as under investigation, not a confirmed "
+            "incident."
+        )
+    else:
+        outcome = "not_detected"
+        message = (
+            "Not detected as an anomaly at all yet - try a lower "
+            "approval_rate, more minutes, or a combination with enough "
+            "attempts to clear the n >= 30 minimum."
+        )
+
+    return {
+        "injection": injection,
+        "outcome": outcome,
+        "message": message,
+        "detected_incidents": detected_incidents,
+        "detected_unresolved_candidates": detected_unresolved,
     }

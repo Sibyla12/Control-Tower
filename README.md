@@ -20,9 +20,11 @@ otherwise it returns a clean, explicit error instead of failing silently.
 ## Capabilities
 
 - A synthetic 60-day history with 500,000 transactions.
-- Multi-segment live traffic with controlled incident injection, plus a live
-  injector (`src/inject_live_incident.py`) for judge-specified, unrehearsed
-  incidents during a demo.
+- Multi-segment live traffic with controlled incident injection: a
+  "🔥 Trial by fire" button in the dashboard lets a judge-specified,
+  unrehearsed incident be injected and detected end-to-end from the
+  browser — no terminal — or the same thing from a script
+  (`src/inject_live_incident.py`).
 - Historical baselines aligned with every live detection level.
 - Adaptive one-minute and five-minute windows.
 - Statistical detection with FDR correction and temporal persistence.
@@ -119,6 +121,8 @@ Available routes:
 - `POST /incidents/{incident_id}/review`
 - `GET /notify/test`
 - `POST /agent/ask`
+- `GET /trial-by-fire/options`
+- `POST /trial-by-fire`
 
 Interactive local documentation is available at
 `http://127.0.0.1:8000/docs`.

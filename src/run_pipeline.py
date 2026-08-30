@@ -44,7 +44,11 @@ def run_stage(script_path: str) -> None:
         cwd=REPO_ROOT,
     )
     if result.returncode != 0:
-        raise SystemExit(
+        # RuntimeError (not SystemExit) so callers importing main() - e.g.
+        # api.py's /trial-by-fire endpoint - can catch it as a normal
+        # exception. Running this file directly still exits non-zero with
+        # a traceback, same as before.
+        raise RuntimeError(
             f"Pipeline stopped: {script_path} exited with code "
             f"{result.returncode}"
         )

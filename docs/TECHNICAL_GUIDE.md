@@ -449,6 +449,25 @@ than looping indefinitely.
 API reviews persist to `reviewed_incidents.csv` and
 `recommendation_audit_log.csv`.
 
+`POST /trial-by-fire` runs the same injection + detection flow as
+`inject_live_incident.py` + `run_pipeline.py`, but callable directly from the
+dashboard - no terminal needed during a demo. It imports both scripts as
+modules (`sys.path.insert` on `api.py`'s own directory, same trick those
+scripts already use to import each other) and calls
+`inject_live_incident.inject_incident(...)` followed by `run_pipeline.main()`
+synchronously, then checks whether the injected incident's ID shows up in
+`ground_truth_ids` on either the confirmed incidents or the unresolved
+candidates, and reports `confirmed_incident` / `unresolved_candidate` /
+`not_detected` accordingly - genuinely re-running detection, not simulating
+an outcome. This takes roughly 15-20 seconds and blocks the request for that
+whole time (FastAPI runs sync `def` handlers in a thread pool, so other
+requests - including the notification background task - aren't blocked
+while it runs). `GET /trial-by-fire/options` returns the real, current
+`MERCHANTS`/`PROVIDERS`/`COUNTRIES`/`PAYMENT_METHODS_BY_COUNTRY`/
+`BANKS_BY_COUNTRY` from `live_simulator.py` plus the decline-code list, so
+the dashboard's form is always sourced from the same values the generator
+actually uses rather than a hand-maintained duplicate.
+
 ### `PRSM_Prototype/html/app.js`
 
 Polls `/dashboard`, `/incidents`, and `/unresolved-candidates` from the public

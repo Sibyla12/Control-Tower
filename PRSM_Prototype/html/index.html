@@ -39,6 +39,7 @@
       <div class="time-view-toggle" id="timeViewToggle" role="group" aria-label="Time view">
         <button data-view="live" class="time-view-button is-active" type="button">Live now</button>
         <button data-view="quiet" class="time-view-button" type="button">Replay: before the incidents (10:00–10:02)</button>
+        <button class="time-view-button tbf-trigger" id="tbfToggle" type="button">🔥 Trial by fire</button>
       </div>
 
       <section class="status-strip" id="statusStrip" aria-live="polite">
@@ -178,6 +179,37 @@
   </aside>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="tbf-backdrop" id="tbfBackdrop" hidden></div>
+  <aside class="tbf-modal" id="tbfModal" hidden aria-hidden="true" aria-label="Trial by fire">
+    <div class="drawer-topbar">
+      <div><span class="eyebrow">LIVE INJECTION — NO TERMINAL NEEDED</span><div class="drawer-id">Trial by Fire</div></div>
+      <button class="close-button" id="tbfClose" aria-label="Close trial by fire">×</button>
+    </div>
+    <p class="tbf-intro">
+      Pick a combination (or randomize one) and inject it into the live feed.
+      The full detection-to-diagnosis pipeline runs for real — this takes
+      about 15–20 seconds — then you'll see whether it was confirmed as an
+      incident, flagged as low-confidence, or missed.
+    </p>
+    <form class="tbf-form" id="tbfForm">
+      <div class="tbf-grid">
+        <label>Merchant<select id="tbfMerchant"><option value="">Any</option></select></label>
+        <label>Provider<select id="tbfProvider"><option value="">Any</option></select></label>
+        <label>Country<select id="tbfCountry"><option value="">Any</option></select></label>
+        <label>Payment method<select id="tbfMethod"><option value="">Any</option></select></label>
+        <label>Issuing bank<select id="tbfBank"><option value="">Any</option></select></label>
+        <label>Decline code<select id="tbfDeclineCode"></select></label>
+        <label>Approval rate during incident<input type="number" id="tbfApprovalRate" min="0" max="1" step="0.05" value="0.35" required></label>
+        <label>Duration (minutes)<input type="number" id="tbfMinutes" min="1" max="30" value="5" required></label>
+      </div>
+      <div class="tbf-actions">
+        <button type="button" class="tbf-secondary" id="tbfRandomize">🎲 Randomize</button>
+        <button type="submit" class="tbf-primary" id="tbfSubmit">Inject &amp; run detection</button>
+      </div>
+    </form>
+    <div class="tbf-status" id="tbfStatus" hidden></div>
+  </aside>
 
   <button class="agent-fab" id="agentToggle" type="button" aria-label="Ask PRISM">
     <span class="agent-fab-mark">⌁</span>

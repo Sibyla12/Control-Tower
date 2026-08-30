@@ -1044,3 +1044,150 @@ document.getElementById("agentForm").addEventListener("submit", e => {
 document.addEventListener("keydown", e => {
   if (e.key === "Escape" && agentState.open) toggleAgentPanel(false);
 });
+
+// --- Trial by fire: inject a live incident and run detection, no terminal ---
+const tbfState = { options: null, open: false, running: false };
+
+async function loadTbfOptions() {
+  if (tbfState.options) return tbfState.options;
+  const response = await fetch(`${API_URL}/trial-by-fire/options`);
+  if (!response.ok) throw new Error("Could not load trial-by-fire options");
+  tbfState.options = await response.json();
+  return tbfState.options;
+}
+
+function populateSelect(select, values, keepFirst) {
+  const first = keepFirst ? select.firstElementChild : null;
+  select.innerHTML = "";
+  if (first) select.appendChild(first);
+  values.forEach(value => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = value;
+    select.appendChild(option);
+  });
+}
+
+function refreshTbfMethodAndBankOptions() {
+  const opts = tbfState.options;
+  if (!opts) return;
+  const country = document.getElementById("tbfCountry").value;
+  const methodSelect = document.getElementById("tbfMethod");
+  const bankSelect = document.getElementById("tbfBank");
+  const methods = country
+    ? opts.payment_methods_by_country[country]
+    : [...new Set(Object.values(opts.payment_methods_by_country).flat())];
+  const banks = country
+    ? opts.issuing_banks_by_country[country]
+    : [...new Set(Object.values(opts.issuing_banks_by_country).flat())];
+  const prevMethod = methodSelect.value;
+  const prevBank = bankSelect.value;
+  populateSelect(methodSelect, methods, true);
+  populateSelect(bankSelect, banks, true);
+  if (methods.includes(prevMethod)) methodSelect.value = prevMethod;
+  if (banks.includes(prevBank)) bankSelect.value = prevBank;
+}
+
+async function initTbfForm() {
+  const opts = await loadTbfOptions();
+  populateSelect(document.getElementById("tbfMerchant"), opts.merchants, true);
+  populateSelect(document.getElementById("tbfProvider"), opts.providers, true);
+  populateSelect(document.getElementById("tbfCountry"), opts.countries, true);
+  populateSelect(document.getElementById("tbfDeclineCode"), opts.decline_codes, false);
+  refreshTbfMethodAndBankOptions();
+}
+
+function toggleTbfModal(open) {
+  tbfState.open = open !== undefined ? open : !tbfState.open;
+  document.getElementById("tbfBackdrop").hidden = !tbfState.open;
+  document.getElementById("tbfModal").hidden = !tbfState.open;
+  document.getElementById("tbfModal").setAttribute("aria-hidden", String(!tbfState.open));
+  if (tbfState.open && !tbfState.options) {
+    initTbfForm().catch(() => showToast("Could not load trial-by-fire options"));
+  }
+}
+
+function randomChoice(list) { return list[Math.floor(Math.random() * list.length)]; }
+
+function randomizeTbfForm() {
+  const opts = tbfState.options;
+  if (!opts) return;
+  const country = randomChoice(opts.countries);
+  document.getElementById("tbfCountry").value = country;
+  refreshTbfMethodAndBankOptions();
+  document.getElementById("tbfProvider").value = randomChoice(opts.providers);
+  document.getElementById("tbfMerchant").value = Math.random() < 0.5 ? randomChoice(opts.merchants) : "";
+  document.getElementById("tbfMethod").value = Math.random() < 0.6 ? randomChoice(opts.payment_methods_by_country[country]) : "";
+  document.getElementById("tbfBank").value = Math.random() < 0.4 ? randomChoice(opts.issuing_banks_by_country[country]) : "";
+  document.getElementById("tbfDeclineCode").value = randomChoice(opts.decline_codes);
+  const approvalRateSteps = 4 + Math.floor(Math.random() * 8); // 0.20 .. 0.55 in 0.05 steps
+  document.getElementById("tbfApprovalRate").value = (approvalRateSteps * 0.05).toFixed(2);
+  document.getElementById("tbfMinutes").value = String(3 + Math.floor(Math.random() * 5));
+}
+
+function setTbfStatus(cls, html) {
+  const el = document.getElementById("tbfStatus");
+  el.hidden = false;
+  el.className = `tbf-status ${cls}`;
+  el.innerHTML = html;
+}
+
+async function submitTbfForm(event) {
+  event.preventDefault();
+  if (tbfState.running) return;
+  tbfState.running = true;
+  document.getElementById("tbfSubmit").disabled = true;
+  document.getElementById("tbfRandomize").disabled = true;
+  setTbfStatus("is-pending", "Injecting transactions and running the full detection pipeline — this takes about 15–20 seconds…");
+
+  const payload = {
+    merchant: document.getElementById("tbfMerchant").value || null,
+    provider: document.getElementById("tbfProvider").value || null,
+    country: document.getElementById("tbfCountry").value || null,
+    payment_method: document.getElementById("tbfMethod").value || null,
+    issuing_bank: document.getElementById("tbfBank").value || null,
+    decline_code: document.getElementById("tbfDeclineCode").value,
+    approval_rate: parseFloat(document.getElementById("tbfApprovalRate").value),
+    minutes: parseInt(document.getElementById("tbfMinutes").value, 10),
+  };
+
+  try {
+    const response = await fetch(`${API_URL}/trial-by-fire`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const body = await response.json();
+
+    if (!response.ok) {
+      setTbfStatus("is-error", escapeHtml(body.detail || `Request failed (${response.status}).`));
+    } else {
+      const cls = body.outcome === "confirmed_incident" ? "is-confirmed"
+        : body.outcome === "unresolved_candidate" ? "is-unresolved" : "is-missed";
+      const injected = body.injection;
+      setTbfStatus(
+        cls,
+        `${escapeHtml(body.message)}<div class="tbf-status-detail">Incident ${escapeHtml(injected.incident_id)} · ` +
+        `${injected.matched_transactions.toLocaleString()} matching transactions, ` +
+        `${injected.declined_transactions.toLocaleString()} declined</div>`
+      );
+      fetchLive();
+    }
+  } catch (error) {
+    setTbfStatus("is-error", "Could not reach the API — check your connection.");
+  } finally {
+    tbfState.running = false;
+    document.getElementById("tbfSubmit").disabled = false;
+    document.getElementById("tbfRandomize").disabled = false;
+  }
+}
+
+document.getElementById("tbfToggle").addEventListener("click", () => toggleTbfModal());
+document.getElementById("tbfClose").addEventListener("click", () => toggleTbfModal(false));
+document.getElementById("tbfBackdrop").addEventListener("click", () => toggleTbfModal(false));
+document.getElementById("tbfCountry").addEventListener("change", refreshTbfMethodAndBankOptions);
+document.getElementById("tbfRandomize").addEventListener("click", randomizeTbfForm);
+document.getElementById("tbfForm").addEventListener("submit", submitTbfForm);
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && tbfState.open) toggleTbfModal(false);
+});

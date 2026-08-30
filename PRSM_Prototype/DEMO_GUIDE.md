@@ -56,7 +56,18 @@ Show the drawer re-render with the new status — this is a real call to
 ## 3:00–3:45 — Trial by fire (judges inject a live incident)
 
 This is the moment a judge names a combination of dimensions the team never
-rehearsed. From a terminal, with the backend already running:
+rehearsed. Click the **"🔥 Trial by fire"** button in the dashboard (next to
+the time-view toggle) — no terminal needed. Pick the dimensions the judge
+named (leave any unnamed field as "Any" — it stays a wildcard, matching
+every value of that dimension), or hit **"🎲 Randomize"** for a one-click
+version, then **"Inject & run detection"**. It takes ~15-20 seconds: real
+transactions get appended to the live feed, the full 11-stage
+detection-to-diagnosis pipeline reruns against them, and the panel reports
+whether it was confirmed as an incident, flagged as low-confidence, or
+missed — the dashboard refreshes automatically either way.
+
+Same mechanism from a terminal, if you'd rather script an exact scenario in
+advance:
 
 ```bash
 python3 src/inject_live_incident.py \
@@ -71,12 +82,6 @@ python3 src/inject_live_incident.py \
 
 python3 src/run_pipeline.py
 ```
-
-Leave out any flag the judge didn't specify — it stays a wildcard, matching
-every value of that dimension (a provider issue across every merchant, a
-bank issue across every merchant, etc.). `run_pipeline.py` re-runs all 11
-detection/diagnosis stages against the newly appended transactions; the
-dashboard picks it up on its next poll (every 20s) with no restart.
 
 > "The simulator just generated traffic matching exactly what you asked for.
 > Control Tower doesn't know this combination in advance — it runs the same

@@ -125,11 +125,31 @@ def parse_args() -> argparse.Namespace:
     return args
 
 
-def main() -> None:
-    args = parse_args()
+def inject_incident(
+    *,
+    decline_code: str,
+    approval_rate: float,
+    minutes: int = 5,
+    merchant: str | None = None,
+    provider: str | None = None,
+    payment_method: str | None = None,
+    country: str | None = None,
+    issuing_bank: str | None = None,
+    incident_id: str | None = None,
+) -> dict:
+    """Appends transactions matching the given (optional-wildcard) dimensions
+    to the live transaction file, in place. Reusable from both the CLI
+    below and the API's /trial-by-fire endpoint - same generation model as
+    live_simulator.py, so an injected incident looks like real traffic, not
+    a special case.
+    """
+    if not 0 <= approval_rate <= 1:
+        raise ValueError("approval_rate must be between 0 and 1")
+    if minutes < 1:
+        raise ValueError("minutes must be at least 1")
 
     if not TRANSACTIONS_PATH.exists():
-        raise SystemExit(
+        raise FileNotFoundError(
             f"{TRANSACTIONS_PATH} not found. Run src/live_simulator.py first "
             "to create the base live dataset."
         )
@@ -140,23 +160,23 @@ def main() -> None:
         date_format="mixed",
     )
     last_timestamp = existing["timestamp"].max()
-    incident_id = args.incident_id or f"JUDGE-{uuid.uuid4().hex[:6].upper()}"
+    resolved_incident_id = incident_id or f"JUDGE-{uuid.uuid4().hex[:6].upper()}"
 
     rule = IncidentRule(
-        incident_id=incident_id,
+        incident_id=resolved_incident_id,
         start_minute=1,
-        end_minute=args.minutes,
-        degraded_approval_rate=args.approval_rate,
-        decline_code=args.decline_code,
-        merchant=args.merchant,
-        provider=args.provider,
-        payment_method=args.payment_method,
-        country=args.country,
-        issuing_bank=args.issuing_bank,
+        end_minute=minutes,
+        degraded_approval_rate=approval_rate,
+        decline_code=decline_code,
+        merchant=merchant,
+        provider=provider,
+        payment_method=payment_method,
+        country=country,
+        issuing_bank=issuing_bank,
     )
 
     new_rows = []
-    for minute_number in range(1, args.minutes + 1):
+    for minute_number in range(1, minutes + 1):
         timestamp = last_timestamp + timedelta(minutes=minute_number)
         for _ in range(ATTEMPTS_PER_MINUTE):
             new_rows.append(generate_transaction(minute_number, timestamp, [rule]))
@@ -165,10 +185,43 @@ def main() -> None:
     combined = pd.concat([existing, new_transactions], ignore_index=True)
     combined.to_csv(TRANSACTIONS_PATH, index=False)
 
-    declined = new_transactions["injected_incident_id"].eq(incident_id) & new_transactions["status"].eq("declined")
-    matched = new_transactions["injected_incident_id"].eq(incident_id)
+    declined = new_transactions["injected_incident_id"].eq(resolved_incident_id) & new_transactions["status"].eq("declined")
+    matched = new_transactions["injected_incident_id"].eq(resolved_incident_id)
 
-    print(f"Injected incident {incident_id}")
+    return {
+        "incident_id": resolved_incident_id,
+        "dimensions": {
+            "merchant": merchant,
+            "provider": provider,
+            "payment_method": payment_method,
+            "country": country,
+            "issuing_bank": issuing_bank,
+        },
+        "decline_code": decline_code,
+        "approval_rate": approval_rate,
+        "minutes": minutes,
+        "matched_transactions": int(matched.sum()),
+        "declined_transactions": int(declined.sum()),
+        "window_start": str(last_timestamp + timedelta(minutes=1)),
+        "window_end": str(last_timestamp + timedelta(minutes=minutes)),
+    }
+
+
+def main() -> None:
+    args = parse_args()
+    summary = inject_incident(
+        decline_code=args.decline_code,
+        approval_rate=args.approval_rate,
+        minutes=args.minutes,
+        merchant=args.merchant,
+        provider=args.provider,
+        payment_method=args.payment_method,
+        country=args.country,
+        issuing_bank=args.issuing_bank,
+        incident_id=args.incident_id,
+    )
+
+    print(f"Injected incident {summary['incident_id']}")
     print(
         f"  dimensions: merchant={args.merchant or 'ALL'} provider={args.provider or 'ALL'} "
         f"method={args.payment_method or 'ALL'} country={args.country or 'ALL'} "
@@ -176,9 +229,9 @@ def main() -> None:
     )
     print(f"  decline_code={args.decline_code}  target approval_rate={args.approval_rate:.0%}")
     print(
-        f"  {matched.sum():,} matching transactions generated across {args.minutes} minute(s) "
-        f"({last_timestamp + timedelta(minutes=1)} to {last_timestamp + timedelta(minutes=args.minutes)}), "
-        f"{declined.sum():,} declined"
+        f"  {summary['matched_transactions']:,} matching transactions generated across {args.minutes} minute(s) "
+        f"({summary['window_start']} to {summary['window_end']}), "
+        f"{summary['declined_transactions']:,} declined"
     )
     print(f"\nNow run:\n  python3 src/run_pipeline.py")
 
