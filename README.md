@@ -7,6 +7,16 @@ and proposes actions subject to human review.
 The demo monitors synthetic traffic from Mexico, Colombia, and Brazil across
 three merchants, three providers, local payment methods, and issuing banks.
 
+**Live demo:** https://sibyla12.github.io/Control-Tower/ — dashboard hosted
+on GitHub Pages (redeploys automatically on every push to
+`PRSM_Prototype/html/`, see
+[.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml)),
+talking to the API on Render. Two caveats if you're reviewing this without
+us present: the Render free tier sleeps after inactivity, so the first load
+can take 30-50s to wake up; and the "Generate Analysis" button in the
+incident drawer needs `OPENAI_API_KEY` configured on the backend to work,
+otherwise it returns a clean, explicit error instead of failing silently.
+
 ## Capabilities
 
 - A synthetic 60-day history with 500,000 transactions.
@@ -104,6 +114,16 @@ Available routes:
 
 Interactive local documentation is available at
 `http://127.0.0.1:8000/docs`.
+
+### Environment variables
+
+Both are optional — the API runs fully without them, with the affected
+feature degrading cleanly instead of failing.
+
+| Variable | Enables | Without it |
+|---|---|---|
+| `OPENAI_API_KEY` | `POST /incidents/{id}/analysis` — AI-generated incident narrative (`gpt-4o`) | Endpoint returns `503` with an explicit "not configured" message |
+| `NTFY_TOPIC` | Phone push notifications on new incidents, via ntfy.sh | The background notification loop simply never fires |
 
 Production uses the command in the `Procfile`, without `--reload`:
 

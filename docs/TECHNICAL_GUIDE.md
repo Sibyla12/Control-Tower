@@ -452,6 +452,13 @@ and is not the primary FastAPI-connected frontend.
 
 ## 13. Execution order
 
+`./run_demo.sh` (repo root) does the full bootstrap in one command: creates
+the virtual environment, installs dependencies, runs the pipeline below,
+starts the API on port 8000, serves the dashboard on port 5500, and opens
+it in the browser — `./stop_demo.sh` shuts both servers down. The rest of
+this section is what that script runs internally, useful when running a
+piece in isolation.
+
 `src/run_pipeline.py` runs every stage below in order as a single command,
 including `multisegment_aggregator.py` (required for `/dashboard`, which the
 detection chain alone does not regenerate):

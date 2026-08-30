@@ -58,25 +58,61 @@ scoped but did not build.
 
 ## 3. Low-confidence anomalies: force a root cause, drop them, or surface them as unresolved
 
-**Options considered:** (a) always assign the best-available root cause to
-every statistically validated anomaly, even below the confidence gate, so
-nothing is left undiagnosed; (b) silently drop candidates that don't clear
-the confidence gate; (c) surface every sub-threshold candidate explicitly as
-"not enough evidence yet," with no forced diagnosis.
+**Options considered:**  
+(a) always assign the best-available root cause to every statistically
+validated anomaly, even below the confidence gate, so nothing remains
+undiagnosed;  
+(b) silently drop candidates that do not clear the confidence gate;  
+(c) surface sub-threshold candidates explicitly as “not enough evidence yet,”
+without forcing a diagnosis.
 
-**Decision:** option (c). `incident_consolidator.py` only promotes a
-candidate to a real incident at `confidence_score >= 0.70`; everything below
-that is written to `unresolved_incident_candidates.csv` and served from
-`GET /unresolved-candidates`, rendered in the dashboard's "UNDER
-INVESTIGATION" panel instead of the incident queue.
+**Decision:** option (c). `incident_consolidator.py` promotes a candidate to a
+confirmed root-cause incident only when `confidence_score >= 0.70`.
+Candidates below that threshold are written to
+`unresolved_incident_candidates.csv`, exposed through
+`GET /unresolved-candidates`, and rendered in the dashboard’s
+“UNDER INVESTIGATION” panel rather than the confirmed incident queue.
 
-**Trade-off:** actionability vs. honesty. Forcing a root cause onto every
-anomaly gives operators zero ambiguity and maximizes apparent detection
-coverage, but risks confidently misdiagnosing a segment and sending a team
-to fix the wrong thing — which is worse than not diagnosing it yet. Dropping
-sub-threshold candidates silently avoids false diagnoses but hides real
-signal an operator would want to know about, and would look like a
-detection blind spot when a judge or an operator later noticed the anomaly
-in the raw data. We accepted a UI that sometimes says "we see something
-unusual, we don't have enough evidence to say what yet" — a weaker-sounding
-claim than a confident wrong one, and a truthful one.
+**Trade-off:** actionability vs. diagnostic honesty. Forcing a root cause onto
+every anomaly maximizes apparent coverage and gives operators a decisive
+answer, but it risks confidently misdiagnosing the affected segment and
+sending a team to fix the wrong component. Silently dropping low-confidence
+candidates avoids false diagnoses, but hides real signals that operators may
+still need to monitor and can make the system appear blind when the anomaly
+is visible in the underlying data.
+
+We accepted a system that can explicitly say, “an anomaly is present, but the
+current evidence is insufficient to assign a reliable root cause.” That is
+less decisive than forcing an answer, but safer and more operationally honest
+than directing a team toward the wrong diagnosis.
+
+## 4. Automatic remediation vs. human approval
+
+**Options considered:**
+(a) automatically execute the recommended mitigation as soon as an incident
+is confirmed;
+(b) generate recommendations but leave execution entirely outside the
+system;
+(c) require a human operator to approve, modify, or reject the
+recommendation before execution.
+
+**Decision:** option (c). PRSM generates a proposed action, but the
+recommendation remains in `proposed` status until an operator reviews it.
+The valid transitions are enforced by the API:
+`proposed → approved / modified / rejected`, and only an `approved`
+recommendation can move to `executed`. Every decision records the reviewer,
+timestamp, comment, previous action, new action, and status transition in
+`recommendation_audit_log.csv`.
+
+**Trade-off:** response speed vs. operational control. Fully automatic
+remediation would minimize time to mitigation, especially for high-impact
+provider incidents, but a wrong diagnosis or overly broad routing change
+could worsen conversion, duplicate retries, or move traffic into a less
+healthy path. Keeping recommendations completely outside the system would
+reduce technical risk, but would make PRSM little more than an alerting
+dashboard and would leave no structured decision trail.
+
+We accepted a small delay between diagnosis and execution in exchange for
+explicit accountability, reversible actions, and a complete audit trail.
+PRSM can recommend and prioritize, but it does not silently change
+production payment routing without human approval.
