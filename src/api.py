@@ -1625,7 +1625,7 @@ def run_trial_by_fire(request: TrialByFireRequest):
             status_code=409,
             detail=(
                 "Another trial-by-fire injection or reset is already "
-                "running - wait for it to finish (about 15-20s) and try "
+                "running - wait for it to finish (about 10-15s) and try "
                 "again."
             ),
         )
@@ -1731,7 +1731,7 @@ def reset_trial_by_fire():
             status_code=409,
             detail=(
                 "Another trial-by-fire injection or reset is already "
-                "running - wait for it to finish (about 15-20s) and try "
+                "running - wait for it to finish (about 10-15s) and try "
                 "again."
             ),
         )

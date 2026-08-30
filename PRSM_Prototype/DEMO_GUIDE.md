@@ -63,7 +63,7 @@ rehearsed. Click the **"Trial by fire"** button in the dashboard (next to
 the time-view toggle) — no terminal needed. Pick the dimensions the judge
 named (leave any unnamed field as "Any" — it stays a wildcard, matching
 every value of that dimension), or hit **"Randomize"** for a one-click
-version, then **"Inject & run detection"**. It takes ~15-20 seconds: real
+version, then **"Inject & run detection"**. It takes ~10-15 seconds: real
 transactions get appended to the live feed, the full 11-stage
 detection-to-diagnosis pipeline reruns against them, and the panel reports
 whether it was confirmed as an incident, flagged as low-confidence, or
@@ -124,7 +124,7 @@ showing if there's room:
 Injection only appends — it never deletes. Click **"Reset live feed to
 baseline"** inside the Trial by fire panel (confirm the dialog) to undo
 every injected incident and rerun detection — no terminal needed, same
-~15-20 second cost as an injection.
+~10-15 second cost as an injection.
 
 From a terminal, the equivalent is:
 

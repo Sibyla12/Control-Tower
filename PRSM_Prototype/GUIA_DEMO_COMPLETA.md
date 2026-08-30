@@ -236,7 +236,7 @@ verdad". Todo desde el navegador:
 - **Randomize** — llena el formulario con una combinación aleatoria y
   válida, para un demo de un clic.
 - **Inject & run detection** — inyecta las transacciones reales al feed
-  en vivo y corre el pipeline completo de 11 etapas (~15-20 segundos,
+  en vivo y corre el pipeline completo de 11 etapas (~10-15 segundos,
   barra de progreso real con las etapas por las que va pasando). Al
   terminar, dice honestamente uno de tres resultados:
   - **Confirmado como incidente** (cruzó el umbral de confianza 0.70)
@@ -244,16 +244,16 @@ verdad". Todo desde el navegador:
     alcanzó 0.70 — aparece en "Under Investigation")
   - **No detectado** (ni siquiera se validó estadísticamente — sugiere
     bajar más el approval rate o subir la duración)
-- **Reset live feed to baseline** (el link de texto arriba del
-  formulario) — deshace **todas** las inyecciones hechas hasta ese
+- **Reset live feed to baseline** — botón ámbar debajo de "Inject & run
+  detection" — deshace **todas** las inyecciones hechas hasta ese
   momento y vuelve el feed exactamente al estado original committeado,
-  re-corriendo el pipeline. Útil para dejar todo limpio antes de
-  presentar, o entre pruebas.
+  re-corriendo el pipeline. Pide confirmación antes de ejecutarse. Útil
+  para dejar todo limpio antes de presentar, o entre pruebas.
 
 **Nota técnica de seguridad:** si dos personas usan Trial by Fire (o
 Reset) al mismo tiempo, el sistema rechaza la segunda petición
 inmediatamente con un mensaje claro ("ya hay una corriendo, espera
-15-20s") en vez de dejar que compitan por los mismos archivos — eso
+10-15s") en vez de dejar que compitan por los mismos archivos — eso
 evitaría que el sistema se corrompiera o se quedara colgado.
 
 ---

@@ -1260,14 +1260,14 @@ function setTbfStatus(cls, html) {
 
 // Progress is estimated, not streamed from the backend (the pipeline runs
 // as one blocking request) — the moving bar and rotating stage labels exist
-// so a ~15-20s wait doesn't read as "nothing is happening."
-const TBF_ESTIMATED_SECONDS = 19;
+// so a ~10-15s wait doesn't read as "nothing is happening."
+const TBF_ESTIMATED_SECONDS = 13;
 const TBF_PROGRESS_STAGES_AFTER_FIRST = [
-  { at: 2, label: "Aggregating live traffic across detection levels…" },
-  { at: 5, label: "Scanning for statistically significant drops…" },
-  { at: 9, label: "Clustering validated anomalies and inferring root cause…" },
-  { at: 13, label: "Estimating financial impact and priority…" },
-  { at: 16, label: "Finalizing recommendations…" },
+  { at: 1, label: "Aggregating live traffic across detection levels…" },
+  { at: 3, label: "Scanning for statistically significant drops…" },
+  { at: 6, label: "Clustering validated anomalies and inferring root cause…" },
+  { at: 9, label: "Estimating financial impact and priority…" },
+  { at: 11, label: "Finalizing recommendations…" },
 ];
 let tbfProgressTimer = null;
 
@@ -1280,7 +1280,7 @@ function startTbfProgress(firstStageLabel) {
   el.innerHTML = `
     <div class="tbf-progress-label" id="tbfProgressLabel">${escapeHtml(firstStageLabel)}</div>
     <div class="tbf-progress-track"><div class="tbf-progress-fill" id="tbfProgressFill"></div></div>
-    <div class="tbf-progress-meta"><span id="tbfProgressElapsed">0s elapsed</span><span>~15-20s total</span></div>
+    <div class="tbf-progress-meta"><span id="tbfProgressElapsed">0s elapsed</span><span>~10-15s total</span></div>
   `;
 
   const startedAt = Date.now();
@@ -1361,7 +1361,7 @@ async function resetTbfDemo() {
   const confirmed = window.confirm(
     "Reset the live feed to its baseline? This removes every incident " +
     "injected via Trial by fire (including the rehearsed demo incidents' " +
-    "current state) and reruns detection — takes about 15-20 seconds."
+    "current state) and reruns detection — takes about 10-15 seconds."
   );
   if (!confirmed) return;
 

@@ -221,6 +221,15 @@ calls the detector. If no exact reliable baseline exists, it uses hierarchical
 fallback. It writes `anomaly_candidates.csv` with the selected baseline, drop,
 z-score, severity, and explanation.
 
+The exact-baseline lookup is precomputed once as a dict
+(`build_detection_baseline_index()`) keyed by
+`(detection_level, *dimension values)`, rather than re-filtering the whole
+`detection_level_baselines.csv` per window as it originally did - same exact
+matching rules (reliable rows only, first match per key), verified to
+produce a byte-identical `anomaly_candidates.csv` on the same input before
+and after. On the reference run this cut the stage from ~4.4s to ~1.4s and
+the full pipeline from ~14-15s to ~10s.
+
 Confirmed windows are evaluated against ground truth as:
 
 - direct: `injected_share >= 0.50`;
@@ -459,7 +468,7 @@ synchronously, then checks whether the injected incident's ID shows up in
 `ground_truth_ids` on either the confirmed incidents or the unresolved
 candidates, and reports `confirmed_incident` / `unresolved_candidate` /
 `not_detected` accordingly - genuinely re-running detection, not simulating
-an outcome. This takes roughly 15-20 seconds and blocks the request for that
+an outcome. This takes roughly 10-15 seconds and blocks the request for that
 whole time (FastAPI runs sync `def` handlers in a thread pool, so other
 requests - including the notification background task - aren't blocked
 while it runs). `GET /trial-by-fire/options` returns the real, current
