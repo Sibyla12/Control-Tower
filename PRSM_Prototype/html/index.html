@@ -40,6 +40,11 @@
     </header>
 
     <main>
+      <div class="time-view-toggle" id="timeViewToggle" role="group" aria-label="Time view">
+        <button data-view="live" class="time-view-button is-active" type="button">Live now</button>
+        <button data-view="quiet" class="time-view-button" type="button">Replay: before the incidents (10:00–10:02)</button>
+      </div>
+
       <section class="status-strip" id="statusStrip" aria-live="polite">
         <div class="status-copy">
           <div class="status-pill" id="statusPill">SYSTEM HEALTHY</div>

@@ -757,12 +757,39 @@ def country_status(
     return "warning"
 
 
-def build_dashboard_payload() -> dict:
+def parse_as_of(as_of: str | None) -> pd.Timestamp | None:
+    """Parses the ?as_of= query param used to replay the dashboard/incidents
+    view from an earlier point in the live window, e.g. to demo the system
+    watching quietly before any incident started.
+    """
+    if not as_of:
+        return None
+
+    try:
+        return pd.Timestamp(as_of)
+    except (ValueError, TypeError) as error:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid as_of timestamp: {as_of!r}",
+        ) from error
+
+
+def build_dashboard_payload(as_of: pd.Timestamp | None = None) -> dict:
     live = load_live_windows()
     baseline = load_segment_baseline()
 
+    if as_of is not None:
+        live = live[live["minute"] <= as_of]
+        if live.empty:
+            raise HTTPException(
+                status_code=404,
+                detail="No live data exists at or before that timestamp.",
+            )
+
     try:
         incidents = load_incidents()
+        if as_of is not None:
+            incidents = incidents[incidents["start_time"] <= as_of]
     except HTTPException:
         incidents = pd.DataFrame(
             columns=["country", "priority", "value_at_risk_per_minute_usd"]
@@ -1066,7 +1093,7 @@ def health():
 
 
 @app.get("/unresolved-candidates")
-def get_unresolved_candidates():
+def get_unresolved_candidates(as_of: str | None = None):
     if not UNRESOLVED_CANDIDATES_PATH.exists():
         return {"count": 0, "candidates": []}
 
@@ -1075,6 +1102,11 @@ def get_unresolved_candidates():
         parse_dates=["start_time", "end_time"],
         date_format="mixed",
     )
+
+    as_of_timestamp = parse_as_of(as_of)
+    if as_of_timestamp is not None:
+        dataframe = dataframe[dataframe["start_time"] <= as_of_timestamp]
+
     dataframe = dataframe.sort_values(
         "confidence_score", ascending=False
     )
@@ -1091,14 +1123,15 @@ def get_unresolved_candidates():
 
 
 @app.get("/dashboard")
-def get_dashboard():
-    return build_dashboard_payload()
+def get_dashboard(as_of: str | None = None):
+    return build_dashboard_payload(as_of=parse_as_of(as_of))
 
 
 @app.get("/incidents")
 def get_incidents(
     priority: str | None = None,
     status: str | None = None,
+    as_of: str | None = None,
 ):
     dataframe = load_incidents()
 
@@ -1109,6 +1142,10 @@ def get_incidents(
         dataframe = dataframe[
             dataframe["recommendation_status"].eq(status)
         ]
+
+    as_of_timestamp = parse_as_of(as_of)
+    if as_of_timestamp is not None:
+        dataframe = dataframe[dataframe["start_time"] <= as_of_timestamp]
 
     dataframe = dataframe.sort_values(
         ["priority_score", "value_at_risk_per_minute_usd"],

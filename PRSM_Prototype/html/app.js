@@ -153,15 +153,19 @@ function mapApiIncident(rawApiIncident) {
   };
 }
 
-async function loadLiveIncidents() {
-  const response = await fetch(`${API_URL}/incidents`);
+function withAsOf(path, asOf) {
+  return asOf ? `${API_URL}${path}?as_of=${encodeURIComponent(asOf)}` : `${API_URL}${path}`;
+}
+
+async function loadLiveIncidents(asOf) {
+  const response = await fetch(withAsOf("/incidents", asOf));
   if (!response.ok) throw new Error(`Control Tower API returned ${response.status}`);
   const payload = await response.json();
   return payload.incidents.map(mapApiIncident);
 }
 
-async function loadDashboard() {
-  const response = await fetch(`${API_URL}/dashboard`);
+async function loadDashboard(asOf) {
+  const response = await fetch(withAsOf("/dashboard", asOf));
   if (!response.ok) throw new Error(`Control Tower API returned ${response.status}`);
   return response.json();
 }
@@ -185,8 +189,8 @@ function mapUnresolvedCandidate(raw) {
   };
 }
 
-async function loadUnresolvedCandidates() {
-  const response = await fetch(`${API_URL}/unresolved-candidates`);
+async function loadUnresolvedCandidates(asOf) {
+  const response = await fetch(withAsOf("/unresolved-candidates", asOf));
   if (!response.ok) throw new Error(`Control Tower API returned ${response.status}`);
   const payload = await response.json();
   return payload.candidates.map(mapUnresolvedCandidate);
@@ -286,7 +290,18 @@ function liveErrorScenario(message) {
   };
 }
 
-const state = { selectedIncident: null, liveData: null, liveError: null, liveTimer: null, reviewUi: { modifying: false } };
+const QUIET_PERIOD_AS_OF = "2026-08-31T10:02:00";
+
+const state = { selectedIncident: null, liveData: null, liveError: null, liveTimer: null, reviewUi: { modifying: false }, asOf: null };
+
+function setTimeView(view) {
+  state.asOf = view === "quiet" ? QUIET_PERIOD_AS_OF : null;
+  document.querySelectorAll("#timeViewToggle [data-view]").forEach(b => b.classList.toggle("is-active", b.dataset.view === view));
+  state.liveData = null;
+  closeDrawer();
+  render();
+  fetchLive();
+}
 
 function money(value) {
   if (value >= 1000000) return `$${(value / 1000000).toFixed(1)}M`;
@@ -303,8 +318,9 @@ function currentView() {
 
 async function fetchLive() {
   try {
+    const asOf = state.asOf;
     const [dashboard, liveIncidents, unresolvedCandidates] = await Promise.all([
-      loadDashboard(), loadLiveIncidents(), loadUnresolvedCandidates()
+      loadDashboard(asOf), loadLiveIncidents(asOf), loadUnresolvedCandidates(asOf)
     ]);
     const hadError = Boolean(state.liveError);
     state.liveData = buildLiveScenario(dashboard, liveIncidents, unresolvedCandidates);
@@ -924,6 +940,7 @@ document.querySelectorAll(".country-node[data-country]").forEach(b=>b.addEventLi
 document.getElementById("marketRoster").addEventListener("click", e => { const b = e.target.closest("[data-country]"); if (b) showCountry(b.dataset.country); });
 document.getElementById("beaconWarning").addEventListener("click", () => { if (document.getElementById("beaconWarning").classList.contains("is-lit")) showToast("Critical signal acknowledged"); });
 document.getElementById("beaconCaution").addEventListener("click", () => { if (document.getElementById("beaconCaution").classList.contains("is-lit")) showToast("Caution signal acknowledged"); });
+document.getElementById("timeViewToggle").addEventListener("click", e => { const b = e.target.closest("[data-view]"); if (b) setTimeView(b.dataset.view); });
 document.getElementById("closeDrawer").addEventListener("click",closeDrawer);
 document.getElementById("drawerBackdrop").addEventListener("click",closeDrawer);
 document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeDrawer(); });

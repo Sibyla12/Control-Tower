@@ -118,8 +118,14 @@ code, .mono { font-family: var(--font-mono); }
 
 .eyebrow { display: block; color: var(--select); font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; font-family: var(--font-mono); }
 
-/* ============ STATUS STRIP ============ */
+/* ============ TIME VIEW TOGGLE ============ */
 main { padding-top: 18px; }
+.time-view-toggle { display: flex; gap: 6px; margin-bottom: 12px; }
+.time-view-button { min-height: 32px; padding: 0 12px; color: var(--text-secondary); border: 1px solid var(--hairline); border-radius: var(--radius-sm); background: var(--panel-sunken); cursor: pointer; font-size: 10.5px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .03em; transition: .15s ease; }
+.time-view-button:hover { color: var(--text-primary); border-color: var(--hairline-bright); }
+.time-view-button.is-active { color: #0a0a0a; border-color: var(--select); background: var(--select); font-weight: 700; }
+
+/* ============ STATUS STRIP ============ */
 .status-strip { min-height: 78px; display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; border: 1px solid var(--hairline); border-left: 3px solid var(--nominal); border-radius: var(--radius); background: var(--panel); transition: .2s ease; }
 .status-strip.critical { border-left-color: var(--warning); }
 .status-strip.warning { border-left-color: var(--caution); }
