@@ -6,9 +6,8 @@ without relying on memory. Everything described here is real — nothing is
 invented or "fake" simulated: every number comes from the real detection
 pipeline running over simulated traffic.
 
-For the timed 4-minute script (what to say and when), use
-[DEMO_GUIDE.md](DEMO_GUIDE.md). This document is the background reference:
-what each piece is and why it exists.
+This document is the background reference: what each piece is and why it
+exists.
 
 ---
 

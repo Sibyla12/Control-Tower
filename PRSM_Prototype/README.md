@@ -12,8 +12,7 @@ an "Ask PRISM" chat (grounded in the same live data), a "Trial by fire"
 panel to inject and detect a judge-named incident with no terminal, and an
 "Executive view" toggle that swaps the analyst dashboard for a one-screen
 decision brief. See [DASHBOARD_GUIDE.md](DASHBOARD_GUIDE.md) for a
-field-by-field explanation of every button and panel, or
-[DEMO_GUIDE.md](DEMO_GUIDE.md) for a timed presentation script.
+field-by-field explanation of every button and panel.
 
 ## 2. Python + Streamlit
 
