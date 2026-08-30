@@ -9,8 +9,8 @@ in most markdown viewers) and exported as standalone PNG files in
 after editing the Mermaid source with:
 
 ```bash
-npx -p @mermaid-js/mermaid-cli mmdc -i docs/diagrams/system_overview.mmd -o docs/diagrams/system_overview.png -b white -s 3
-npx -p @mermaid-js/mermaid-cli mmdc -i docs/diagrams/pipeline_dataflow.mmd -o docs/diagrams/pipeline_dataflow.png -b white -s 3
+npx -p @mermaid-js/mermaid-cli mmdc -i docs/diagrams/system_overview.mmd -o docs/diagrams/system_overview.png -b white -s 6
+npx -p @mermaid-js/mermaid-cli mmdc -i docs/diagrams/pipeline_dataflow.mmd -o docs/diagrams/pipeline_dataflow.png -b white -s 6
 ```
 
 ## 1. System overview
