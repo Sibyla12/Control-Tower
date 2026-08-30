@@ -178,6 +178,30 @@
   </aside>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <button class="agent-fab" id="agentToggle" type="button" aria-label="Ask PRISM">
+    <span class="agent-fab-mark">⌁</span>
+    <span class="agent-fab-label">Ask PRISM</span>
+  </button>
+  <aside class="agent-panel" id="agentPanel" hidden aria-hidden="true" aria-label="Ask PRISM">
+    <div class="agent-header">
+      <div><span class="eyebrow">LIVE DATA ASSISTANT</span><div class="agent-title">Ask PRISM</div></div>
+      <button class="close-button" id="agentClose" aria-label="Close assistant">×</button>
+    </div>
+    <div class="agent-messages" id="agentMessages">
+      <div class="agent-empty">
+        Ask about the current incident state — e.g. "how many P1 incidents are there?"
+        or "what's driving the Adyen incident?". Every answer is grounded in the same
+        live data on this dashboard, nothing invented.
+      </div>
+    </div>
+    <form class="agent-input-row" id="agentForm">
+      <input class="agent-input" id="agentInput" type="text" maxlength="500"
+             placeholder="Ask about the current incidents..." autocomplete="off" />
+      <button class="agent-send" id="agentSend" type="submit">Send</button>
+    </form>
+  </aside>
+
   <script src="world-data.js"></script>
   <script src="app.js"></script>
 </body>

@@ -45,6 +45,10 @@ otherwise it returns a clean, explicit error instead of failing silently.
 - Team-specific recommendations, AI-assisted narrative analysis (OpenAI), and
   human approval with an audit trail.
 - Phone push notifications (ntfy) on new incidents.
+- "Ask PRISM": a tool-calling conversational agent (OpenAI, `gpt-4o`) that
+  answers natural-language questions about the live incident state by
+  calling the same data functions the REST endpoints use — never a
+  separate, inventable code path.
 - A FastAPI backend and an HTML dashboard connected to the API.
 
 ## Repository structure
@@ -111,6 +115,7 @@ Available routes:
 - `GET /audit-log`
 - `POST /incidents/{incident_id}/review`
 - `GET /notify/test`
+- `POST /agent/ask`
 
 Interactive local documentation is available at
 `http://127.0.0.1:8000/docs`.
@@ -122,7 +127,7 @@ feature degrading cleanly instead of failing.
 
 | Variable | Enables | Without it |
 |---|---|---|
-| `OPENAI_API_KEY` | `POST /incidents/{id}/analysis` — AI-generated incident narrative (`gpt-4o`) | Endpoint returns `503` with an explicit "not configured" message |
+| `OPENAI_API_KEY` | `POST /incidents/{id}/analysis` (incident narrative) and `POST /agent/ask` ("Ask PRISM" chat, `gpt-4o` with tool-calling) | Both endpoints return `503` with an explicit "not configured" message |
 | `NTFY_TOPIC` | Phone push notifications on new incidents, via ntfy.sh | The background notification loop simply never fires |
 
 Production uses the command in the `Procfile`, without `--reload`:

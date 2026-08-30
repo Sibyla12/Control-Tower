@@ -112,6 +112,15 @@ class ReviewRequest(BaseModel):
     )
 
 
+class AgentMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str = Field(min_length=1, max_length=2000)
+
+
+class AgentAskRequest(BaseModel):
+    messages: list[AgentMessage] = Field(min_length=1, max_length=20)
+
+
 STATUS_TRANSITIONS = {
     "proposed": {
         "approve": "approved",
@@ -1322,4 +1331,224 @@ def review_incident(incident_id: str, request: ReviewRequest):
         "message": "Review applied successfully.",
         "incident": enrich_with_playbook(clean_record(updated)),
         "audit_entry": clean_record(audit_entry),
+    }
+
+
+# --- Conversational agent -----------------------------------------------
+#
+# A tool-calling agent that answers natural-language questions by calling
+# the same functions the REST endpoints above use, so every answer is
+# grounded in the exact same live data a human sees on the dashboard -
+# never invented, never a separate code path.
+
+AGENT_MODEL = "gpt-4o"
+AGENT_MAX_TOOL_ROUNDS = 4
+
+AGENT_SYSTEM_PROMPT = """You are an assistant embedded in Control Tower / PRISM, \
+a payment incident intelligence dashboard. You answer questions about the \
+CURRENT live incident state by calling the tools provided - you have no other \
+source of truth.
+
+Rules:
+- Never invent incident IDs, numbers, root causes, or statuses. Only state \
+facts returned by a tool call.
+- If a tool returns no data, an error, or "not found", say so plainly instead \
+of guessing.
+- Call as many tools as needed to answer fully, but keep the final answer \
+concise (a few sentences, not a data dump).
+- If the question is ambiguous about which incident, ask for clarification \
+instead of picking one arbitrarily."""
+
+AGENT_TOOLS = [
+    {
+        "type": "function",
+        "function": {
+            "name": "get_dashboard_summary",
+            "description": (
+                "Get the current network-wide dashboard: system status, "
+                "conversion KPIs, executive financial summary, risk "
+                "concentration by dimension, and a Pareto ranking of "
+                "active incidents by financial exposure."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "list_incidents",
+            "description": (
+                "List currently confirmed incidents, optionally filtered "
+                "by priority or review status."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "priority": {
+                        "type": "string",
+                        "enum": ["P1", "P2", "P3", "P4"],
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "proposed",
+                            "approved",
+                            "modified",
+                            "rejected",
+                            "executed",
+                        ],
+                        "description": "recommendation_status",
+                    },
+                },
+                "required": [],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_incident_detail",
+            "description": (
+                "Get full detail for one confirmed incident by its "
+                "consolidated_incident_id: root cause, evidence, "
+                "financial impact, priority, playbook, and projections."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incident_id": {"type": "string"},
+                },
+                "required": ["incident_id"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_incident_segments",
+            "description": (
+                "Get the Pareto-ranked segment breakdown for one "
+                "incident: which underlying provider/bank/merchant/method "
+                "segments explain what share of the excess declines."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incident_id": {"type": "string"},
+                },
+                "required": ["incident_id"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "list_unresolved_candidates",
+            "description": (
+                "List anomalies detected but without enough evidence yet "
+                "to confirm a root cause (below the 0.70 confidence "
+                "gate) - shown as 'under investigation', not a confirmed "
+                "incident."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+            },
+        },
+    },
+]
+
+
+def dispatch_agent_tool(name: str, arguments: dict) -> dict:
+    try:
+        if name == "get_dashboard_summary":
+            return build_dashboard_payload()
+        if name == "list_incidents":
+            return get_incidents(
+                priority=arguments.get("priority"),
+                status=arguments.get("status"),
+            )
+        if name == "get_incident_detail":
+            return get_incident(arguments["incident_id"])
+        if name == "get_incident_segments":
+            return get_incident_segments(arguments["incident_id"])
+        if name == "list_unresolved_candidates":
+            return get_unresolved_candidates()
+        return {"error": f"Unknown tool: {name}"}
+    except HTTPException as error:
+        return {"error": error.detail}
+    except Exception as error:
+        return {"error": str(error)}
+
+
+@app.post("/agent/ask")
+def ask_agent(request: AgentAskRequest):
+    try:
+        client = get_openai_client()
+    except Exception as error:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Agent is not configured: {error}",
+        ) from error
+
+    messages: list[dict] = [
+        {"role": "system", "content": AGENT_SYSTEM_PROMPT}
+    ] + [
+        {"role": message.role, "content": message.content}
+        for message in request.messages
+    ]
+
+    for _ in range(AGENT_MAX_TOOL_ROUNDS):
+        try:
+            response = client.chat.completions.create(
+                model=AGENT_MODEL,
+                max_tokens=600,
+                messages=messages,
+                tools=AGENT_TOOLS,
+            )
+        except openai.APIStatusError as error:
+            raise HTTPException(
+                status_code=502,
+                detail=f"Agent request failed: {error.message}",
+            ) from error
+
+        reply = response.choices[0].message
+
+        if not reply.tool_calls:
+            return {"answer": (reply.content or "").strip()}
+
+        messages.append(
+            {
+                "role": "assistant",
+                "content": reply.content,
+                "tool_calls": [
+                    tool_call.model_dump()
+                    for tool_call in reply.tool_calls
+                ],
+            }
+        )
+
+        for tool_call in reply.tool_calls:
+            arguments = json.loads(tool_call.function.arguments or "{}")
+            result = dispatch_agent_tool(
+                tool_call.function.name, arguments
+            )
+            messages.append(
+                {
+                    "role": "tool",
+                    "tool_call_id": tool_call.id,
+                    "content": json.dumps(result, default=str),
+                }
+            )
+
+    return {
+        "answer": (
+            "I wasn't able to reach a final answer within the tool-call "
+            "limit."
+        )
     }

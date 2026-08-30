@@ -954,3 +954,93 @@ setInterval(updateClock, 1000);
 updateClock();
 render();
 startLivePolling();
+
+// --- Ask PRISM: conversational agent over the live dashboard data ---
+const agentState = { open: false, messages: [], sending: false };
+const AGENT_HISTORY_LIMIT = 10;
+
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function renderAgentMessages() {
+  const container = document.getElementById("agentMessages");
+  if (agentState.messages.length === 0) {
+    container.innerHTML = `<div class="agent-empty">Ask about the current incident state — e.g. "how many P1 incidents are there?" or "what's driving the highest-priority incident?". Every answer is grounded in the same live data on this dashboard, nothing invented.</div>`;
+    return;
+  }
+  container.innerHTML = agentState.messages
+    .map(m => {
+      const cls = m.role === "user" ? "is-user" : m.role === "error" ? "is-error" : "is-assistant";
+      const pendingCls = m.pending ? " is-pending" : "";
+      return `<div class="agent-message ${cls}${pendingCls}">${escapeHtml(m.content)}</div>`;
+    })
+    .join("");
+  container.scrollTop = container.scrollHeight;
+}
+
+function toggleAgentPanel(open) {
+  agentState.open = open !== undefined ? open : !agentState.open;
+  const panel = document.getElementById("agentPanel");
+  panel.hidden = !agentState.open;
+  panel.classList.toggle("is-open", agentState.open);
+  panel.setAttribute("aria-hidden", String(!agentState.open));
+  if (agentState.open) {
+    renderAgentMessages();
+    document.getElementById("agentInput").focus();
+  }
+}
+
+async function sendAgentMessage(text) {
+  if (!text.trim() || agentState.sending) return;
+
+  agentState.messages.push({ role: "user", content: text.trim() });
+  const pending = { role: "assistant", content: "Thinking…", pending: true };
+  agentState.messages.push(pending);
+  agentState.sending = true;
+  renderAgentMessages();
+
+  const history = agentState.messages
+    .filter(m => !m.pending && m.role !== "error")
+    .slice(-AGENT_HISTORY_LIMIT)
+    .map(m => ({ role: m.role, content: m.content }));
+
+  try {
+    const response = await fetch(`${API_URL}/agent/ask`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: history }),
+    });
+    const index = agentState.messages.indexOf(pending);
+
+    if (!response.ok) {
+      const body = await response.json().catch(() => ({}));
+      const detail = body.detail || `Request failed (${response.status}).`;
+      agentState.messages[index] = { role: "error", content: detail };
+    } else {
+      const body = await response.json();
+      agentState.messages[index] = { role: "assistant", content: body.answer || "No answer returned." };
+    }
+  } catch (error) {
+    const index = agentState.messages.indexOf(pending);
+    agentState.messages[index] = { role: "error", content: "Could not reach the agent — check your connection." };
+  } finally {
+    agentState.sending = false;
+    renderAgentMessages();
+  }
+}
+
+document.getElementById("agentToggle").addEventListener("click", () => toggleAgentPanel());
+document.getElementById("agentClose").addEventListener("click", () => toggleAgentPanel(false));
+document.getElementById("agentForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const input = document.getElementById("agentInput");
+  const text = input.value;
+  input.value = "";
+  sendAgentMessage(text);
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && agentState.open) toggleAgentPanel(false);
+});

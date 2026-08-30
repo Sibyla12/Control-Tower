@@ -435,6 +435,21 @@ It requires `OPENAI_API_KEY` in the environment; without it, the analysis
 endpoint returns a clean 503 instead of executing. ntfy notifications are
 enabled when `NTFY_TOPIC` is configured.
 
+`POST /agent/ask` ("Ask PRISM") is a tool-calling conversational agent, also
+`gpt-4o`. It does not have its own view of the data - its five tools
+(`get_dashboard_summary`, `list_incidents`, `get_incident_detail`,
+`get_incident_segments`, `list_unresolved_candidates`) call
+`build_dashboard_payload()` and the same handler functions the REST routes
+use, so an answer can only ever be grounded in what those routes would also
+return; the system prompt explicitly forbids inventing incident IDs, numbers,
+or root causes not returned by a tool call. The endpoint accepts the last few
+turns of conversation (`messages: [{role, content}]`) so the frontend can
+support short back-and-forth without server-side session state. A tool-call
+round trip is capped at `AGENT_MAX_TOOL_ROUNDS = 4` to bound cost and
+latency; if the model still hasn't produced a final answer by then, the
+endpoint returns a plain-language "couldn't reach an answer" message rather
+than looping indefinitely.
+
 API reviews persist to `reviewed_incidents.csv` and
 `recommendation_audit_log.csv`.
 
