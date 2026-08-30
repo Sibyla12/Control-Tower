@@ -18,5 +18,5 @@ simplified decision brief. "Ask PRISM" (floating button, bottom right) is a
 chat grounded in the same live data. "Trial by fire" (next to the time-view
 toggle) injects and detects a judge-named incident combination entirely
 from the browser, with a matching reset. See
-[../GUIA_DEMO_COMPLETA.md](../GUIA_DEMO_COMPLETA.md) for what every button
+[../DASHBOARD_GUIDE.md](../DASHBOARD_GUIDE.md) for what every button
 does.

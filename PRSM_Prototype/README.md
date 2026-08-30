@@ -11,8 +11,8 @@ and conversion data — no invented numbers, no demo scenarios. It also has
 an "Ask PRISM" chat (grounded in the same live data), a "Trial by fire"
 panel to inject and detect a judge-named incident with no terminal, and an
 "Executive view" toggle that swaps the analyst dashboard for a one-screen
-decision brief. See [GUIA_DEMO_COMPLETA.md](GUIA_DEMO_COMPLETA.md) for a
-field-by-field explanation of every button and panel (Spanish), or
+decision brief. See [DASHBOARD_GUIDE.md](DASHBOARD_GUIDE.md) for a
+field-by-field explanation of every button and panel, or
 [DEMO_GUIDE.md](DEMO_GUIDE.md) for a timed presentation script.
 
 ## 2. Python + Streamlit

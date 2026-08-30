@@ -7,7 +7,7 @@ from the repo root once before the demo starts (creates the venv, installs
 dependencies, runs the pipeline, starts the API and the dashboard, and opens
 the browser — one command, nothing else to type) to make sure the data on
 disk matches this script. For a field-by-field explanation of every button
-and panel, see [GUIA_DEMO_COMPLETA.md](GUIA_DEMO_COMPLETA.md) (Spanish).
+and panel, see [DASHBOARD_GUIDE.md](DASHBOARD_GUIDE.md).
 
 ## 0:00–0:30 — Establish the normal state
 
