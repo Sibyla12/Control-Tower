@@ -1097,13 +1097,36 @@ async function initTbfForm() {
   refreshTbfMethodAndBankOptions();
 }
 
+async function attemptLoadTbfOptions() {
+  const submitButton = document.getElementById("tbfSubmit");
+  const randomizeButton = document.getElementById("tbfRandomize");
+  submitButton.disabled = true;
+  randomizeButton.disabled = true;
+  setTbfStatus("is-pending", "Loading available merchants, providers, and decline codes from the API…");
+
+  try {
+    await initTbfForm();
+    document.getElementById("tbfStatus").hidden = true;
+    submitButton.disabled = false;
+    randomizeButton.disabled = false;
+  } catch (error) {
+    setTbfStatus(
+      "is-error",
+      "Could not load options from the API — it may be waking up from idle " +
+      "(Render free tier can take 30-50s on the first request). " +
+      '<button type="button" id="tbfRetryOptions" class="tbf-secondary" style="margin-top:10px;width:auto;padding:0 14px;">Retry</button>'
+    );
+    document.getElementById("tbfRetryOptions").addEventListener("click", attemptLoadTbfOptions);
+  }
+}
+
 function toggleTbfModal(open) {
   tbfState.open = open !== undefined ? open : !tbfState.open;
   document.getElementById("tbfBackdrop").hidden = !tbfState.open;
   document.getElementById("tbfModal").hidden = !tbfState.open;
   document.getElementById("tbfModal").setAttribute("aria-hidden", String(!tbfState.open));
   if (tbfState.open && !tbfState.options) {
-    initTbfForm().catch(() => showToast("Could not load trial-by-fire options"));
+    attemptLoadTbfOptions();
   }
 }
 
