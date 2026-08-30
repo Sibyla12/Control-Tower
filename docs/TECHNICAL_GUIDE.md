@@ -468,6 +468,32 @@ while it runs). `GET /trial-by-fire/options` returns the real, current
 the dashboard's form is always sourced from the same values the generator
 actually uses rather than a hand-maintained duplicate.
 
+**Form fields, what each one does:**
+
+- **Merchant / Provider / Country / Payment method / Issuing bank** - the
+  dimensions to constrain the injected traffic to. Each is optional; leaving
+  one as "Any" makes it a wildcard, matching every value of that dimension
+  (e.g. provider = Adyen with everything else "Any" injects an Adyen problem
+  across every merchant, country, method, and bank at once - a network-wide
+  provider outage rather than one narrow segment). Filling in more fields
+  narrows the injected traffic to a smaller, more specific segment.
+- **Decline code** - which `decline_code` the degraded (declined)
+  transactions in this window carry, e.g. `PROCESSOR_ERROR` for a technical
+  failure or `SUSPECTED_FRAUD` for a fraud-pattern spike. Required, since it
+  is one of the signals the diagnosis engine reads.
+- **Approval rate during incident** - the target approval rate (0-1) applied
+  only to transactions matching the chosen dimensions during the injection
+  window; everything else keeps its normal baseline rate. A lower value is a
+  more severe incident and clears the statistical detection threshold
+  faster.
+- **Duration (minutes)** - how many minutes of that degraded traffic get
+  generated, at 1,200 attempts/minute. This drives how many matching
+  transactions exist for detection to work with - the anomaly scanner
+  requires at least 30 attempts in a window (`n >= 30`) before it will even
+  consider a window, so a narrow dimension combination (e.g. one merchant +
+  one bank + one method + one country together) may need more minutes to
+  accumulate enough matching traffic to be detected at all.
+
 `POST /trial-by-fire/reset` is the undo: injection only ever appends, so
 resetting overwrites the live file with
 `data/source/transactions_live_multisegment.baseline.csv` - a committed,
