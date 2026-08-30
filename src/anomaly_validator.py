@@ -6,8 +6,8 @@ import pandas as pd
 from scipy.stats import norm
 
 
-INPUT_PATH = "data/anomaly_candidates.csv"
-OUTPUT_PATH = "data/validated_anomalies.csv"
+INPUT_PATH = "data/generated/anomaly_candidates.csv"
+OUTPUT_PATH = "data/generated/validated_anomalies.csv"
 
 FDR_ALPHA = 0.05
 MIN_CONSECUTIVE_WINDOWS = 2

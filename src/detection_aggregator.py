@@ -5,8 +5,8 @@ from pathlib import Path
 import pandas as pd
 
 
-INPUT_PATH = "data/transactions_live_multisegment.csv"
-OUTPUT_PATH = "data/detection_windows.csv"
+INPUT_PATH = "data/source/transactions_live_multisegment.csv"
+OUTPUT_PATH = "data/generated/detection_windows.csv"
 
 
 DETECTION_LEVELS = {

@@ -6,7 +6,7 @@ from typing import Any
 import pandas as pd
 
 
-BASELINE_PATH = "data/hierarchical_baselines.csv"
+BASELINE_PATH = "data/generated/hierarchical_baselines.csv"
 MIN_ATTEMPTS = 30
 
 

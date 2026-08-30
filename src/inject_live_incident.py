@@ -1,6 +1,6 @@
 """Injects a judge-specified incident into the running demo ("trial by fire").
 
-Appends new transactions to data/transactions_live_multisegment.csv for a
+Appends new transactions to data/source/transactions_live_multisegment.csv for a
 combination of dimensions given on the command line, using the same
 generation model as live_simulator.py (background noise + a matching
 IncidentRule), then prints the next command to run.
@@ -48,7 +48,7 @@ from live_simulator import (
     get_normal_approval_rate,
 )
 
-TRANSACTIONS_PATH = Path("data/transactions_live_multisegment.csv")
+TRANSACTIONS_PATH = Path("data/source/transactions_live_multisegment.csv")
 ATTEMPTS_PER_MINUTE = 1200
 NORMAL_DECLINE_CODES = [
     "INSUFFICIENT_FUNDS",

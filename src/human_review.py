@@ -7,9 +7,9 @@ import json
 import pandas as pd
 
 
-INPUT_PATH = "data/incidents_with_recommendations.csv"
-OUTPUT_PATH = "data/reviewed_incidents.csv"
-AUDIT_PATH = "data/recommendation_audit_log.csv"
+INPUT_PATH = "data/generated/incidents_with_recommendations.csv"
+OUTPUT_PATH = "data/generated/reviewed_incidents.csv"
+AUDIT_PATH = "data/generated/recommendation_audit_log.csv"
 
 
 VALID_ACTIONS = {

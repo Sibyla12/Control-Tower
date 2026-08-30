@@ -5,8 +5,8 @@ from pathlib import Path
 import pandas as pd
 
 
-INPUT_PATH = "data/detection_windows.csv"
-OUTPUT_PATH = "data/adaptive_detection_windows.csv"
+INPUT_PATH = "data/generated/detection_windows.csv"
+OUTPUT_PATH = "data/generated/adaptive_detection_windows.csv"
 
 MIN_ATTEMPTS = 30
 

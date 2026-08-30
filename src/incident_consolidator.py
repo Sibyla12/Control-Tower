@@ -6,8 +6,8 @@ from uuid import uuid4
 import pandas as pd
 
 
-INPUT_PATH = "data/root_cause_incidents.csv"
-OUTPUT_PATH = "data/consolidated_incidents.csv"
+INPUT_PATH = "data/generated/root_cause_incidents.csv"
+OUTPUT_PATH = "data/generated/consolidated_incidents.csv"
 
 
 ROOT_TYPE_WEIGHT = {
@@ -706,7 +706,7 @@ def main() -> None:
     )
 
     unresolved.to_csv(
-        "data/unresolved_incident_candidates.csv",
+        "data/generated/unresolved_incident_candidates.csv",
         index=False,
     )
 

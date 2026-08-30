@@ -6,8 +6,8 @@ from uuid import uuid4
 import pandas as pd
 
 
-INPUT_PATH = "data/validated_anomalies.csv"
-OUTPUT_PATH = "data/clustered_incidents.csv"
+INPUT_PATH = "data/generated/validated_anomalies.csv"
+OUTPUT_PATH = "data/generated/clustered_incidents.csv"
 
 MAX_GAP_MINUTES = 2
 

@@ -5,12 +5,12 @@ from pathlib import Path
 import pandas as pd
 
 
-INCIDENTS_PATH = "data/consolidated_incidents.csv"
-TRANSACTIONS_PATH = "data/transactions_live_multisegment.csv"
-FINANCIAL_CONFIG_PATH = "data/merchant_financial_config.csv"
-EXCHANGE_RATES_PATH = "data/exchange_rates.csv"
+INCIDENTS_PATH = "data/generated/consolidated_incidents.csv"
+TRANSACTIONS_PATH = "data/source/transactions_live_multisegment.csv"
+FINANCIAL_CONFIG_PATH = "data/source/merchant_financial_config.csv"
+EXCHANGE_RATES_PATH = "data/source/exchange_rates.csv"
 
-OUTPUT_PATH = "data/incidents_with_financial_impact.csv"
+OUTPUT_PATH = "data/generated/incidents_with_financial_impact.csv"
 
 
 def split_values(value) -> set[str]:

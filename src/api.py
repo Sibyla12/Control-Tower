@@ -16,17 +16,17 @@ from pydantic import BaseModel, Field
 from scipy.stats import norm
 
 
-REVIEWED_INCIDENTS_PATH = Path("data/reviewed_incidents.csv")
+REVIEWED_INCIDENTS_PATH = Path("data/generated/reviewed_incidents.csv")
 RECOMMENDED_INCIDENTS_PATH = Path(
-    "data/incidents_with_recommendations.csv"
+    "data/generated/incidents_with_recommendations.csv"
 )
-AUDIT_LOG_PATH = Path("data/recommendation_audit_log.csv")
+AUDIT_LOG_PATH = Path("data/generated/recommendation_audit_log.csv")
 UNRESOLVED_CANDIDATES_PATH = Path(
-    "data/unresolved_incident_candidates.csv"
+    "data/generated/unresolved_incident_candidates.csv"
 )
-ROOT_CAUSE_INCIDENTS_PATH = Path("data/root_cause_incidents.csv")
-CLUSTERED_INCIDENTS_PATH = Path("data/clustered_incidents.csv")
-INCIDENT_MEMORY_PATH = Path("data/incident_memory.csv")
+ROOT_CAUSE_INCIDENTS_PATH = Path("data/generated/root_cause_incidents.csv")
+CLUSTERED_INCIDENTS_PATH = Path("data/generated/clustered_incidents.csv")
+INCIDENT_MEMORY_PATH = Path("data/generated/incident_memory.csv")
 INCIDENT_MEMORY_COLUMNS = [
     "fingerprint",
     "consolidated_incident_id",
@@ -34,17 +34,17 @@ INCIDENT_MEMORY_COLUMNS = [
     "priority",
     "recorded_at",
 ]
-LIVE_SEGMENT_WINDOWS_PATH = Path("data/live_segment_windows.csv")
-BASELINE_BY_SEGMENT_PATH = Path("data/baseline_by_segment.csv")
-NOTIFIED_INCIDENTS_PATH = Path("data/notified_incidents.json")
-INCIDENT_TAXONOMY_PATH = Path("data/incident_taxonomy.csv")
-OPERATIONAL_PLAYBOOK_PATH = Path("data/operational_playbook.csv")
-PRIORITY_MATRIX_PATH = Path("data/priority_matrix.csv")
+LIVE_SEGMENT_WINDOWS_PATH = Path("data/generated/live_segment_windows.csv")
+BASELINE_BY_SEGMENT_PATH = Path("data/generated/baseline_by_segment.csv")
+NOTIFIED_INCIDENTS_PATH = Path("data/generated/notified_incidents.json")
+INCIDENT_TAXONOMY_PATH = Path("data/source/incident_taxonomy.csv")
+OPERATIONAL_PLAYBOOK_PATH = Path("data/source/operational_playbook.csv")
+PRIORITY_MATRIX_PATH = Path("data/source/priority_matrix.csv")
 MERCHANT_FINANCIAL_CONFIG_PATH = Path(
-    "data/merchant_financial_config.csv"
+    "data/source/merchant_financial_config.csv"
 )
 DETECTION_LEVEL_BASELINES_PATH = Path(
-    "data/detection_level_baselines.csv"
+    "data/generated/detection_level_baselines.csv"
 )
 
 # Which detection level (and matching incident field) backs each root

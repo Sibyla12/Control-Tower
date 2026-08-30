@@ -146,6 +146,6 @@ flowchart LR
   `OPENAI_API_KEY` the analysis endpoint returns a clean 503; without
   `NTFY_TOPIC` the notification loop simply never fires. Neither failure
   touches detection, diagnosis, or the rest of the API.
-- **`data/incident_memory.csv` and `data/notified_incidents.json`** are
+- **`data/generated/incident_memory.csv` and `data/generated/notified_incidents.json`** are
   runtime state written by the running API, not source data — gitignored,
   regenerated on first use.

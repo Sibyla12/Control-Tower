@@ -208,7 +208,7 @@ def run_simulation(
         )
 
     dataframe = pd.DataFrame(rows)
-    output_path = Path("data/transactions_live_multisegment.csv")
+    output_path = Path("data/source/transactions_live_multisegment.csv")
     output_path.parent.mkdir(parents=True, exist_ok=True)
     dataframe.to_csv(output_path, index=False)
 
@@ -270,4 +270,4 @@ if __name__ == "__main__":
 
     print("\nSimulation completed.")
     print(f"Transactions: {len(live_data):,}")
-    print("Saved at: data/transactions_live_multisegment.csv")
+    print("Saved at: data/source/transactions_live_multisegment.csv")

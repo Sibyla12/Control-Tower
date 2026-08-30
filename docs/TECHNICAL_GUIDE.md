@@ -55,7 +55,7 @@ transactions_history_60_days.csv        transactions_live_multisegment.csv
 
 ### Historical transactions
 
-`data/transactions_history_60_days.csv` contains 500,000 attempts over 60 days.
+`data/source/transactions_history_60_days.csv` contains 500,000 attempts over 60 days.
 It includes payment dimensions, status, decline code, amount, currency, retry
 relationships, recovery, and processing latency.
 
@@ -65,7 +65,7 @@ simulation convert near 90%, while retries recover at a much lower rate.
 
 ### Live transactions
 
-`data/transactions_live_multisegment.csv` contains 12 minutes with 1,200
+`data/source/transactions_live_multisegment.csv` contains 12 minutes with 1,200
 attempts per minute. Every row keeps `injected_incident_id`. This is laboratory
 ground truth and would not exist in a production payment stream.
 
@@ -276,15 +276,11 @@ Before these safeguards, 66 confirmed windows had no injected traffic. Reducing
 that count to 23 demonstrates meaningful noise removal without losing INC-001 or
 INC-002.
 
-### `src/persistent_detector.py`
-
-Implements the conceptual state machine for one segment:
-
-```text
-normal -> investigating -> confirmed -> recovering -> normal
-```
-
-The dataframe validator applies the persistence principle across all segments.
+Conceptually, each segment moves through
+`normal -> investigating -> confirmed -> recovering -> normal`; in practice
+this is applied directly as the two-consecutive-minute check above, across
+every segment in the dataframe in one pass, rather than as a standalone
+per-segment state machine.
 
 ## 9. From windows to incidents
 
@@ -414,7 +410,7 @@ operational playbook, and priority matrix when those tables exist, plus:
 - incident memory: incidents are fingerprinted by root cause type,
   provider/bank, country, and decline code (not by
   `consolidated_incident_id`, which is random on every pipeline run) and
-  persisted to `data/incident_memory.csv` with a real wall-clock timestamp.
+  persisted to `data/generated/incident_memory.csv` with a real wall-clock timestamp.
   A later run producing a new ID for an already-seen fingerprint is flagged
   `is_repeat_incident` with the real first/last-seen times and occurrence
   count. Recording is idempotent per incident ID, so repeated polling of

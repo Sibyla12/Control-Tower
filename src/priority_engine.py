@@ -5,9 +5,9 @@ from pathlib import Path
 import pandas as pd
 
 
-INPUT_PATH = "data/incidents_with_financial_impact.csv"
-CONFIG_PATH = "data/merchant_financial_config.csv"
-OUTPUT_PATH = "data/prioritized_incidents.csv"
+INPUT_PATH = "data/generated/incidents_with_financial_impact.csv"
+CONFIG_PATH = "data/source/merchant_financial_config.csv"
+OUTPUT_PATH = "data/generated/prioritized_incidents.csv"
 
 
 PRIORITY_WEIGHTS = {

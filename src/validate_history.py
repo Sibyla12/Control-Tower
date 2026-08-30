@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-DATA_PATH = "data/transactions_history_60_days.csv"
+DATA_PATH = "data/source/transactions_history_60_days.csv"
 
 
 def approval_rate(series: pd.Series) -> float:

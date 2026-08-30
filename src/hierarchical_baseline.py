@@ -5,8 +5,8 @@ from pathlib import Path
 import pandas as pd
 
 
-INPUT_PATH = "data/transactions_history_60_days.csv"
-OUTPUT_PATH = "data/hierarchical_baselines.csv"
+INPUT_PATH = "data/source/transactions_history_60_days.csv"
+OUTPUT_PATH = "data/generated/hierarchical_baselines.csv"
 
 MIN_ATTEMPTS = 30
 

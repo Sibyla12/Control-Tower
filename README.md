@@ -56,11 +56,14 @@ otherwise it returns a clean, explicit error instead of failing silently.
 ```text
 Control-Tower/
 ├── src/                     # Simulation, detection, diagnosis, and API
-├── data/                    # Synthetic CSV and JSON demo data
-├── docs/                    # UI contracts and technical documentation
+├── data/
+│   ├── source/               # Seed data and config, never rewritten by the pipeline
+│   └── generated/             # Everything run_pipeline.py writes/regenerates
+├── docs/                    # Architecture, decision log, and technical guide
 ├── PRSM_Prototype/
 │   ├── html/                # HTML/CSS/JavaScript dashboard
 │   └── streamlit/           # Alternative Streamlit prototype
+├── run_demo.sh / stop_demo.sh  # One-command bootstrap
 ├── requirements.txt
 └── Procfile
 ```

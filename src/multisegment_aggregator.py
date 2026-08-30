@@ -5,8 +5,8 @@ from pathlib import Path
 import pandas as pd
 
 
-INPUT_PATH = "data/transactions_live_multisegment.csv"
-OUTPUT_PATH = "data/live_segment_windows.csv"
+INPUT_PATH = "data/source/transactions_live_multisegment.csv"
+OUTPUT_PATH = "data/generated/live_segment_windows.csv"
 
 
 GROUPING_COLUMNS = [

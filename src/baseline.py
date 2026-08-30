@@ -5,8 +5,8 @@ from pathlib import Path
 import pandas as pd
 
 
-INPUT_PATH = "data/transactions_history_60_days.csv"
-OUTPUT_PATH = "data/baseline_by_segment.csv"
+INPUT_PATH = "data/source/transactions_history_60_days.csv"
+OUTPUT_PATH = "data/generated/baseline_by_segment.csv"
 
 
 def approval_rate(status: pd.Series) -> float:

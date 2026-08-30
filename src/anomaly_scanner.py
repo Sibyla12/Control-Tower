@@ -13,9 +13,9 @@ from baseline_selector import (
 )
 
 
-INPUT_PATH = "data/adaptive_detection_windows.csv"
-OUTPUT_PATH = "data/anomaly_candidates.csv"
-DETECTION_BASELINES_PATH = "data/detection_level_baselines.csv"
+INPUT_PATH = "data/generated/adaptive_detection_windows.csv"
+OUTPUT_PATH = "data/generated/anomaly_candidates.csv"
+DETECTION_BASELINES_PATH = "data/generated/detection_level_baselines.csv"
 
 DETECTION_DIMENSIONS = {
     "L1_PROVIDER_COUNTRY": ["provider", "country", "weekday", "hour"],

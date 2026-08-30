@@ -5,8 +5,8 @@ from pathlib import Path
 import pandas as pd
 
 
-INPUT_PATH = "data/prioritized_incidents.csv"
-OUTPUT_PATH = "data/incidents_with_recommendations.csv"
+INPUT_PATH = "data/generated/prioritized_incidents.csv"
+OUTPUT_PATH = "data/generated/incidents_with_recommendations.csv"
 
 
 TECHNICAL_CODES = {

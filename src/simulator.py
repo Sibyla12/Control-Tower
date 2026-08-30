@@ -326,7 +326,7 @@ def validate_dataset(dataframe: pd.DataFrame) -> None:
 
 def save_dataset(
     dataframe: pd.DataFrame,
-    output_path: str = "data/transactions_normal.csv",
+    output_path: str = "data/generated/transactions_normal.csv",
 ) -> None:
     path = Path(output_path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -377,7 +377,7 @@ if __name__ == "__main__":
 
     save_dataset(
         df,
-        output_path="data/transactions_history_60_days.csv",
+        output_path="data/source/transactions_history_60_days.csv",
     )
 
     approval_rate = (
@@ -393,5 +393,5 @@ if __name__ == "__main__":
     )
     print(
         "Saved at: "
-        "data/transactions_history_60_days.csv"
+        "data/source/transactions_history_60_days.csv"
     )
